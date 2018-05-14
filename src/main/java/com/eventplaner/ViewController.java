@@ -10,13 +10,31 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewController {
 
         @GetMapping("/")
-        public String home(){
-
+        public String renderHome(){
             return "index";
+        }
+
+        @GetMapping("/polls")
+        public String renderPolls(){
+            return "polls";
+        }
+
+        @GetMapping("/poll")
+        public String home(HttpServletRequest request, Model model){
+            if(request.getAttribute("poll") == null){
+                return "404";
+            }
+            String pollId = (String) request.getAttribute("poll");
+
+            model.addAttribute("pollName",pollId);
+
+            return "poll";
         }
 
         @GetMapping("/test")
         public String seas(HttpServletRequest request, Model model){
             return "test";
         }
+
+
 }
