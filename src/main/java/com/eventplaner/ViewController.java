@@ -26,6 +26,8 @@ public class ViewController {
             }
             String pollId = (String) request.getAttribute("poll");
 
+
+
             model.addAttribute("pollName",pollId);
 
             return "poll";
