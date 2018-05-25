@@ -3,6 +3,8 @@ package com.eventplaner.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name="comment")
@@ -19,11 +21,8 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private RegisteredUser author;
 
-    @Column(name="date")
-    private String date;
-
-    @Column(name="time")
-    private String time;
+    @Column(name="date_time")
+    private Date dateTime;
 
     @Column(name="comment")
     private String comment;
@@ -32,12 +31,12 @@ public class Comment {
     @JoinColumn(name = "sub_comment_system")
     private CommentSystem subCommentSystem;
 
-    public Comment(RegisteredUser author, String date, String time, String comment) {
+    public Comment(RegisteredUser author, String comment) {
         this.author = author;
-        this.date = date;
-        this.time = time;
         this.comment = comment;
         this.subCommentSystem = new CommentSystem();
+
+        this.dateTime = new Date();
     }
 
     public RegisteredUser getAuthor() {
@@ -45,14 +44,40 @@ public class Comment {
     }
 
     public String getDate() {
-        return date;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
+        return formatter.format(dateTime);
     }
 
     public String getTime() {
-        return time;
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+
+        return formatter.format(dateTime);
+    }
+
+    public Date getDateTime(){
+        return dateTime;
+    }
+
+    public String getDateTimeString(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+        return formatter.format(dateTime);
     }
 
     public CommentSystem getSubComments() {
+        return subCommentSystem;
+    }
+
+    public String getCommentID() {
+        return commentID;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public CommentSystem getSubCommentSystem() {
         return subCommentSystem;
     }
 }

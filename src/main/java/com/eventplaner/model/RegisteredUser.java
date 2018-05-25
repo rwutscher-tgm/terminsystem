@@ -18,6 +18,7 @@ public class RegisteredUser extends User {
 
     public RegisteredUser(String email, String username, String password) {
         super(email);
+
         this.username = username;
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -40,5 +41,6 @@ public class RegisteredUser extends User {
     public String getUsername() {
         return username;
     }
+
 
 }

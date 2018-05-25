@@ -7,15 +7,20 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.schema.TargetType;
+
+import javax.persistence.Entity;
+import java.io.IOException;
+import java.util.EnumSet;
 
 public class test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Configuration config = HibernateUtils.getConfig(new Class[]{
-                /*,
                 Poll.class,
-                PollTopic.class,*/
+                PollTopic.class,
                 User.class,
                 UnregisteredUser.class,
                 RegisteredUser.class,
@@ -29,26 +34,50 @@ public class test {
         factory = config.buildSessionFactory();
         session = factory.openSession();
 
-        //Poll p = new Poll("reise nach dort", "wir reisen nach bla", false);
 
-        RegisteredUser u = new RegisteredUser("my@email.com", "testwu", "rootpw");
+        // Creating Organizer
+        RegisteredUser organizer = new RegisteredUser("organizer@email.com", "organizer", "rootpw");
 
-        Comment c = new Comment(u,"13.05.2018","23:53", "i hate dis");
+        // Creating Poll
+        Poll poll = new Poll(organizer, "When should we do X?", "We want to know when we should do X!", true);
 
-        Comment c2 = new Comment(u,"14.05.2018","14:05", "does this work");
+        // Creating possible dates for event
+        PollTopic date1 = new PollTopic("14.3.2019");
+        PollTopic date2 = new PollTopic("29.3.2019");
 
-        CommentSystem p = new CommentSystem();
+        // Creating Participants
+        UnregisteredUser unregisteredParticipant = new UnregisteredUser("dummy@unregistered.user");
+        RegisteredUser registeredParticipant = new RegisteredUser("dummy@registered.user", "registered User", "rootpw");
 
-        p.addComment(c);
+        // Adding possible dates to poll
+        poll.addPollTopic(date1);
+        poll.addPollTopic(date2);
 
-        p.addComment(c2);
+        // Adding participants to pol
+        poll.addParticipant(unregisteredParticipant);
+        poll.addParticipant(registeredParticipant);
+
+        // Creating Comment
+        Comment comment = new Comment(registeredParticipant, "first");
+
+        // Adding Comment to poll
+        poll.getCommentSystem().addComment(comment);
+
 
         session.beginTransaction();
 
-        session.save(u);
-        session.save(c);
-        session.save(c2);
-        session.save(p);
+
+        session.save(organizer);
+        session.save(poll);
+        session.save(date1);
+        session.save(date2);
+        session.save(unregisteredParticipant);
+        session.save(registeredParticipant);
+        session.save(comment);
+
+
+        /*session.save(registeredParticipant);
+        session.save(comment);*/
 
         session.getTransaction().commit();
 
@@ -58,4 +87,5 @@ public class test {
         factory.close();
 
     }
+
 }
