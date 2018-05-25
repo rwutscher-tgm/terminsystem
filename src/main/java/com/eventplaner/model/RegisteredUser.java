@@ -16,9 +16,8 @@ public class RegisteredUser extends User {
     @Column(name="username")
     private String username;
 
-    public RegisteredUser(String email, String username, String password) {
-        super(email);
-
+    public RegisteredUser(String userid, String email, String username, String password) {
+        super(userid, email);
         this.username = username;
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
