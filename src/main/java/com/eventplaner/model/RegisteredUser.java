@@ -16,8 +16,10 @@ public class RegisteredUser extends User {
     @Column(name="username")
     private String username;
 
-    public RegisteredUser(String userid, String email, String username, String password) {
-        super(userid, email);
+
+    public RegisteredUser(String userid, String email, String password, String username) {
+        this.email = email;
+        this.userID = userID;
         this.username = username;
 
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -29,7 +31,7 @@ public class RegisteredUser extends User {
     }
 
     public RegisteredUser(String email, String username, String password) {
-        super(email);
+        this.email = email;
         this.username = username;
 
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -38,6 +40,10 @@ public class RegisteredUser extends User {
         //System.out.println("password matches: "+passwordEncoder.matches(password, hashedPassword));
 
         //this.password = hashedPassword;
+    }
+
+    public RegisteredUser() {
+
     }
 
     public boolean isPassword(String unhashedPassword){
@@ -54,5 +60,11 @@ public class RegisteredUser extends User {
         return username;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

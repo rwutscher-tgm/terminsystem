@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="user")
 public abstract class User {
 
@@ -12,19 +13,10 @@ public abstract class User {
     @Column(name="user_id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String  userID;
+    protected String  userID;
 
     @Column(name="email")
-    private String email;
-
-    public User(String email){
-        this.email = email;
-    }
-
-    public User(String email, String  userID){
-        this.email = email;
-        this.userID = userID;
-    }
+    protected String email;
 
     public String getUserID() {
         return userID;

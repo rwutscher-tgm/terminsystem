@@ -1,8 +1,12 @@
 package com.eventplaner.tasks.userTasks;
 
-import com.eventplaner.model.Poll;
-import com.eventplaner.model.User;
+import com.eventplaner.HibernateUtils;
+import com.eventplaner.model.*;
 import com.eventplaner.tasks.GetterTask;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -44,15 +48,52 @@ public class GetUser implements GetterTask {
 
     @Override
     public ArrayList<User> execute() {
-        if(this.uid != null){
-            //TODO: Implement get User by userID
-        }else if(this.email != null){
-            //TODO: Implement get User by email
-        }else if(this.poll != null){
-            //TODO: Implement get all Users in a Poll
-        }else{
-            //TODO: Implement get all Users
+        ArrayList<User> polls = new ArrayList<>();
+
+        // Adding all model classes to hibernate config
+        Configuration config = HibernateUtils.getConfig(new Class[]{
+                Poll.class,
+                PollTopic.class,
+                User.class,
+                UnregisteredUser.class,
+                RegisteredUser.class,
+                Comment.class,
+                CommentSystem.class
+        });
+
+        SessionFactory factory = null;
+        Session session = null;
+
+        try{
+            factory = config.buildSessionFactory();
+            session = factory.openSession();
+
+            session.beginTransaction();
+
+
+
+            if(this.uid != null){
+                Query query = session.createQuery("from User where id = :i");
+                query.setParameter("i", uid);
+                polls.addAll(query.getResultList());
+            }else if(this.email != null){
+                //TODO: Implement get User by email
+            }else if(this.poll != null){
+                //TODO: Implement get all Users in a Poll
+            }else{
+                Query query = session.createQuery("from Poll");
+                polls.addAll(query.getResultList());
+            }
+
+            session.getTransaction().commit();
+
+            session.close();
+            factory.close();
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        return null;
+
+
+        return polls;
     }
 }
