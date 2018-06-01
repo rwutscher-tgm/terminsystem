@@ -28,6 +28,18 @@ public class RegisteredUser extends User {
         this.password = hashedPassword;
     }
 
+    public RegisteredUser(String email, String username, String password) {
+        super(email);
+        this.username = username;
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        //System.out.println("password matches: "+passwordEncoder.matches(password, hashedPassword));
+
+        this.password = hashedPassword;
+    }
+
     public boolean isPassword(String unhashedPassword){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(unhashedPassword, this.password);
