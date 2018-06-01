@@ -1,8 +1,7 @@
 package com.eventplaner.tasks.userTasks;
 
 import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.model.UnregisteredUser;
-import com.eventplaner.model.User;
+import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 
 public class CreateUser implements Task {
@@ -27,6 +26,6 @@ public class CreateUser implements Task {
 
     @Override
     public void execute() {
-
+        new SaveObject<>(new RegisteredUser(this.userid, this.email, this.username, this.password)).execute();
     }
 }
