@@ -11,9 +11,7 @@ public class UnregisteredUser extends User{
         this.email = email;
     }
 
-    public UnregisteredUser(String email, String  userID){
-        this.email = email;
-        this.userID = userID;
-    }
+    public UnregisteredUser() {
 
+    }
 }

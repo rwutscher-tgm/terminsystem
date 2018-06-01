@@ -1,5 +1,7 @@
 package com.eventplaner.tasks.userTasks;
 
+import com.eventplaner.model.UnregisteredUser;
+import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 
 public class CreateUnregisteredUser implements Task {
@@ -18,6 +20,6 @@ public class CreateUnregisteredUser implements Task {
 
     @Override
     public void execute() {
-
+        
     }
 }
