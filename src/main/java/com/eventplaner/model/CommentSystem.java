@@ -18,7 +18,6 @@ public class CommentSystem {
 
     //@Column(name = "comments")
     @OneToMany//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
-    //@JoinColumn(name = "comment_id")
     @JoinTable(
             name = "stored_comment",
             joinColumns = {@JoinColumn(referencedColumnName = "comment_system_id")},
@@ -36,5 +35,9 @@ public class CommentSystem {
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public String getCommentSystemID() {
+        return commentSystemID;
     }
 }

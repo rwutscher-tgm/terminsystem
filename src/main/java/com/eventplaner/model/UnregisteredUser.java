@@ -10,4 +10,6 @@ public class UnregisteredUser extends User{
     public UnregisteredUser(String email) {
         super(email);
     }
+
+
 }

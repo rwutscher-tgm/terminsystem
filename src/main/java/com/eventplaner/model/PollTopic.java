@@ -1,13 +1,19 @@
 package com.eventplaner.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
 @Table(name="poll_topic")
 public class PollTopic {
+
+    @Id
+    @Column(name="id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
     @Column
     private String description;
