@@ -35,7 +35,7 @@ public class DeleteObject<T> implements Task{
             session = factory.openSession();
 
             session.beginTransaction();
-            session.remove(object);
+            session.delete(object);
             session.getTransaction().commit();
 
             session.close();

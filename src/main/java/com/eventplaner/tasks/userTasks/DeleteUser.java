@@ -1,6 +1,7 @@
 package com.eventplaner.tasks.userTasks;
 
 import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.tasks.DeleteObject;
 import com.eventplaner.tasks.Task;
 
 public class DeleteUser implements Task{
@@ -13,6 +14,6 @@ public class DeleteUser implements Task{
 
     @Override
     public void execute() {
-
+        new DeleteObject<>(this.user);
     }
 }

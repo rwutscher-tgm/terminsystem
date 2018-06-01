@@ -5,6 +5,7 @@ import com.eventplaner.tasks.DeleteObject;
 import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.pollTasks.GetPoll;
 import com.eventplaner.tasks.userTasks.CreateUser;
+import com.eventplaner.tasks.userTasks.DeleteUser;
 import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class Testtest extends TestCase{
 
     @Test
     public void testdirtyTest() {
-        RegisteredUser registeredParticipant = new RegisteredUser("idd","dummy@registered.user", "registered User", "rootpw");
+        RegisteredUser registeredParticipant = new RegisteredUser("dummy@registered.user", "registered User", "rootpw");
 
         System.out.println(new GetUser(registeredParticipant.getUserID()).execute().size());
 
@@ -38,13 +39,13 @@ public class Testtest extends TestCase{
     public void testdirtyTest2() {
         new CreateUser("idd","dummy@registered.user", "registered User", "rootpw").execute();
 
-        System.out.println(new GetUser().execute().get(0).getUserID());
+        System.out.println(new GetUser().execute().get(0).getEmail());
 
-        new DeleteObject(new GetUser("idd").execute().get(0)).execute();
+        new DeleteUser((RegisteredUser) new GetUser("dummy@registered.user").execute().get(0)).execute();
 
         System.out.println(new GetUser().execute().size());
 
-        assertEquals(new GetUser().execute().size(), 0);
+        assertEquals(0, new GetUser().execute().size());
     }
 
     @Override
