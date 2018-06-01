@@ -4,6 +4,7 @@ import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.User;
+import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,7 +22,7 @@ public class AddOrganizer implements Task{
 
     @Override
     public void execute() {
-        SaveObject<Poll>(poll).execute();
-        SaveObject<RegisteredUser>(organizer).execute();
+        this.poll.addOrganizer(this.organizer);
+        new SaveObject(poll).execute();
     }
 }
