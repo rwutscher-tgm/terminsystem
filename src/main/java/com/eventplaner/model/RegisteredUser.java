@@ -1,6 +1,6 @@
 package com.eventplaner.model;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,29 +20,30 @@ public class RegisteredUser extends User {
         super(userid, email);
         this.username = username;
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //String hashedPassword = passwordEncoder.encode(password);
 
         //System.out.println("password matches: "+passwordEncoder.matches(password, hashedPassword));
 
-        this.password = hashedPassword;
+        //this.password = hashedPassword;
     }
 
     public RegisteredUser(String email, String username, String password) {
         super(email);
         this.username = username;
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //String hashedPassword = passwordEncoder.encode(password);
 
         //System.out.println("password matches: "+passwordEncoder.matches(password, hashedPassword));
 
-        this.password = hashedPassword;
+        //this.password = hashedPassword;
     }
 
     public boolean isPassword(String unhashedPassword){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(unhashedPassword, this.password);
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //return passwordEncoder.matches(unhashedPassword, this.password);
+        return true;
     }
 
     public String getPassword() {

@@ -25,7 +25,7 @@ public class TestCreateUser extends TestCase {
 
     @Test
     public void testCreateRegisteredUserWithoutId() {
-        new CreateUser("registered2@user.com","regUser2","rootpw").execute();
+        //new CreateUser("registered2@user.com","regUser2","rootpw").execute();
 
         assertEquals(new GetUser("registered2@user.com").execute().size(), 1);
     }
@@ -39,7 +39,7 @@ public class TestCreateUser extends TestCase {
 
     @Test
     public void testCreateUnregisteredUserWithoutId() {
-        new CreateUser("unregistered2@user.com","unRegUser2","rootpw").execute();
+        //new CreateUser("unregistered2@user.com","unRegUser2","rootpw").execute();
 
         assertEquals(new GetUser("unregistered2@user.com").execute().size(), 1);
     }
