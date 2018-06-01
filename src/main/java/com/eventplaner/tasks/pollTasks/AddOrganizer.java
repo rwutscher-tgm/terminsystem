@@ -21,28 +21,7 @@ public class AddOrganizer implements Task{
 
     @Override
     public void execute() {
-        Configuration config = HibernateUtils.getConfig(new Class[]{
-                Poll.class,
-                User.class,
-                RegisteredUser.class
-        });
-
-        SessionFactory factory = null;
-        Session session = null;
-
-        factory = config.buildSessionFactory();
-        session = factory.openSession();
-
-        this.poll.addOrganizer(this.organizer);
-
-        session.beginTransaction();
-
-        session.save(this.poll);
-
-        session.getTransaction().commit();
-
-
-        session.close();
-        factory.close();
+        SaveObject<Poll>(poll).execute();
+        SaveObject<RegisteredUser>(organizer).execute();
     }
 }
