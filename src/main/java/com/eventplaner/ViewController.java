@@ -14,15 +14,11 @@ public class ViewController {
             return "index";
         }
 
-        @GetMapping("/polls")
-        public String renderPolls(){
-            return "polls";
-        }
-
         @GetMapping("/poll")
         public String home(HttpServletRequest request, Model model){
+
             if(request.getAttribute("poll") == null){
-                return "404";
+                return "poll";
             }
             String pollId = (String) request.getAttribute("poll");
 
