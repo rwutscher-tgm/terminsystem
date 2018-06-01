@@ -10,6 +10,8 @@ import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class Testtest extends TestCase{
 
     @Override
@@ -20,6 +22,7 @@ public class Testtest extends TestCase{
 
     @Test
     public void testdirtyTest() {
+
         RegisteredUser registeredParticipant = new RegisteredUser("dummy@registered.user", "registered User", "rootpw");
 
         System.out.println(new GetUser(registeredParticipant.getUserID()).execute().size());
@@ -37,13 +40,12 @@ public class Testtest extends TestCase{
 
     @Test
     public void testdirtyTest2() {
+
         new CreateUser("idd","dummy@registered.user", "registered User", "rootpw").execute();
 
-        System.out.println(new GetUser().execute().get(0).getEmail());
 
         new DeleteUser((RegisteredUser) new GetUser("dummy@registered.user").execute().get(0)).execute();
 
-        System.out.println(new GetUser().execute().size());
 
         assertEquals(0, new GetUser().execute().size());
     }
