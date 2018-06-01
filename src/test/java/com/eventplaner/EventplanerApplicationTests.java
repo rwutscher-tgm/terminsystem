@@ -1,6 +1,8 @@
 package com.eventplaner;
 
 import com.eventplaner.model.*;
+import com.eventplaner.tasks.DeleteObject;
+import com.eventplaner.tasks.SaveObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -27,6 +29,11 @@ public class EventplanerApplicationTests extends TestCase {
 
     @Test
 	public void dirtyTest() {
+		RegisteredUser registeredParticipant = new RegisteredUser("idd","dummy@registered.user", "registered User", "rootpw");
+		new SaveObject(registeredParticipant).execute();
+		new DeleteObject(registeredParticipant).execute();
+
+
 		Configuration config = HibernateUtils.getConfig(new Class[]{
 				Poll.class,
 				PollTopic.class,
@@ -40,22 +47,22 @@ public class EventplanerApplicationTests extends TestCase {
 		SessionFactory factory = null;
 		Session session = null;
 
-		factory = config.buildSessionFactory();
-		session = factory.openSession();
+		try{
+			factory = config.buildSessionFactory();
+			session = factory.openSession();
+			User user = session.get(RegisteredUser.class, "idd");
+			assertNull(user);
+			session.beginTransaction();
+			session.getTransaction().commit();
 
-		RegisteredUser registeredParticipant = new RegisteredUser("dummy@registered.user", "registered User", "rootpw");
+			session.close();
+			factory.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
-		session.beginTransaction();
 
-		session.save(registeredParticipant);
 
-        /*session.save(registeredParticipant);
-        session.save(comment);*/
-
-		session.getTransaction().commit();
-
-		session.close();
-		factory.close();
 	}
 
 }

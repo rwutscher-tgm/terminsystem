@@ -2,6 +2,7 @@ package com.eventplaner.tasks.pollTasks;
 
 import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.*;
+import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,33 +10,20 @@ import org.hibernate.cfg.Configuration;
 
 public class CreatePoll implements Task{
 
-    private Poll poll;
+    private RegisteredUser organizer;
+    private String name;
+    private String description;
+    private boolean isPublic;
 
-    public CreatePoll(Poll poll) {
-        this.poll = poll;
+    public CreatePoll(RegisteredUser organizer, String name, String description, boolean isPublic) {
+        this.organizer = organizer;
+        this.name = name;
+        this.description = description;
+        this.isPublic = isPublic;
     }
 
     @Override
     public void execute() {
-        Configuration config = HibernateUtils.getConfig(new Class[]{
-                Poll.class
-        });
-
-        SessionFactory factory = null;
-        Session session = null;
-
-        factory = config.buildSessionFactory();
-        session = factory.openSession();
-
-
-        session.beginTransaction();
-
-            session.save(this.poll);
-
-        session.getTransaction().commit();
-
-
-        session.close();
-        factory.close();
+        new SaveObject<>(new Poll(this.organizer, name, description, isPublic)).execute();
     }
 }
