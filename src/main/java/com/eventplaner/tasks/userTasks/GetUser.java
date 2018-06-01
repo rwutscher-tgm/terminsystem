@@ -4,6 +4,7 @@ import com.eventplaner.model.Poll;
 import com.eventplaner.model.User;
 import com.eventplaner.tasks.GetterTask;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -42,7 +43,7 @@ public class GetUser implements GetterTask {
     }
 
     @Override
-    public User execute() {
+    public ArrayList<User> execute() {
         if(this.uid != null){
             //TODO: Implement get User by userID
         }else if(this.email != null){
