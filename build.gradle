@@ -28,6 +28,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.hibernate:hibernate-core:5.2.17.Final')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.2.RELEASE'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

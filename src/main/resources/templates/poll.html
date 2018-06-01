@@ -8,31 +8,32 @@
         <script type="text/javascript" src="js/materialize.min.js"></script>
 		<script type="text/javascript">
 		function Invite(){
-		
-		
-		<!-- Zugriff auf die Einlade Funktion / Email senden -->
-		var nametxt = Document.GetElementById('name1').value;
-		var Username = nametxt;
-		alert(Username);
-		
-		
+
+		if(Documen.GetElementById('name1')) {
+            <!-- Zugriff auf die Einlade Funktion / Email senden -->
+            var nametxt = Document.GetElementById('name1').value;
+            var Username = nametxt;
+            alert("");
+        }
+
+
 		if(Document.GetElementById('name2')){
-		<!-- Zugriff auf die Einlade Funktion / Email senden -->
-		var nametxt = Document.GetElementById('name2').value;
-		var Username = nametxt;
+			<!-- Zugriff auf die Einlade Funktion / Email senden -->
+			var nametxt = Document.GetElementById('name2').value;
+			var Username = nametxt;
 		}
-		
+
 		if(Document.GetElementById('name3')){
-		<!-- Zugriff auf die Einlade Funktion / Email senden -->
-		var nametxt = Document.GetElementById('name3').value;
-		var Username = nametxt;
+			<!-- Zugriff auf die Einlade Funktion / Email senden -->
+			var nametxt = Document.GetElementById('name3').value;
+			var Username = nametxt;
 		}
-		
+
 		var Datum = "";
 		if(Document.GetElementById('datepicker')){
-		<!-- Zugriff auf die Einlade Funktion / Email senden -->
-		var datetxt = Document.GetElementById('datepicker').value;
-		var Datum = datetxt;
+			<!-- Zugriff auf die Einlade Funktion / Email senden -->
+			var datetxt = Document.GetElementById('datepicker').value;
+			var Datum = datetxt;
 		}
 		}
 		
@@ -48,21 +49,21 @@
 				<div class = "row">
 					<div class = "input-field col s6">
 						<i class = "material-icons prefix">account_circle</i>
-						<label for = "name">User1</label>
+						<label for = "name1">User1</label>
 						<input placeholder = "Username" value = "" id = "name1" type = "text" class = "active validate" required />
 					</div>
 				</div>      
 				<div class = "row">
 					<div class = "input-field col s6">
 						<i class = "material-icons prefix">account_circle</i>
-						<label for = "name">User2</label>
+						<label for = "name2">User2</label>
 						<input placeholder = "Username" value = "" id = "name2" type = "text" class = "active validate" />
 					</div>
 				</div>       
 				<div class = "row">
 					<div class = "input-field col s6">
 						<i class = "material-icons prefix">account_circle</i>
-						<label for = "name">User3</label>
+						<label for = "name3">User3</label>
 						<input placeholder = "Username" value = "" id = "name3" type = "text" class = "active validate" />
 					</div>
 				</div>
