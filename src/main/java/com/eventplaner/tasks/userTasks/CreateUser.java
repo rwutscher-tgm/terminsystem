@@ -19,9 +19,6 @@ public class CreateUser implements Task {
         this.password = password;
     }
 
-    //TODO: Implement Constructor without userID
-
-
     public CreateUser(String email, String username, String password) {
         this.email = email;
         this.username = username;
