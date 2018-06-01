@@ -12,7 +12,7 @@ import org.junit.Test;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
-public class Testtest extends TestCase{
+public class MiscTest extends TestCase{
 
     @Override
     protected void setUp() throws Exception{

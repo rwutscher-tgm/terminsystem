@@ -17,7 +17,7 @@ public class TestUser extends TestCase {
         System.out.println("Setting it up!");
         deleteUsers();
 
-        System.out.println("Setting up!");
+        System.out.println("Set up finished!");
     }
 
     /*
@@ -38,17 +38,10 @@ public class TestUser extends TestCase {
     }
 
     @Test
-    public void testCreateUnregisteredUserWithId() {
-        new CreateUnregisteredUser("unregUserCreatedWithID", "unregistered1@user.com").execute();
-
-        assertEquals("unregUserCreatedWithID", new GetUser("unregistered1@user.com").execute().get(0).getUserID());
-    }
-
-    @Test
     public void testCreateUnregisteredUserWithoutId() {
-        new CreateUnregisteredUser("unregistered2@user.com").execute();
+        new CreateUnregisteredUser("unregistered1@user.com").execute();
 
-        assertEquals(1, new GetUser().execute().size());
+        assertEquals(1, new GetUser("unregistered1@user.com").execute().size());
     }
 
     /*
@@ -109,10 +102,10 @@ public class TestUser extends TestCase {
 
     @Test
     public void testDeleteUnregisterdUser(){
-        new CreateUnregisteredUser("unregisteredUser3", "unregistered3@user.com").execute();
-        new DeleteUser(new GetUser("unregistered3@user.com").execute().get(0)).execute();
+        new CreateUnregisteredUser("unregisteredUser2", "unregistered2@user.com").execute();
+        new DeleteUser(new GetUser("unregistered2@user.com").execute().get(0)).execute();
 
-        assertEquals(0, new GetUser("unregistered3@user.com").execute().size());
+        assertEquals(0, new GetUser("unregistered2@user.com").execute().size());
     }
 
     @Override
@@ -131,7 +124,6 @@ public class TestUser extends TestCase {
 
             new DeleteUser(new GetUser("unregistered1@user.com").execute().get(0)).execute();
             new DeleteUser(new GetUser("unregistered2@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("unregistered3@user.com").execute().get(0)).execute();
         }catch (Exception e){}
     }
 }
