@@ -38,7 +38,7 @@ public class TestUser extends TestCase {
     }
 
     @Test
-    public void testCreateUnregisteredUserWithoutId() {
+    public void testCreateUnregisteredUser() {
         new CreateUnregisteredUser("unregistered1@user.com").execute();
 
         assertEquals(1, new GetUser("unregistered1@user.com").execute().size());

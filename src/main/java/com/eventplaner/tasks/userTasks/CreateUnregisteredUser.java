@@ -20,6 +20,6 @@ public class CreateUnregisteredUser implements Task {
 
     @Override
     public void execute() {
-        
+
     }
 }
