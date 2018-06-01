@@ -102,7 +102,7 @@ public class TestUser extends TestCase {
 
     @Test
     public void testDeleteUnregisterdUser(){
-        new CreateUnregisteredUser("unregisteredUser2", "unregistered2@user.com").execute();
+        new CreateUnregisteredUser("unregistered2@user.com").execute();
         new DeleteUser(new GetUser("unregistered2@user.com").execute().get(0)).execute();
 
         assertEquals(0, new GetUser("unregistered2@user.com").execute().size());
