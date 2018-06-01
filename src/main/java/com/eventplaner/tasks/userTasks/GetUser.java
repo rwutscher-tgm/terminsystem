@@ -76,12 +76,18 @@ public class GetUser implements GetterTask {
                 Query query = session.createQuery("from User where id = :i");
                 query.setParameter("i", uid);
                 polls.addAll(query.getResultList());
+
+                System.out.println("uid");
             }else if(this.email != null){
-                //TODO: Implement get User by email
+                Query query = session.createQuery("from User where email = :i");
+                query.setParameter("i", email);
+                polls.addAll(query.getResultList());
+
+                System.out.println("uid");
             }else if(this.poll != null){
                 //TODO: Implement get all Users in a Poll
             }else{
-                Query query = session.createQuery("from Poll");
+                Query query = session.createQuery("from User");
                 polls.addAll(query.getResultList());
             }
 

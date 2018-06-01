@@ -38,7 +38,7 @@ public class Testtest extends TestCase{
     public void testdirtyTest2() {
         new CreateUser("idd","dummy@registered.user", "registered User", "rootpw").execute();
 
-        System.out.println(new GetUser().execute().size());
+        System.out.println(new GetUser().execute().get(0).getUserID());
 
         new DeleteObject(new GetUser("idd").execute().get(0)).execute();
 

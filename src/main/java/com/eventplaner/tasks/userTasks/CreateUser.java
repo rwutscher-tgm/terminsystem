@@ -26,6 +26,8 @@ public class CreateUser implements Task {
 
     @Override
     public void execute() {
-        new SaveObject<>(new RegisteredUser(this.userid, this.email, this.username, this.password)).execute();
+        RegisteredUser user = new RegisteredUser(this.email, this.username, this.password);
+        user.setUserID(this.userid);
+        new SaveObject<>(user).execute();
     }
 }

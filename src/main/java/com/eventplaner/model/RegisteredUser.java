@@ -17,20 +17,7 @@ public class RegisteredUser extends User {
     private String username;
 
 
-    public RegisteredUser(String userid, String email, String password, String username) {
-        this.email = email;
-        this.userID = userID;
-        this.username = username;
-
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //String hashedPassword = passwordEncoder.encode(password);
-
-        //System.out.println("password matches: "+passwordEncoder.matches(password, hashedPassword));
-
-        //this.password = hashedPassword;
-    }
-
-    public RegisteredUser(String email, String username, String password) {
+    public RegisteredUser(String email, String password, String username) {
         this.email = email;
         this.username = username;
 
