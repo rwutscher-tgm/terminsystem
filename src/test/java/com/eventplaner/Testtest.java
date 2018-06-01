@@ -1,4 +1,4 @@
-package com.eventplaner.commentTests;
+package com.eventplaner;
 
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.tasks.DeleteObject;
@@ -36,7 +36,7 @@ public class Testtest extends TestCase{
 
     @Test
     public void testdirtyTest2() {
-        new CreateUser("idd","dummy@registered.user", "registered User", "rootpw");
+        new CreateUser("idd","dummy@registered.user", "registered User", "rootpw").execute();
 
         System.out.println(new GetUser().execute().size());
 
