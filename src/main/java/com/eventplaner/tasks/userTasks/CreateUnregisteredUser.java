@@ -13,13 +13,9 @@ public class CreateUnregisteredUser implements Task {
         this.email = email;
     }
 
-    public CreateUnregisteredUser(String email, String uid) {
-        this.email = email;
-        this.uid = uid;
-    }
-
     @Override
     public void execute() {
-
+        UnregisteredUser user = new UnregisteredUser(this.email);
+        new SaveObject<>(user).execute();
     }
 }

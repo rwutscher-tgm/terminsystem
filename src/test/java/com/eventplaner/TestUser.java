@@ -102,7 +102,8 @@ public class TestUser extends TestCase {
 
     @Test
     public void testDeleteUnregisterdUser(){
-        new CreateUnregisteredUser("unregisteredUser2", "unregistered2@user.com").execute();
+        new CreateUnregisteredUser("unregistered2@user.com").execute();
+        System.out.println(new GetUser("unregistered2@user.com").execute().get(0).getEmail());
         new DeleteUser(new GetUser("unregistered2@user.com").execute().get(0)).execute();
 
         assertEquals(0, new GetUser("unregistered2@user.com").execute().size());
@@ -114,16 +115,22 @@ public class TestUser extends TestCase {
     }
 
     public void deleteUsers(){
-        try{
-            new DeleteUser(new GetUser("registered1@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("registered2@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("registered3@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("registered4@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("registered5@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("registered6@user.com").execute().get(0)).execute();
+        String[] users = new String[]{
+                "registered1@user.com",
+                "registered2@user.com",
+                "registered3@user.com",
+                "registered4@user.com",
+                "registered5@user.com",
+                "registered6@user.com",
 
-            new DeleteUser(new GetUser("unregistered1@user.com").execute().get(0)).execute();
-            new DeleteUser(new GetUser("unregistered2@user.com").execute().get(0)).execute();
-        }catch (Exception e){}
+                "unregistered1@user.com",
+                "unregistered2@user.com",
+        };
+        for(String user: users){
+            try{
+                new DeleteUser(new GetUser(user).execute().get(0)).execute();
+            }catch (Exception e){}
+        }
+
     }
 }
