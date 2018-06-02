@@ -15,6 +15,6 @@ public class DeleteUser implements Task{
 
     @Override
     public void execute() {
-        new DeleteObject<>(this.user);
+        new DeleteObject<>(this.user).execute();
     }
 }
