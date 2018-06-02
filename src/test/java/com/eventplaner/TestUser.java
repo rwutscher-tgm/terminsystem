@@ -124,6 +124,7 @@ public class TestUser extends TestCase {
                 "registered4@user.com",
                 "registered5@user.com",
                 "registered6@user.com",
+                "registered7@user.com",
 
                 "unregistered1@user.com",
                 "unregistered2@user.com"

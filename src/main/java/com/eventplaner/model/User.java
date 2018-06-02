@@ -11,8 +11,8 @@ public abstract class User {
 
     @Id
     @Column(name="user_id")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    //@GeneratedValue(generator = "uuid")
+    //@GenericGenerator(name = "uuid", strategy = "uuid2")
     //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected String  userID;
 

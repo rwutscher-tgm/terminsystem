@@ -33,6 +33,7 @@ public class CreateUser implements Task {
         }else{
             user = new RegisteredUser(this.email, this.username, this.password);
         }
+        System.out.println(user.getUserID());
         new SaveObject<>(user).execute();
     }
 }

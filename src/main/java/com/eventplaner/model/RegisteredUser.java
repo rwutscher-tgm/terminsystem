@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table(name="registered_user")
@@ -18,6 +19,7 @@ public class RegisteredUser extends User {
 
 
     public RegisteredUser(String email, String password, String username) {
+        this.userID = UUID.randomUUID().toString();
         this.email = email;
         this.username = username;
 
@@ -39,7 +41,7 @@ public class RegisteredUser extends User {
     }
 
     public RegisteredUser() {
-
+        this.userID = UUID.randomUUID().toString();
     }
 
     public boolean isPassword(String unhashedPassword){
