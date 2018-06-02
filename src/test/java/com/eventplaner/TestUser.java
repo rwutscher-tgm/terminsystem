@@ -14,10 +14,8 @@ public class TestUser extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        System.out.println("Setting it up!");
+        super.setUp();
         deleteUsers();
-
-        System.out.println("Set up finished!");
     }
 
     /*
@@ -111,6 +109,7 @@ public class TestUser extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
+        super.tearDown();
         deleteUsers();
     }
 
