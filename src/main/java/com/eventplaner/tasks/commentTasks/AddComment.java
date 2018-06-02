@@ -19,8 +19,10 @@ public class AddComment implements Task{
         this.comment = comment;
     }
 
-    public AddComment(Poll poll){
+    public AddComment(Poll poll, RegisteredUser author, String comment){
         this.system = poll.getCommentSystem();
+        this.author = author;
+        this.comment = comment;
     }
 
     @Override
