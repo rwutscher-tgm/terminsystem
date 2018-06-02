@@ -3,6 +3,8 @@ package com.eventplaner;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.UnregisteredUser;
 import com.eventplaner.model.User;
+import com.eventplaner.tasks.DeleteObject;
+import com.eventplaner.tasks.pollTasks.GetPoll;
 import com.eventplaner.tasks.userTasks.CreateUnregisteredUser;
 import com.eventplaner.tasks.userTasks.CreateUser;
 import com.eventplaner.tasks.userTasks.DeleteUser;
@@ -15,6 +17,7 @@ public class TestUser extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        System.out.println("Setting up: ");
         deleteUsers();
     }
 
@@ -123,13 +126,17 @@ public class TestUser extends TestCase {
                 "registered6@user.com",
 
                 "unregistered1@user.com",
-                "unregistered2@user.com",
+                "unregistered2@user.com"
         };
         for(String user: users){
             try{
-                new DeleteUser(new GetUser(user).execute().get(0)).execute();
+                new DeleteObject<>(new GetUser(user).execute().get(0)).execute();
+                System.out.println("Deleting user");
             }catch (Exception e){}
         }
+
+        System.out.println("Cleaning up: ");
+        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
 
     }
 }

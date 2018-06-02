@@ -3,6 +3,7 @@ package com.eventplaner;
 import com.eventplaner.model.Comment;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.tasks.DeleteObject;
 import com.eventplaner.tasks.commentTasks.AddComment;
 import com.eventplaner.tasks.commentTasks.EditComment;
 import com.eventplaner.tasks.commentTasks.GetComment;
@@ -18,6 +19,8 @@ public class TestComment extends TestCase{
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        System.out.println("Setting up: ");
+        deleteObjects();
     }
 
     @Test
@@ -59,5 +62,43 @@ public class TestComment extends TestCase{
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+        deleteObjects();
+    }
+
+    public void deleteObjects(){
+
+        String[] polls = new String[]{
+                "poll_ 1",
+                "poll_ 2",
+                "poll_ 3"
+        };
+        for(String poll: polls){
+            try{
+                new DeleteObject<>(new GetPoll(poll).execute().get(0)).execute();
+            }catch (Exception e){}
+        }
+
+        String[] users = new String[]{
+                "registered1@user.com",
+                "registered2@user.com",
+                "registered3@user.com",
+                "registered4@user.com",
+                "registered5@user.com",
+                "registered6@user.com",
+
+                "unregistered1@user.com",
+                "unregistered2@user.com"
+        };
+
+        for(String user: users){
+            try{
+                new DeleteObject<>(new GetUser(user).execute().get(0)).execute();
+            }catch (Exception e){}
+        }
+
+        System.out.println("Cleaning up: ");
+        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
+        System.out.println("Amount of polls in DB: " + new GetPoll().execute().size());
+
     }
 }
