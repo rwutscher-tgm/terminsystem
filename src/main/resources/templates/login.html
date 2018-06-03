@@ -45,12 +45,41 @@
 
 
 <div th:if="${param.error}">
-    Invalid username and password.
+
+    <br>
+    <div class="container">
+    <div class="center-align">
+            <div style="background-color : red">
+                <div class="card-content black-text">
+                    <span class="card-title"><b>Incorrect Login</b></span>
+                    <p><b>Invalid Username or Password. <br>Please try again!</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
 </div>
 <div th:if="${param.logout}">
-    You have been logged out.
+    <br>
+    <div class="container">
+        <div class="center-align">
+            <div style="background-color : lightgreen">
+                <div class="card-content black-text">
+                    <span class="card-title"><b>LogOut Done</b></span>
+                    <p><b>You have been Loged out</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+</div>
 </div>
         <div class="container">
+            <div class="center-align">
             <h5 class="indigo-text">Please, Login into your account</h5>
             <br>
             <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
@@ -58,8 +87,8 @@
 <form th:action="@{/login}" method="post">
 
 
-        <div><i class="small material-icons">account_box</i><label> Username : <input type="text" name="username"/> </label></div>
-        <div><i class="small material-icons">lock_outline</i><label> Password : <input type="password" name="password"/> </label></div>
+        <div><i class="small material-icons">account_box</i><label> Username : <input type="text" name="username" style="text-align:center;"/> </label></div>
+        <div><i class="small material-icons">lock_outline</i><label> Password : <input type="password" name="password" style="text-align: center;"/> </label></div>
         <div><input class="col s12 btn-large waves-effect indigo" type="submit" value="Sign In"/></div>
 
     <br>
@@ -72,6 +101,7 @@
 
 </form>
     </div>
+        </div>
         </div>
     </div>
 </div>
