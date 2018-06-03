@@ -28,7 +28,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.hibernate:hibernate-core:5.2.17.Final')
-	compile("org.springframework.boot:spring-boot-starter-security")
+	//compile("org.springframework.boot:spring-boot-starter-security")
 	//compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
     compile('com.enigmabridge:hibernate4-sqlite-dialect:0.1.2')
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.23.1'
