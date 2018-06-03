@@ -1,5 +1,6 @@
 package com.eventplaner;
 
+import com.eventplaner.tasks.pollTasks.GetPoll;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,12 @@ public class ViewController {
 
             if(request.getAttribute("poll") == null){
                 return "poll";
+
             }
             String pollId = (String) request.getAttribute("poll");
 
 
-
-            model.addAttribute("pollName",pollId);
+            model.addAttribute("pollName",new GetPoll(pollId).execute().get(0));
 
             return "poll";
         }
