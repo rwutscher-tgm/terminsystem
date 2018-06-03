@@ -11,7 +11,12 @@ import com.eventplaner.tasks.userTasks.DeleteUser;
 import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TestUser extends TestCase {
 
     @Override
@@ -137,7 +142,7 @@ public class TestUser extends TestCase {
         }
 
         System.out.println("Cleaning up: ");
-        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
+//        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
 
     }
 }
