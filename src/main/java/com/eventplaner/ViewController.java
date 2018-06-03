@@ -40,4 +40,9 @@ public class ViewController {
                     return "createpoll";
         }
 
+        @GetMapping("/login")
+        public String login(HttpServletRequest request, Model model){
+            return "login";
+        }
+
 }

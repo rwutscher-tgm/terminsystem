@@ -15,7 +15,7 @@
     <div class="center-align">
         <h2>Hier können Sie Ihren eigenen Poll erstellen</h2>
         <p>Bitte füllen Sie alle der untenstehenden Felder aus</p>
-        <form>
+        <form method="post" action="poll/createPoll">
             <input placeholder = "Pollname" value = "" id = "pollname" type = "text" class = "active validate" name="PollName" required />
             <input placeholder = "Pollbeschreibung" value = "" id = "polldesciption" type = "text" class = "active validate" name ="Polldesc"required />
             <p>Bitte wählen Sie aus ob ihr Poll public oder private sein soll</p>
