@@ -51,6 +51,8 @@
     You have been logged out.
 </div>
         <div class="container">
+            <h5 class="indigo-text">Please, Login into your account</h5>
+            <br>
             <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
 <form th:action="@{/login}" method="post">
@@ -58,7 +60,7 @@
 
         <div><label> User Name : <input type="text" name="username"/> </label></div>
         <div><label> Password : <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
+        <div><input class="col s12 btn-large waves-effect indigo" type="submit" value="Sign In"/></div>
 
     <br>
 
