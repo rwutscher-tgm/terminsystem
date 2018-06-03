@@ -34,5 +34,9 @@ public class ViewController {
             return "test";
         }
 
+        @GetMapping("/createpoll")
+                public String createpoll(HttpServletRequest request, Model model){
+                    return "createpoll";
+        }
 
 }
