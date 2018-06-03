@@ -51,13 +51,13 @@ public class GetUser implements GetterTask {
         return pat.matcher(string).matches();
     }
 
-    @Autowired
-    private UserRepository userRepository;
+    /*@Autowired
+    private UserRepository userRepository;*/
 
     @Override
     public ArrayList<User> execute() {
 
-        System.out.println(userRepository);
+        /*System.out.println(userRepository);
 
         if(this.uid != null){
             return new ArrayList<>(Arrays.asList(userRepository.findByUserID(uid)));
@@ -70,12 +70,12 @@ public class GetUser implements GetterTask {
                 System.out.println(user.getEmail());
             }
             return new ArrayList<>(userRepository.findAll());
-        }
+        }*/
 
 
 
 
-        /*
+
         ArrayList<User> polls = new ArrayList<>();
 
         // Adding all model classes to hibernate config
@@ -95,10 +95,7 @@ public class GetUser implements GetterTask {
         try{
             factory = config.buildSessionFactory();
             session = factory.openSession();
-
             session.beginTransaction();
-
-
 
             if(this.uid != null){
                 Query query = session.createQuery("from User where id = :i");
@@ -109,14 +106,13 @@ public class GetUser implements GetterTask {
                 query.setParameter("i", email);
                 polls.addAll(query.getResultList());
             }else if(this.poll != null){
-                //TODO: Implement get all Users in a Poll
+                return (ArrayList<User>) poll.getParticipants();
             }else{
                 Query query = session.createQuery("from User");
                 polls.addAll(query.getResultList());
             }
 
             session.getTransaction().commit();
-
             session.close();
             factory.close();
         }catch(Exception e){
@@ -125,6 +121,5 @@ public class GetUser implements GetterTask {
 
 
         return polls;
-        */
     }
 }

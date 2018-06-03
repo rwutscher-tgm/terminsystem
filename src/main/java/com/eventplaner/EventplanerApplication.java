@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 public class EventplanerApplication {
 
 	public static void main(String[] args) {
-		new CreateUser("seas@seas.seas", "seas", "seas").execute();
+		//new CreateUser("seas@seas.seas", "seas", "seas").execute();
 		SpringApplication.run(EventplanerApplication.class, args);
 	}
 }

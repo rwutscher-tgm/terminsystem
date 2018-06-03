@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/poll", "/test", "/signup", "/poll/joinPoll", "/poll/leavePoll").permitAll()
+                .antMatchers("/", "/poll", "/test", "/signup", "/user/signup", "/poll/joinPoll", "/poll/leavePoll").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder(11);
+        return new BCryptPasswordEncoder();
     }
     /*@Bean
     @Override

@@ -41,4 +41,6 @@ dependencies {
     testcompile('org.hibernate:hibernate-core:5.2.17.Final')
     testcompile('com.enigmabridge:hibernate4-sqlite-dialect:0.1.2')
     testcompile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.23.1'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+
 }

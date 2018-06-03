@@ -17,7 +17,7 @@ public class Comment {
     private String  commentID;
 
     //@Column(name="author")
-    @ManyToOne
+    @ManyToOne//(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private RegisteredUser author;
 
@@ -37,6 +37,10 @@ public class Comment {
         this.subCommentSystem = new CommentSystem();
 
         this.dateTime = new Date();
+    }
+
+    public Comment() {
+        this.subCommentSystem = new CommentSystem();
     }
 
     public RegisteredUser getAuthor() {
