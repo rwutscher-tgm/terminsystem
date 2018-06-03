@@ -1,6 +1,6 @@
 package com.eventplaner.model;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,10 +23,10 @@ public class RegisteredUser extends User {
         this.email = email;
         this.username = username;
 
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //String hashedPassword = passwordEncoder.encode(password);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
 
-        //this.password = hashedPassword;
+        this.password = hashedPassword;
     }
 
     public RegisteredUser(String userID, String email, String password, String username) {
@@ -34,10 +34,10 @@ public class RegisteredUser extends User {
         this.email = email;
         this.username = username;
 
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //String hashedPassword = passwordEncoder.encode(password);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
 
-        //this.password = hashedPassword;
+        this.password = hashedPassword;
     }
 
     public RegisteredUser() {
@@ -45,10 +45,9 @@ public class RegisteredUser extends User {
     }
 
     public boolean isPassword(String unhashedPassword){
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //System.out.println("Password matches: " + passwordEncoder.matches(unhashedPassword, this.password));
-        //return passwordEncoder.matches(unhashedPassword, this.password);
-        return false;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.out.println("Password matches: " + passwordEncoder.matches(unhashedPassword, this.password));
+        return passwordEncoder.matches(unhashedPassword, this.password);
     }
 
     public String getPassword() {
@@ -60,10 +59,10 @@ public class RegisteredUser extends User {
     }
 
     public void setPassword(String password) {
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //String hashedPassword = passwordEncoder.encode(password);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
 
-        //this.password = hashedPassword;
+        this.password = hashedPassword;
     }
 
     public void setUsername(String username) {
