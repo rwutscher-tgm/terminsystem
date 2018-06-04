@@ -26,75 +26,18 @@
 
 <div th:fragment="commentTree (commentSystem)" xmlns:th="http://www.w3.org/1999/xhtml" th:each="comment :${commentSystem.comments}" class="row">
     <div class="col s12 m6">
-        <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-                <span class="card-title" th:text="${comment.author}">Card Title</span>
+        <!--<div class="card blue-grey darken-1">
+            <div class="card-content white-text">-->
+                <span class="card-title" th:text="${comment.author.email}">Card Title</span>
                 <p th:text="${comment.comment}"></p>
 
-                <div class ="" th:replace="fragments.html :: commentTree(commentSystem=${comment.subCommentSystem})"></div>
+                <div class="" th:insert="fragments.html :: commentTree(commentSystem=${comment.subCommentSystem})"></div>
 
-            </div>
+            <!--</div>
             <!--<div class="card-action">
                 <a href="#">This is a link</a>
                 <a href="#">This is a link</a>
-            </div>-->
-        </div>
+            </div>-
+        </div>-->
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<table>
-    <tr>
-        <td>comment</td>
-        <td>com.eventplaner.model.CommentSystem@70d5532f</td>
-    </tr>
-    <tr>
-        <table>
-            <tr>
-                <td>subcomment</td>
-                <td>com.eventplaner.model.CommentSystem@5fa994f0</td>
-            </tr>
-            <tr>
-                <table>
-                    <tr>
-                        <td>subsubcomment</td>
-                        <td>com.eventplaner.model.CommentSystem@13fe1bb1</td>
-                    </tr>
-                    <tr>
-                        <table>
-                            <tr>
-                                <td>subsubsubcomment</td>
-                                <td>com.eventplaner.model.CommentSystem@620170ea</td>
-                            </tr>
-                        <tr></tr>
-                        </table>
-                    </tr>
-                </table>
-            </tr>
-        </table>
-    </tr>
-</table>-->
