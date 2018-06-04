@@ -1,10 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Spring Security Example </title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        .input-field input[type=date]:focus + label,
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=email]:focus + label,
+        .input-field input[type=password]:focus + label {
+            color: #e91e63;
+        }
+
+        .input-field input[type=date]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            border-bottom: 2px solid #e91e63;
+            box-shadow: none;
+        }
+    </style>
+
 </head>
 <body>
+<div class="container">
+    <div th:replace="fragments.html :: header(loggedIn=${loggedIn})"></div>
+    <div class="center-align">
 
+        <div th:if="${param.error}">
+
+            <br>
+            <div class="container">
+                <div class="center-align">
+                    <div style="background-color : red">
+                        <div class="card-content black-text">
+                            <span class="card-title"><b>Incorrect Login</b></span>
+                            <p><b>Invalid Username or Password. <br>Please try again!</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+        </div>
+        <div th:if="${param.logout}">
+            <br>
+            <div class="container">
+                <div class="center-align">
+                    <div style="background-color : lightgreen">
+                        <div class="card-content black-text">
+                            <span class="card-title"><b>LogOut Done</b></span>
+                            <p><b>You have been Loged out</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="center-align">
+            <h5 class="indigo-text">Create your own Account</h5>
+            <br>
+            <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                <form action="user/signup" method="post">
+
+
+                    <div><i class="small material-icons">account_box</i><label> Username : <input type="text" value="sadasdasd" name="username" style="text-align:center;"/> </label></div>
+                    <div><i class="small material-icons">email</i><label> Email : <input type="text" name="email" style="text-align:center;"/> </label></div>
+                    <div><i class="small material-icons">lock_outline</i><label> Password : <input type="password" name="password" style="text-align: center;"/> </label></div>
+                    <div><input class="col s12 btn-large waves-effect indigo" type="submit" value="Sign In"/></div>
+
+                    <br>
+
+                    <div class='row'>
+                        <div class='col s12'>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

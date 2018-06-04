@@ -1,0 +1,47 @@
+<div th:fragment="header (loggedIn)" xmlns:th="http://www.w3.org/1999/xhtml">
+    <nav class="">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo">Eventplaner</a>
+
+            <span th:switch="${loggedIn}">
+                <ul id="nav-mobile" class="right hide-on-med-and-down" th:case="false">
+                    <li ><a href="/login" class="btn-large waves-effect waves-light orange">Log In</a></li>
+                    <li><a href="/signup" class="btn-large waves-effect waves-light orange">Sign Up</a></li>
+
+                </ul>
+
+                <ul id="nav-mobile-loggedin" class="right hide-on-med-and-down" th:case="true">
+                    <li><a href="/logout" class="btn-large waves-effect waves-light orange">Log out</a></li>
+                </ul>
+            </span>
+
+
+            <!--<ul id="nav-mobile" class="right hide-on-med-and-down" th:switch="${loggedIn}" >
+                <li th:case="false"><a href="/login" class="btn-large waves-effect waves-light orange">Log In</a></li>
+                <li th:case="false"><a href="/signup" class="btn-large waves-effect waves-light orange">Sign Up</a></li>
+                <li th:case="true"><a href="/login" class="btn-large waves-effect waves-light orange">Log out</a></li>
+            </ul>-->
+
+        </div>
+    </nav>
+</div>
+
+<!---
+<div th:fragment="commentTree (commentSystem)" xmlns:th="http://www.w3.org/1999/xhtml" th:each="comment :${commentSystem.comments}">
+    <div>
+        <td th:text="${comment.comment}"></td>
+        <td th:text="${comment.subCommentSystem}"></td>
+    </div>
+    <div class ="" th:insert="fragments.html :: commentTree(commentSystem=${comment.subCommentSystem})"></div>
+</div>
+
+
+-->
+
+
+<div th:fragment="commentTree (commentSystem)" xmlns:th="http://www.w3.org/1999/xhtml" th:each="comment :${commentSystem.comments}" class="comment">
+                <span class="card-title" th:text="${comment.author.email}">Card Title</span>
+                <p th:text="${comment.comment}"></p>
+
+                <div class="subcomments" th:insert="fragments.html :: commentTree(commentSystem=${comment.subCommentSystem})"></div>
+</div>

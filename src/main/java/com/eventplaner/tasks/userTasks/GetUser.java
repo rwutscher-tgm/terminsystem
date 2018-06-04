@@ -2,13 +2,18 @@ package com.eventplaner.tasks.userTasks;
 
 import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.*;
+import com.eventplaner.model.repositories.RegisteredUserRepository;
+import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.GetterTask;
+import com.eventplaner.tasks.pollTasks.GetPoll;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -46,8 +51,31 @@ public class GetUser implements GetterTask {
         return pat.matcher(string).matches();
     }
 
+    /*@Autowired
+    private UserRepository userRepository;*/
+
     @Override
     public ArrayList<User> execute() {
+
+        /*System.out.println(userRepository);
+
+        if(this.uid != null){
+            return new ArrayList<>(Arrays.asList(userRepository.findByUserID(uid)));
+        }else if(this.email != null){
+            return new ArrayList<>(Arrays.asList(userRepository.findByEmail(email)));
+        }else if(this.poll != null){
+            return (ArrayList<User>) poll.getParticipants();
+        }else{
+            for(User user: userRepository.findAll()){
+                System.out.println(user.getEmail());
+            }
+            return new ArrayList<>(userRepository.findAll());
+        }*/
+
+
+
+
+
         ArrayList<User> polls = new ArrayList<>();
 
         // Adding all model classes to hibernate config
@@ -67,10 +95,7 @@ public class GetUser implements GetterTask {
         try{
             factory = config.buildSessionFactory();
             session = factory.openSession();
-
             session.beginTransaction();
-
-
 
             if(this.uid != null){
                 Query query = session.createQuery("from User where id = :i");
@@ -81,14 +106,13 @@ public class GetUser implements GetterTask {
                 query.setParameter("i", email);
                 polls.addAll(query.getResultList());
             }else if(this.poll != null){
-                //TODO: Implement get all Users in a Poll
+                return (ArrayList<User>) poll.getParticipants();
             }else{
                 Query query = session.createQuery("from User");
                 polls.addAll(query.getResultList());
             }
 
             session.getTransaction().commit();
-
             session.close();
             factory.close();
         }catch(Exception e){

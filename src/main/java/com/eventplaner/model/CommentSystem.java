@@ -17,7 +17,7 @@ public class CommentSystem {
     private String  commentSystemID;
 
     //@Column(name = "comments")
-    @OneToMany//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
     @JoinTable(
             name = "stored_comment",
             joinColumns = {@JoinColumn(referencedColumnName = "comment_system_id")},
@@ -39,5 +39,13 @@ public class CommentSystem {
 
     public String getCommentSystemID() {
         return commentSystemID;
+    }
+
+    public void setCommentSystemID(String commentSystemID) {
+        this.commentSystemID = commentSystemID;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

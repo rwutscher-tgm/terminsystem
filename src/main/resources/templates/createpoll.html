@@ -17,6 +17,7 @@
 
 <body>
 <div class="container">
+    <div th:replace="fragments.html :: header(loggedIn=${loggedIn})"></div>
     <div class="center-align">
         <h2>Hier können Sie Ihren eigenen Poll erstellen</h2>
         <p>Bitte füllen Sie alle der untenstehenden Felder aus</p>

@@ -19,21 +19,21 @@ public class Poll {
     @Column(name = "name")
     private String name;
 
-    @OneToMany//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
+    @OneToMany//(fetch = FetchType.EAGER)//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
     @JoinTable(
             name = "poll_organizers",
             joinColumns = {@JoinColumn(referencedColumnName = "id")},
             inverseJoinColumns = { @JoinColumn(referencedColumnName = "user_id") })
     private List<RegisteredUser> organizers;
 
-    @OneToMany//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
+    @OneToMany//(fetch = FetchType.EAGER)//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
     @JoinTable(
             name = "poll_participants",
             joinColumns = {@JoinColumn(referencedColumnName = "id")},
             inverseJoinColumns = { @JoinColumn(referencedColumnName = "user_id") })
     private List<User> participants;
 
-    @OneToMany//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
+    @OneToMany//(fetch = FetchType.EAGER)//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
     @JoinTable(
             name = "poll_topics",
             joinColumns = {@JoinColumn(referencedColumnName = "id")},
@@ -61,6 +61,9 @@ public class Poll {
         this.pollTopics = new ArrayList<>();
 
         this.organizers.add(organizer);
+    }
+
+    public Poll() {
     }
 
     public void setDescription(String description) {

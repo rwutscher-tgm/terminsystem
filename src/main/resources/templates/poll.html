@@ -1,18 +1,30 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-    <head>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-		<script type="text/javascript">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript">
 		
-		</script>
-    </head>
-	
-	<body>
+    </script>
+</head>
+<body>
 
-	</body>   
+
+
+    <div class="container">
+        <div th:replace="fragments.html :: header(loggedIn=${loggedIn})"></div>
+
+        <h1 th:text="${poll.name}"> </h1>
+
+        <div th:text="${poll.description}"></div>
+
+        <h2>Comments</h2>
+        <div th:replace="fragments.html :: commentTree(commentSystem=${poll.commentSystem})"></div>
+    </div>
+
+</body>
 </html>
 

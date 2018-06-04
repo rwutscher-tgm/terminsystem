@@ -3,13 +3,16 @@ package com.eventplaner.tasks.pollTasks;
 import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.*;
 import com.eventplaner.tasks.GetterTask;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
+@Transactional
 public class GetPoll implements GetterTask{
 
     private String pid;
@@ -44,11 +47,14 @@ public class GetPoll implements GetterTask{
         try{
             factory = config.buildSessionFactory();
             session = factory.openSession();
-
             session.beginTransaction();
 
 
+
+
             if(this.pid != null){
+                //polls.add(session.get(Poll.class, pid));
+
                 Query query = session.createQuery("from Poll where id = :i");
                 query.setParameter("i", pid);
                 polls.addAll(query.list());
@@ -58,8 +64,11 @@ public class GetPoll implements GetterTask{
                 polls.addAll(query.list());
             }
 
-            session.getTransaction().commit();
+            for(Poll poll: polls){
+                Hibernate.initialize(poll.getCommentSystem().getComments());
+            }
 
+            session.getTransaction().commit();
             session.close();
             factory.close();
         }catch(Exception e){

@@ -3,6 +3,7 @@ package com.eventplaner;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.UnregisteredUser;
 import com.eventplaner.model.User;
+import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.DeleteObject;
 import com.eventplaner.tasks.pollTasks.GetPoll;
 import com.eventplaner.tasks.userTasks.CreateUnregisteredUser;
@@ -11,7 +12,19 @@ import com.eventplaner.tasks.userTasks.DeleteUser;
 import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@WebIntegrationTest
+//@AutoConfigureTestDatabase
+//@AutoConfigureTestEntityManager
 public class TestUser extends TestCase {
 
     @Override
@@ -24,6 +37,7 @@ public class TestUser extends TestCase {
     /*
         Create User Tests
      */
+
     @Test
     public void testCreateRegisteredUserWithId() {
         new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw").execute();
@@ -137,7 +151,7 @@ public class TestUser extends TestCase {
         }
 
         System.out.println("Cleaning up: ");
-        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
+//        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
 
     }
 }
