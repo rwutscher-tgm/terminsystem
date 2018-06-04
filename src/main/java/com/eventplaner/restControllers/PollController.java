@@ -32,8 +32,6 @@ public class PollController {
         }
 
 
-        git commit -m "create poll linked with views"
-
 
         CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status);
         cp.execute();
