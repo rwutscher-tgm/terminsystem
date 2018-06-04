@@ -14,6 +14,7 @@ public class CreatePoll implements Task{
     private String name;
     private String description;
     private boolean isPublic;
+    private String id;
 
     public CreatePoll(RegisteredUser organizer, String name, String description, boolean isPublic) {
         this.organizer = organizer;
@@ -24,6 +25,12 @@ public class CreatePoll implements Task{
 
     @Override
     public void execute() {
-        new SaveObject<>(new Poll(this.organizer, name, description, isPublic)).execute();
+        Poll poll = new Poll(this.organizer, name, description, isPublic);
+        this.id = poll.getId();
+        new SaveObject<>(poll).execute();
+    }
+
+    public String getId(){
+        return this.id;
     }
 }

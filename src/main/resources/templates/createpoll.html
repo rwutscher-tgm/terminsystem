@@ -6,6 +6,7 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
         </script>
 </head>
@@ -19,11 +20,37 @@
         <form method="post" action="poll/createPoll">
             <input placeholder = "Pollname" value = "" id = "pollname" type = "text" class = "active validate" name="PollName" required />
             <input placeholder = "Pollbeschreibung" value = "" id = "polldesciption" type = "text" class = "active validate" name ="Polldesc"required />
+
+            <br>
+
+            <a id="add_topic" class="waves-effect waves-light btn">Noch einen Termin hinzufügen</a>
+            <ul id="topic_list" class="collection">
+                <li class="collection-item"><input id="topic_0" name="topic_0" type="date" class="datepicker" required></li>
+
+            </ul>
+
+
+            <script>
+                $(document).ready(function(){
+                    //$('.datepicker').datepicker([]);
+                    $("#add_topic").click(function(){
+                        $("#topic_list").append("<li class=\"collection-item\"><input type=\"date\" class=\"datepicker\" required></li>");
+
+                        $('#topic_list').find("input").each(function (i) {
+                            $(this).attr('id', 'topic_' + i);
+                            $(this).attr('name', 'topic_' + i);
+                        });
+
+                    });
+                });
+
+            </script>
+
             <p>Bitte wählen Sie aus ob ihr Poll public oder private sein soll</p>
             <div class="switch">
                 <label>
                     private
-                    <input type="checkbox" id="status" name="Status">
+                    <input type="checkbox" id="status" name="status">
                     <span class="lever"></span>
                     public
                 </label>

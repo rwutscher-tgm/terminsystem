@@ -36,9 +36,9 @@ public class ViewController {
 
             }
 
-            new CreateUser("admin@admin.com", "admin", "admin").execute();
-            RegisteredUser admin = (RegisteredUser) new GetUser("admin@admin.com").execute().get(0);
-            new CreatePoll(admin, "new Poll", "new Poll", true).execute();
+            //new CreateUser("admin@admin.com", "admin", "admin").execute();
+            RegisteredUser admin = new RegisteredUser("admin@admin.com", "admin", "admin");//(RegisteredUser) new GetUser("admin@admin.com").execute().get(0);
+            //new CreatePoll(admin, "new Poll", "new Poll", true).execute();
 
 
 
@@ -52,7 +52,7 @@ public class ViewController {
 
             //poll = new GetPoll(pollId).execute().get(0);
 
-            Poll poll = new Poll(admin, "Poll", "sis is a poll", true);
+            Poll poll = new Poll(admin, "Konzert der flying Borkos", "wir wollen ein Konzert planen und wollen wissen wann ihr Zeit hättet.", true);
 
             Comment c = new Comment(admin, "comment");
             Comment c2 = new Comment(admin, "subcomment");

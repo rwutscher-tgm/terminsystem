@@ -22,10 +22,13 @@
 
         <div th:text="${poll.description}"></div>
 
+        <br>
+        <div class="divider"></div>
+
         <div class="col s12 m2">
 
 
-
+            <h3>Termine</h3>
             <div class="" th:each="pollTopic: ${poll.pollTopics}">
                 <p>
                     <label>
@@ -72,9 +75,26 @@
             </script>
         </div>
 
+        <br>
+        <div class="divider"></div>
+        <h3>Comments</h3>
 
 
-        <h2>Comments</h2>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s11">
+                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Schreib ein Kommentar ...</label>
+                    </div>
+                    <div class="input-field col s1">
+                        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">send</i></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
         <div th:replace="fragments.html :: commentTree(commentSystem=${poll.commentSystem})"></div>
     </div>
 

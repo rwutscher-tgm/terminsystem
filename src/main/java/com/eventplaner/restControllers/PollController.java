@@ -1,10 +1,19 @@
 package com.eventplaner.restControllers;
 
+import com.eventplaner.model.Poll;
+import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.tasks.pollTasks.AddPollTopic;
+import com.eventplaner.tasks.pollTasks.CreatePoll;
+import com.eventplaner.tasks.pollTasks.GetPoll;
+import com.eventplaner.tasks.userTasks.GetUser;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Map;
 
 @org.springframework.web.bind.annotation.RestController
 public class PollController {
@@ -13,8 +22,35 @@ public class PollController {
         Creating
      */
     @PostMapping("/poll/createPoll")
-    public void createPoll(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("seas mich gibts auch");
+    public void createPoll(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {
+
+        RegisteredUser organizer = (RegisteredUser) new GetUser(user.getName()).execute().get(0);
+
+        boolean status = false;
+        if(params.get("status") == "on"){
+            status = true;
+        }
+
+
+        git commit -m "create poll linked with views"
+
+
+        CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status);
+        cp.execute();
+        String id = cp.getId();
+        Poll poll = new GetPoll(id).execute().get(0);
+
+        for(String param : params.values()){
+            System.out.println(param);
+        }
+
+        for(String param : params.keySet()){
+            if(param.substring(0, 6).equals("topic_")){
+                new AddPollTopic(poll, param);
+            }
+        }
+
+        System.out.println("SEAS .............................................. ..................... ...............");
         response.sendRedirect("/");
     }
 
