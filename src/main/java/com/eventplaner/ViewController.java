@@ -15,17 +15,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 public class ViewController {
 
         @GetMapping("/")
-        public String renderHome(){
+        public String renderHome(Principal user, Model model){
+            boolean loggedIn = false;
+            if(user != null){
+                loggedIn = true;
+            }
+            model.addAttribute("loggedIn", loggedIn);
             return "index";
         }
 
         @GetMapping("/poll")
-        public String home(@RequestParam(value="poll", required = false) String pollId, Model model){
+        public String home(@RequestParam(value="poll", required = false) String pollId, Model model, Principal user){
 
             if(pollId == null){
                 return "polls";
@@ -62,9 +68,16 @@ public class ViewController {
 
 
             System.out.println("asdasdasdasdasddadasdasdasdsd: "+poll.getCommentSystem().getComments().size());
+
+            boolean loggedIn = false;
+            if(user != null){
+                loggedIn = true;
+            }
+
             try{
-                model.addAttribute("poll", poll.getName());
-                model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);
+                model.addAttribute("loggedIn", loggedIn);
+                model.addAttribute("poll", poll);
+                //model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);
                 /*model.addAttribute("name", poll.getName());
                 model.addAttribute("id", poll.getId());*/
             }catch(Exception e){
@@ -75,23 +88,45 @@ public class ViewController {
         }
 
         @GetMapping("/test")
-        public String seas(HttpServletRequest request, Model model){
+        public String seas(HttpServletRequest request, Model model, Principal user){
+
+            boolean loggedIn = false;
+            if(user != null){
+                loggedIn = true;
+            }
+            model.addAttribute("loggedIn", loggedIn);
+
             return "test";
         }
 
         @GetMapping("/createpoll")
-        public String createpoll(HttpServletRequest request, Model model){
-                    return "createpoll";
+        public String createpoll(HttpServletRequest request, Model model, Principal user){
+            boolean loggedIn = false;
+            if(user != null){
+                loggedIn = true;
+            }
+            model.addAttribute("loggedIn", loggedIn);
+            return "createpoll";
         }
 
         @GetMapping("/login")
-        public String login(HttpServletRequest request, Model model){
+        public String login(HttpServletRequest request, Model model, Principal user){
+            boolean loggedIn = false;
+            if(user != null){
+                loggedIn = true;
+            }
+            model.addAttribute("loggedIn", loggedIn);
+
             return "login";
         }
 
         @GetMapping("/signup")
-        public String signup(HttpServletRequest request, Model model){
-
+        public String signup(HttpServletRequest request, Model model, Principal user){
+            boolean loggedIn = false;
+            if(user != null){
+                loggedIn = true;
+            }
+            model.addAttribute("loggedIn", loggedIn);
             return "signup";
         }
 
