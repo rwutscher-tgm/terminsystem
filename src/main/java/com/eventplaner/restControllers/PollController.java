@@ -36,8 +36,9 @@ public class PollController {
         return true;
     }
 
-    @PostMapping("/poll/VoteForTopic")
-    public boolean VoteForTopic(HttpServletRequest request){
+    @PostMapping("/poll/voteForTopic")
+    public boolean voteForTopic(HttpServletRequest request){
+        System.out.println("Seas ....................................................................................");
         return true;
     }
 

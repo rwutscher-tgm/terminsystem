@@ -45,51 +45,29 @@
     <div class="center-align">
 
 
-<div th:if="${param.error}">
 
-    <br>
-    <div class="container">
-    <div class="center-align">
-            <div style="background-color : red">
-                <div class="card-content black-text">
-                    <span class="card-title"><b>Incorrect Login</b></span>
-                    <p><b>Invalid Username or Password. <br>Please try again!</b></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-</div>
-<div th:if="${param.logout}">
-    <br>
-    <div class="container">
-        <div class="center-align">
-            <div style="background-color : lightgreen">
-                <div class="card-content black-text">
-                    <span class="card-title"><b>LogOut Done</b></span>
-                    <p><b>You have been Loged out</b></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-</div>
 </div>
         <div class="container">
             <div class="center-align">
             <h5 class="indigo-text">Please, Login into your account</h5>
             <br>
             <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+                <div th:if="${param.error}">
+
+                    <div class="card-panel red lighten-1">Invalid Username or Password.</div>
+
+                </div>
+                <div th:if="${param.logout}">
+
+                    <div class="card-panel green lighten-1">Invalid Username or Password.</div>
+
+                </div>
 
 <form th:action="@{/login}" method="post">
 
 
-        <div><i class="small material-icons">account_box</i><label> Username : <input type="text" name="username" style="text-align:center;"/> </label></div>
-        <div><i class="small material-icons">lock_outline</i><label> Password : <input type="password" name="password" style="text-align: center;"/> </label></div>
+        <div><i class="small material-icons">account_box</i><label> Username : <input type="text" class="autocomplete"name="username" style="text-align:center;"/> </label></div>
+        <div><i class="small material-icons">lock_outline</i><label> Password : <input type="password" class="autocomplete" name="password" style="text-align: center;"/> </label></div>
         <div><input class="col s12 btn-large waves-effect indigo" type="submit" value="Sign In"/></div>
 
     <br>

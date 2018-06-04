@@ -6,6 +6,7 @@
     <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
 		
     </script>
@@ -20,6 +21,58 @@
         <h1 th:text="${poll.name}"> </h1>
 
         <div th:text="${poll.description}"></div>
+
+        <div class="col s12 m2">
+
+
+
+            <div class="" th:each="pollTopic: ${poll.pollTopics}">
+                <p>
+                    <label>
+                        <input type="checkbox" id="${pollTopic.id}" class="topic"/>
+                        <span th:text="${pollTopic.description}"></span>
+                    </label>
+                </p>
+            </div>
+            <div id="topic_messages"></div>
+            <a href="#" class="btn-large waves-effect waves-light green lighten-1" onclick="f1()">Send</a>
+
+            <script>
+                function f1(){
+                    a = document.getElementsByClassName("topic");
+                    //alert(a.length);
+
+                    /*array1.forEach(function(element) {
+                        console.log(element);
+                    });*/
+                    for(i = 0; i < a.length; i++){
+                        if(a.item(i).checked){
+                            $.post( "/poll/voteForTopic", { name: "John"}, function( data ) {
+                                if(typeof data === 'boolean'){
+                                    if(data){
+                                        $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");
+                                    }else{
+                                        $("#topic_messages").html("<div class=\"card-panel red lighten-1\">Error</div>");
+                                    }
+                                }else{
+                                    window.location.replace("/login");
+                                }
+                                //$( ".result" ).html( data );
+
+                            });
+                            //alert("seas");
+                        }
+                    }
+                    /*
+                    a.forEach(function (t) {
+                        //if(t.value == ))
+                        alert(t.value());
+                    });*/
+                }
+            </script>
+        </div>
+
+
 
         <h2>Comments</h2>
         <div th:replace="fragments.html :: commentTree(commentSystem=${poll.commentSystem})"></div>

@@ -1,9 +1,6 @@
 package com.eventplaner;
 
-import com.eventplaner.model.Comment;
-import com.eventplaner.model.Poll;
-import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.model.User;
+import com.eventplaner.model.*;
 import com.eventplaner.tasks.commentTasks.AddComment;
 import com.eventplaner.tasks.pollTasks.CreatePoll;
 import com.eventplaner.tasks.pollTasks.GetPoll;
@@ -34,6 +31,7 @@ public class ViewController {
         public String home(@RequestParam(value="poll", required = false) String pollId, Model model, Principal user){
 
             if(pollId == null){
+                model.addAttribute("polls", new GetPoll().execute());
                 return "polls";
 
             }
@@ -48,11 +46,13 @@ public class ViewController {
                     .get(0)
                     .getId();
 
-            Poll poll = new GetPoll(pollId).execute().get(0);
+            //Poll poll = new GetPoll(pollId).execute().get(0);
 
-            new AddComment(poll.getCommentSystem(), admin, "seas").execute();
+            //new AddComment(poll.getCommentSystem(), admin, "seas").execute();
 
-            poll = new GetPoll(pollId).execute().get(0);
+            //poll = new GetPoll(pollId).execute().get(0);
+
+            Poll poll = new Poll(admin, "Poll", "sis is a poll", true);
 
             Comment c = new Comment(admin, "comment");
             Comment c2 = new Comment(admin, "subcomment");
@@ -65,6 +65,10 @@ public class ViewController {
             c.getSubCommentSystem().addComment(c2);
 
             poll.getCommentSystem().addComment(c);
+
+            poll.addPollTopic(new PollTopic("13.12.2018"));
+            poll.addPollTopic(new PollTopic("18.9.2018"));
+            poll.addPollTopic(new PollTopic("1.7.2018"));
 
 
             System.out.println("asdasdasdasdasddadasdasdasdsd: "+poll.getCommentSystem().getComments().size());
@@ -81,6 +85,7 @@ public class ViewController {
                 /*model.addAttribute("name", poll.getName());
                 model.addAttribute("id", poll.getId());*/
             }catch(Exception e){
+                model.addAttribute("polls", new GetPoll().execute());
                 return "polls";
             }
 
