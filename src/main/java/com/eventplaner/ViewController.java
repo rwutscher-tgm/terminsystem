@@ -84,8 +84,8 @@ public class ViewController {
         try{
             //Poll poll = new GetPoll(pollId).execute().get(0);
             Poll poll = pollRepository.findById(pollId);
-            poll.getCommentSystem().getComments();
-            System.out.println(poll.getPollTopics().size());
+            //poll.getCommentSystem().getComments();
+            //System.out.println(poll.getPollTopics().size());
             model.addAttribute("loggedIn", loggedIn);
             model.addAttribute("poll", poll);
             //model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);

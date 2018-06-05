@@ -36,13 +36,31 @@ public class SaveObject<T> implements Task {
                 session = factory.openSession();
 
                 session.beginTransaction();
+
                 session.save(object);
-            session.getTransaction().commit();
+
+                session.getTransaction().commit();
 
             session.close();
             factory.close();
         }catch(Exception e){
-            e.printStackTrace();
+                try{
+                    factory = config.buildSessionFactory();
+                    session = factory.openSession();
+
+                    session.beginTransaction();
+
+                    session.update(object);
+
+                    session.getTransaction().commit();
+
+                    session.close();
+                    factory.close();
+                }catch (Exception e2){
+                    e2.printStackTrace();
+                }
+
+
         }
 
     }

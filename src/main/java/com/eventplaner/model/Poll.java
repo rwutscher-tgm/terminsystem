@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name="poll")
@@ -14,8 +15,6 @@ public class Poll {
 
     @Id
     @Column(name="id")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     @Column(name = "name")
@@ -56,6 +55,7 @@ public class Poll {
     private boolean isPublic;
 
     public Poll(RegisteredUser organizer, String name, String description, boolean isPublic) {
+        this.id = UUID.randomUUID().toString();
         this.description = description;
         this.isPublic = isPublic;
         this.name = name;
@@ -69,6 +69,7 @@ public class Poll {
     }
 
     public Poll() {
+        this.id = UUID.randomUUID().toString();
         this.commentSystem = new CommentSystem();
         this.organizers = new ArrayList<>();
         this.participants = new ArrayList<>();
@@ -139,6 +140,34 @@ public class Poll {
     }
 
     public boolean getPublic() {
+        return isPublic;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOrganizers(List<RegisteredUser> organizers) {
+        this.organizers = organizers;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
+    }
+
+    public void setPollTopics(List<PollTopic> pollTopics) {
+        this.pollTopics = pollTopics;
+    }
+
+    public void setCommentSystem(CommentSystem commentSystem) {
+        this.commentSystem = commentSystem;
+    }
+
+    public boolean isPublic() {
         return isPublic;
     }
 }

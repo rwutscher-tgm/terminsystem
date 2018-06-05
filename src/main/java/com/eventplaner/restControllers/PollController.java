@@ -32,11 +32,15 @@ public class PollController {
         }
 
 
-
         CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status);
+
         cp.execute();
+
         String id = cp.getId();
+
         Poll poll = new GetPoll(id).execute().get(0);
+
+        System.out.println("Amount of Polls in Database"+new GetPoll().execute().size());
 
         for(String param : params.values()){
             System.out.println(param);
@@ -44,10 +48,13 @@ public class PollController {
 
         for(String param : params.keySet()){
             if(param.substring(0, 6).equals("topic_")){
-                System.out.println("Adding Poll Topic"+param);
+                System.out.println("Adding Poll Topic"+params.get(param));
                 new AddPollTopic(poll, param).execute();
             }
         }
+
+        System.out.println("Amount of Polls in Database"+new GetPoll().execute().size());
+
 
         System.out.println("SEAS .............................................. ..................... ...............");
         response.sendRedirect("/");

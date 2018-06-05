@@ -21,7 +21,7 @@ public class AddPollTopic implements Task{
     @Override
     public void execute() {
 
-        Configuration config = HibernateUtils.getConfig(new Class[]{
+        /*Configuration config = HibernateUtils.getConfig(new Class[]{
                 Poll.class,
                 PollTopic.class,
                 User.class,
@@ -38,14 +38,14 @@ public class AddPollTopic implements Task{
             factory = config.buildSessionFactory();
             session = factory.openSession();
 
-            session.beginTransaction();
+            session.beginTransaction();*/
 
             PollTopic topic = new PollTopic(this.description);
-            this.poll.addPollTopic(topic);
-            System.out.println("Amount of Poll Topics"+this.poll.getPollTopics().size());
             new SaveObject<>(topic).execute();
-            new SaveObject<>(this.poll).execute();
 
+            this.poll.addPollTopic(topic);
+            new SaveObject<>(this.poll).execute();
+/*
             session.getTransaction().commit();
 
             session.close();
@@ -53,6 +53,6 @@ public class AddPollTopic implements Task{
         }catch(Exception e){
             e.printStackTrace();
         }
-
+*/
     }
 }
