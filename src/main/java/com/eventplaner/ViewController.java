@@ -19,9 +19,6 @@ import java.security.Principal;
 @Controller
 public class ViewController {
 
-    @Autowired
-    PollRepository pollRepository;
-
     @GetMapping("/")
     public String renderHome(Principal user, Model model){
         boolean loggedIn = false;
@@ -32,49 +29,17 @@ public class ViewController {
         return "index";
     }
 
+    @Autowired
+    PollRepository pollRepository;
+
     @GetMapping("/poll")
     public String home(@RequestParam(value="poll", required = false) String pollId, Model model, Principal user){
 
         if(pollId == null){
-            model.addAttribute("polls", new GetPoll().execute());
+            model.addAttribute("polls", pollRepository.findAll()/*new GetPoll().execute()*/);
             return "polls";
 
         }
-
-        //new CreateUser("admin@admin.com", "admin", "admin").execute();
-        // RegisteredUser admin = new RegisteredUser("admin@admin.com", "admin", "admin");//(RegisteredUser) new GetUser("admin@admin.com").execute().get(0);
-        //new CreatePoll(admin, "new Poll", "new Poll", true).execute();
-
-
-
-        //pollId = new GetPoll().execute().get(0).getId();
-
-        //Poll poll = new GetPoll(pollId).execute().get(0);
-
-        //new AddComment(poll.getCommentSystem(), admin, "seas").execute();
-
-        //poll = new GetPoll(pollId).execute().get(0);
-        /*
-        Poll poll = new Poll(admin, "Konzert der flying Borkos", "wir wollen ein Konzert planen und wollen wissen wann ihr Zeit hättet.", true);
-
-        Comment c = new Comment(admin, "comment");
-        Comment c2 = new Comment(admin, "subcomment");
-        Comment c3 = new Comment(admin, "subsubcomment");
-        Comment c4 = new Comment(admin, "subsubsubcomment");
-
-
-        c3.getSubCommentSystem().addComment(c4);
-        c2.getSubCommentSystem().addComment(c3);
-        c.getSubCommentSystem().addComment(c2);
-
-        poll.getCommentSystem().addComment(c);
-
-        poll.addPollTopic(new PollTopic("13.12.2018"));
-        poll.addPollTopic(new PollTopic("18.9.2018"));
-        poll.addPollTopic(new PollTopic("1.7.2018"));
-
-        */
-        //System.out.println("asdasdasdasdasddadasdasdasdsd: "+poll.getCommentSystem().getComments().size());
 
         boolean loggedIn = false;
         if(user != null){
@@ -82,22 +47,23 @@ public class ViewController {
         }
 
         try{
+            //PollRepositoryGiver giver = new PollRepositoryGiver();
+            //PollRepository pollRepository = giver.getPollRepository();
             //Poll poll = new GetPoll(pollId).execute().get(0);
             Poll poll = pollRepository.findById(pollId);
-            //poll.getCommentSystem().getComments();
-            //System.out.println(poll.getPollTopics().size());
+            int i = poll.getCommentSystem().getComments().size();
+            System.out.println(poll.getPollTopics().size());
             model.addAttribute("loggedIn", loggedIn);
             model.addAttribute("poll", poll);
             //model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);
             /*model.addAttribute("name", poll.getName());
             model.addAttribute("id", poll.getId());*/
+            return "poll";
         }catch(Exception e){
             e.printStackTrace();
             model.addAttribute("polls", new GetPoll().execute());
             return "polls";
         }
-
-        return "poll";
     }
 
     @GetMapping("/test")

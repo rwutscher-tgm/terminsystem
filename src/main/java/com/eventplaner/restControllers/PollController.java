@@ -27,7 +27,7 @@ public class PollController {
         RegisteredUser organizer = (RegisteredUser) new GetUser(user.getName()).execute().get(0);
 
         boolean status = false;
-        if(params.get("status") == "on"){
+        if(params.get("status").equals("on")){
             status = true;
         }
 
@@ -48,8 +48,8 @@ public class PollController {
 
         for(String param : params.keySet()){
             if(param.substring(0, 6).equals("topic_")){
-                System.out.println("Adding Poll Topic"+params.get(param));
-                new AddPollTopic(poll, param).execute();
+                System.out.println("Adding Poll Topic: "+params.get(param));
+                new AddPollTopic(poll, params.get(param)).execute();
             }
         }
 

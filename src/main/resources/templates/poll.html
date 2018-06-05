@@ -79,20 +79,21 @@
         <div class="divider"></div>
         <h3>Comments</h3>
 
-
         <div class="row">
-            <form class="col s12">
+            <form class="col s12" method="post" action="/comment/createComment">
+                <input type="hidden" name="poll" th:value="${poll.id}">
                 <div class="row">
                     <div class="input-field col s11">
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <textarea id="textarea1" name="comment" class="materialize-textarea"></textarea>
                         <label for="textarea1">Schreib ein Kommentar ...</label>
                     </div>
                     <div class="input-field col s1">
-                        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">send</i></a>
+                        <button class="btn-floating btn-large waves-effect waves-light red" type="submit" name="submitbutton"><i class="material-icons">send</i></button>
                     </div>
                 </div>
             </form>
         </div>
+
 
 
         <div th:replace="fragments.html :: commentTree(commentSystem=${poll.commentSystem})"></div>

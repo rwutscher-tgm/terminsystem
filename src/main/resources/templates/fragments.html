@@ -19,23 +19,49 @@
     </nav>
 </div>
 
-<!---
-<div th:fragment="commentTree (commentSystem)" xmlns:th="http://www.w3.org/1999/xhtml" th:each="comment :${commentSystem.comments}">
-    <div>
-        <td th:text="${comment.comment}"></td>
-        <td th:text="${comment.subCommentSystem}"></td>
-    </div>
-    <div class ="" th:insert="fragments.html :: commentTree(commentSystem=${comment.subCommentSystem})"></div>
-</div>
-
-
--->
-
-
 <ul th:fragment="commentTree (commentSystem)" xmlns:th="http://www.w3.org/1999/xhtml" th:each="comment :${commentSystem.comments}" class="collection commenta">
     <li class="collection-item" >
-        <span class="title" th:text="${comment.author.username}">email</span>
+        <span class="title" th:text="${comment.author.username}">email</span><a th:id="sub_comment_button_+${comment.commentID}" class="waves-effect waves-light btn-flat right"><i class="material-icons">comment</i></a>
         <p th:text="${comment.comment}">comment</p>
+
     </li>
+    <div th:id="sub_comment_area_+${comment.commentID}">
+
+    </div>
+
+    <script th:inline="javascript">
+
+
+        $(document).ready(function(){
+            /*<![CDATA[*/
+
+            var sub_comment_area = "#sub_comment_area_"+/*[[${comment.commentID}]]*/'notFound';
+            var sub_comment_button = "#sub_comment_button_"+/*[[${comment.commentID}]]*/'notFound';
+
+            $(sub_comment_button).click(function(){
+                poll_id = ''+/*[[${poll.id}]]*/'notFound';
+                comment_system = ''+/*[[${comment.subCommentSystem.commentSystemID}]]*/'notFound';
+
+                $(sub_comment_area).html("" +
+                    "           <form class=\"col s12\" method=\"post\" action=\"/comment/createSubComment\">\n" +
+                    "                <input type=\"hidden\" name=\"poll\" value=\""+poll_id+"\">" +
+                    "                <input type=\"hidden\" name=\"commentSystem\" value=\""+comment_system+"\">\n" +
+                    "                <div class=\"row\">\n" +
+                    "                    <div class=\"input-field col s11\">\n" +
+                    "                        <textarea id=\"textarea1\" name=\"comment\" class=\"materialize-textarea\"></textarea>\n" +
+                    "                        <label for=\"textarea1\">Schreib ein Kommentar ...</label>\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"input-field col s1\">\n" +
+                    "                        <button class=\"btn-floating btn-large waves-effect waves-light red\" type=\"submit\" name=\"submitbutton\"><i class=\"material-icons\">send</i></button>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </form>");
+
+            });
+            /*]]>*/
+
+        });
+
+    </script>
     <li class="subcomments" th:insert="fragments.html :: commentTree(commentSystem=${comment.subCommentSystem})"></li>
 </ul>

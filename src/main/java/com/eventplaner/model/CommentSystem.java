@@ -7,13 +7,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name="comment_system")
 public class CommentSystem {
 
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Id
     @Column(name="comment_system_id")
     private String  commentSystemID;
@@ -28,6 +27,7 @@ public class CommentSystem {
     private List<Comment> comments;
 
     public CommentSystem() {
+        this.commentSystemID = UUID.randomUUID().toString();
         comments = new ArrayList<>();
 
     }
