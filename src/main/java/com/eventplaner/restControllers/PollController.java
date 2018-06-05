@@ -44,7 +44,8 @@ public class PollController {
 
         for(String param : params.keySet()){
             if(param.substring(0, 6).equals("topic_")){
-                new AddPollTopic(poll, param);
+                System.out.println("Adding Poll Topic"+param);
+                new AddPollTopic(poll, param).execute();
             }
         }
 

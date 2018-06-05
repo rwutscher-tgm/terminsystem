@@ -84,4 +84,25 @@ public class Comment {
     public CommentSystem getSubCommentSystem() {
         return subCommentSystem;
     }
+
+    public void setCommentID(String commentID) {
+        this.commentID = commentID;
+    }
+
+    public void setAuthor(RegisteredUser author) {
+        this.author = author;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setSubCommentSystem(CommentSystem subCommentSystem) {
+        this.subCommentSystem = subCommentSystem;
+    }
 }
+
