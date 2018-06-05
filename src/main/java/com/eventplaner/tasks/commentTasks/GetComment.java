@@ -31,6 +31,7 @@ public class GetComment implements GetterTask{
 
     @Override
     public ArrayList<Comment> execute() {
+
         if(this.user != null){
             //TODO: Implement get all Comments from a User
         }else if(this.poll != null){

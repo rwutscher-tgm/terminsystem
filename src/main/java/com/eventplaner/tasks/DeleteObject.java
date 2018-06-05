@@ -6,17 +6,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class SaveObject<T> implements Task {
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.swing.text.html.parser.Entity;
 
-    public T object;
+public class DeleteObject<T> implements Task{
 
-    public SaveObject(T object){
+    private T object;
+
+    public DeleteObject(T object) {
         this.object = object;
     }
 
     @Override
     public void execute() {
-
         // Adding all model classes to hibernate config
         Configuration config = HibernateUtils.getConfig(new Class[]{
                 Poll.class,
@@ -31,12 +34,12 @@ public class SaveObject<T> implements Task {
         SessionFactory factory = null;
         Session session = null;
 
-            try{
-                factory = config.buildSessionFactory();
-                session = factory.openSession();
+        try{
+            factory = config.buildSessionFactory();
+            session = factory.openSession();
 
-                session.beginTransaction();
-                session.save(object);
+            session.beginTransaction();
+            session.delete(object);
             session.getTransaction().commit();
 
             session.close();
@@ -44,6 +47,5 @@ public class SaveObject<T> implements Task {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
 }

@@ -1,90 +1,30 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-    <head>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-		<script type="text/javascript">
-		function Invite(){
-
-		<!-- Zugriff auf die Einlade Funktion / Email senden -->
-		var nametxt = Document.GetElementById('name1').value;
-		var Username = nametxt;
-		alert(Username);
-
-		if(Documen.GetElementById('name1')) {
-            <!-- Zugriff auf die Einlade Funktion / Email senden -->
-            var nametxt = Document.GetElementById('name1').value;
-            var Username = nametxt;
-            alert("");
-        }
-
-
-		if(Document.GetElementById('name2')){
-			<!-- Zugriff auf die Einlade Funktion / Email senden -->
-			var nametxt = Document.GetElementById('name2').value;
-			var Username = nametxt;
-		}
-
-		if(Document.GetElementById('name3')){
-			<!-- Zugriff auf die Einlade Funktion / Email senden -->
-			var nametxt = Document.GetElementById('name3').value;
-			var Username = nametxt;
-		}
-
-		var Datum = "";
-		if(Document.GetElementById('datepicker')){
-			<!-- Zugriff auf die Einlade Funktion / Email senden -->
-			var datetxt = Document.GetElementById('datepicker').value;
-			var Datum = datetxt;
-		}
-		}
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript">
 		
-		</script>
-    </head>
-	
-	<body>   
-		<h1>Erstellen der Abstimmung</h1>
-		<p>Trage Bitte die Usernamen der Personen die an deinem Event Teilnehmen d&uumlrfen, in die unten stehenden Textfelder ein</p>
-		<br>
-		<div class = "row">
-			<form class = "col s12">
-				<div class = "row">
-					<div class = "input-field col s6">
-						<i class = "material-icons prefix">account_circle</i>
-						<label for = "name1">User1</label>
-						<input placeholder = "Username" value = "" id = "name1" type = "text" class = "active validate" required />
-					</div>
-				</div>      
-				<div class = "row">
-					<div class = "input-field col s6">
-						<i class = "material-icons prefix">account_circle</i>
-						<label for = "name2">User2</label>
-						<input placeholder = "Username" value = "" id = "name2" type = "text" class = "active validate" />
-					</div>
-				</div>       
-				<div class = "row">
-					<div class = "input-field col s6">
-						<i class = "material-icons prefix">account_circle</i>
-						<label for = "name3">User3</label>
-						<input placeholder = "Username" value = "" id = "name3" type = "text" class = "active validate" />
-					</div>
-				</div>
+    </script>
+</head>
+<body>
 
-<!-- Man kann mehrere User einladen, aber fürs erste reichen 3 -->
-				
-				<br>
-				<input type="date" value="Datum" id="datepicker" class="datepicker-controls" />
-				<br>
-				<br>
-				<div class = "card-panel">
-				<button class = "btn waves-effect waves-light red" type = "button" onClick="Invite()">Send<i class = "material-icons right">send</i></button>
-				</div>
-				
-			</form>       
-		</div>
-	</body>   
+
+
+    <div class="container">
+        <div th:replace="fragments.html :: header(loggedIn=${loggedIn})"></div>
+
+        <h1 th:text="${poll.name}"> </h1>
+
+        <div th:text="${poll.description}"></div>
+
+        <h2>Comments</h2>
+        <div th:replace="fragments.html :: commentTree(commentSystem=${poll.commentSystem})"></div>
+    </div>
+
+</body>
 </html>
 

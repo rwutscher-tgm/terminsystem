@@ -4,6 +4,7 @@ import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.User;
+import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,27 +22,7 @@ public class JoinPoll implements Task{
 
     @Override
     public void execute() {
-        Configuration config = HibernateUtils.getConfig(new Class[]{
-                Poll.class,
-                User.class
-        });
-
-        SessionFactory factory = null;
-        Session session = null;
-
-        factory = config.buildSessionFactory();
-        session = factory.openSession();
-
         this.poll.addParticipant(this.participant);
-
-        session.beginTransaction();
-
-        session.save(this.poll);
-
-        session.getTransaction().commit();
-
-
-        session.close();
-        factory.close();
+        new SaveObject<>(this.participant).execute();
     }
 }

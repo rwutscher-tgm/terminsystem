@@ -3,6 +3,8 @@ package com.eventplaner.restControllers;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @org.springframework.web.bind.annotation.RestController
 public class PollController {
@@ -11,8 +13,9 @@ public class PollController {
         Creating
      */
     @PostMapping("/poll/createPoll")
-    public boolean createPoll(HttpServletRequest request){
-        return true;
+    public void createPoll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("seas mich gibts auch");
+        response.sendRedirect("/");
     }
 
     /*

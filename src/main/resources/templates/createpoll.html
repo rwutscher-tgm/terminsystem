@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.datepicker');
+                var instances = M.Datepicker.init(elems, options);
+            });
+        </script>
+</head>
+
+<body>
+<div class="container">
+    <div th:replace="fragments.html :: header(loggedIn=${loggedIn})"></div>
+    <div class="center-align">
+        <h2>Hier können Sie Ihren eigenen Poll erstellen</h2>
+        <p>Bitte füllen Sie alle der untenstehenden Felder aus</p>
+        <form method="post" action="poll/createPoll">
+            <input placeholder = "Pollname" value = "" id = "pollname" type = "text" class = "active validate" name="PollName" style="text-align: center;" required />
+            <input placeholder = "Pollbeschreibung" value = "" id = "polldesciption" type = "text" class = "active validate" name ="Polldesc" style="text-align: center;" required />
+            <input type="date" class="datepicker" placeholder="Datum" id ="datepick" name="Kalender" style="text-align: center;"  required>
+            <p>Bitte wählen Sie aus ob ihr Poll public oder private sein soll</p>
+            <div class="switch">
+                <label>
+                    private
+                    <input type="checkbox" id="status" name="Status">
+                    <span class="lever"></span>
+                    public
+                </label>
+            </div>
+            <br>
+            <button class="btn waves-effect waves.-light" type="submit" name="submitbutton">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+</div>
+    </form>
+</body>
+</html>
+

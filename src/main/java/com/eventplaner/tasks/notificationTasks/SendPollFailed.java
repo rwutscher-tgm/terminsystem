@@ -3,11 +3,11 @@ package com.eventplaner.tasks.notificationTasks;
 import com.eventplaner.model.Poll;
 import com.eventplaner.tasks.Task;
 
-public class SendPollFinalizedUpdate implements Task{
+public class SendPollFailed implements Task {
 
     private Poll poll;
 
-    public SendPollFinalizedUpdate(Poll poll) {
+    public SendPollFailed(Poll poll) {
         this.poll = poll;
     }
 

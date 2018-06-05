@@ -1,9 +1,10 @@
 package com.eventplaner.tasks.userTasks;
 
 import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.model.UnregisteredUser;
-import com.eventplaner.model.User;
+import com.eventplaner.model.repositories.UserRepository;
+import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CreateUser implements Task {
 
@@ -19,10 +20,26 @@ public class CreateUser implements Task {
         this.password = password;
     }
 
-    //TODO: Implement Constructor without userID
+    public CreateUser(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
+    /*@Autowired
+    UserRepository userRepository;*/
 
     @Override
     public void execute() {
-
+        RegisteredUser user;
+        if(userid != null){
+            user = new RegisteredUser(this.userid, this.email, this.username, this.password);
+            System.out.println(user.getUserID());
+        }else{
+            user = new RegisteredUser(this.email, this.username, this.password);
+        }
+        System.out.println(user.getUserID());
+        //userRepository.save(user);
+        new SaveObject<>(user).execute();
     }
 }
