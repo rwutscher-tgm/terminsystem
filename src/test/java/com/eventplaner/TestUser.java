@@ -45,7 +45,7 @@ public class TestUser extends TestCase {
         assertNotNull(userRepository);
     }
 
-    @Test
+    /*@Test
     public void testCreateRegisteredUserWithId() {
 
 
@@ -79,7 +79,7 @@ public class TestUser extends TestCase {
         Password Tests
      */
 
-    @Test
+    /*@Test
     public void testIsPasswordRight(){
         new CreateUser("registered4@user.com","regUser4","rootpw").execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered4@user.com").execute().get(0);
@@ -117,7 +117,7 @@ public class TestUser extends TestCase {
         Delete User Tests
      */
 
-    @Test
+    /*@Test
     public void testDeleteRegisterdUser(){
         new CreateUser("registered3@user.com","regUser3","rootpw").execute();
         new DeleteUser(new GetUser("registered3@user.com").execute().get(0)).execute();
@@ -138,7 +138,7 @@ public class TestUser extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         deleteUsers();
-    }
+    }*/
 
     public void deleteUsers(){
         String[] users = new String[]{
