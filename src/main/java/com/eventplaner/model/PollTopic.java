@@ -32,4 +32,12 @@ public class PollTopic {
     public ArrayList<User> getAvailables() {
         return availables;
     }
+
+    public void addAvailable(User user) {
+        this.availables.add(user);
+    }
+
+    public void removeAvailable(User user){
+        this.availables.remove(user);
+    }
 }
