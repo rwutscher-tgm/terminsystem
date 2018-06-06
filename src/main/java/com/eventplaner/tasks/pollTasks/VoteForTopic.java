@@ -10,14 +10,6 @@ public class VoteForTopic implements Task{
 
     private User user;
 
-<<<<<<< HEAD
-    private PollTopic topic;
-
-    public VoteForTopic(Poll poll, User user, PollTopic topic) {
-        this.poll = poll;
-        this.user = user;
-        this.topic = topic;
-=======
     private Repository repository;
 
     private PollTopic polltopic;
@@ -26,7 +18,6 @@ public class VoteForTopic implements Task{
         this.user = user;
         this.repository = repository;
         this.polltopic = polltopic;
->>>>>>> master
     }
 
     @Override
