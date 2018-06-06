@@ -38,19 +38,11 @@ public class PollTopic {
         return availables;
     }
 
-    public String getId() {
-        return id;
+    public void addAvailable(User user) {
+        this.availables.add(user);
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setAvailables(ArrayList<User> availables) {
-        this.availables = availables;
+    public void removeAvailable(User user){
+        this.availables.remove(user);
     }
 }
