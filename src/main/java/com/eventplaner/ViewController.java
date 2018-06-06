@@ -9,14 +9,17 @@ import com.eventplaner.tasks.userTasks.CreateUser;
 import com.eventplaner.tasks.userTasks.GetUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
+//@CrossOrigin(origins = {"http://localhost:8081"})
 public class ViewController {
 
     @GetMapping("/")
@@ -32,19 +35,49 @@ public class ViewController {
     @Autowired
     PollRepository pollRepository;
 
+
     @GetMapping("/poll")
     public String home(@RequestParam(value="poll", required = false) String pollId, Model model, Principal user){
-
-        if(pollId == null){
-            model.addAttribute("polls", pollRepository.findAll()/*new GetPoll().execute()*/);
-            return "polls";
-
-        }
 
         boolean loggedIn = false;
         if(user != null){
             loggedIn = true;
         }
+
+        if(pollId == null){
+            Iterable<Poll> polls = pollRepository.findAll();
+            ArrayList<Poll> validPolls = new ArrayList<>();
+            for(Poll poll:polls){
+                if(poll.isPublic()){
+                    validPolls.add(poll);
+                }else{
+                    if(loggedIn){
+                        User logged_in_User = new GetUser(user.getName()).execute().get(0);
+
+                        System.out.println("USERNAME :::::::::::::::::: " + logged_in_User.getEmail());
+
+                        for(User participant: poll.getParticipants()){
+
+                            if(participant.getEmail().equals(logged_in_User.getEmail())){
+                                validPolls.add(poll);
+                                break;
+                            }
+                        }
+                        for(User organizer: poll.getOrganizers()){
+                            if(organizer.getEmail().equals(logged_in_User.getEmail())){
+                                validPolls.add(poll);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            model.addAttribute("polls", validPolls /*new GetPoll().execute()*/);
+            return "polls";
+
+        }
+
+
 
         try{
             //PollRepositoryGiver giver = new PollRepositoryGiver();

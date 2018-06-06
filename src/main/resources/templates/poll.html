@@ -20,6 +20,12 @@
 
         <h1 th:text="${poll.name}"> </h1>
 
+        <form method="post" action="/poll/joinPoll">
+            <input type="hidden" name="poll" th:value="${poll.id}">
+            <button class="btn-floating btn-large waves-effect waves-light red" type="submit"><i class="material-icons">send</i></button>
+        </form>
+
+
         <div th:text="${poll.description}"></div>
 
         <br>
@@ -30,6 +36,7 @@
 
             <h3>Termine</h3>
             <div class="" th:each="pollTopic: ${poll.pollTopics}">
+
                 <p>
                     <label>
                         <input type="checkbox" id="${pollTopic.id}" class="topic"/>
@@ -43,14 +50,13 @@
             <script>
                 function f1(){
                     a = document.getElementsByClassName("topic");
-                    //alert(a.length);
 
-                    /*array1.forEach(function(element) {
-                        console.log(element);
-                    });*/
+                    /*<![CDATA[*/
+                    alert(typeof a);
+
                     for(i = 0; i < a.length; i++){
                         if(a.item(i).checked){
-                            $.post( "/poll/voteForTopic", { name: "John"}, function( data ) {
+                            $.post( "/poll/voteForTopic", { poll: /*[[${poll.id}]]*/"", topic:a.item(i)}, function( data ) {
                                 if(typeof data === 'boolean'){
                                     if(data){
                                         $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");
@@ -66,11 +72,7 @@
                             //alert("seas");
                         }
                     }
-                    /*
-                    a.forEach(function (t) {
-                        //if(t.value == ))
-                        alert(t.value());
-                    });*/
+                    /*]]>*/
                 }
             </script>
         </div>

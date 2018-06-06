@@ -85,10 +85,7 @@ public class Poll {
     }
 
     public void addPollTopic(PollTopic topic){
-        System.out.println("adding Poll Topic");
         this.pollTopics.add(topic);
-
-        System.out.println("Poll topics according to Poll: "+this.pollTopics.size());
     }
 
     public void removePollTopic(PollTopic topic){
