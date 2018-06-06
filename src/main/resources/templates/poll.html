@@ -39,7 +39,7 @@
 
                 <p>
                     <label>
-                        <input type="checkbox" id="${pollTopic.id}" class="topic"/>
+                        <input type="checkbox" th:id="''+${pollTopic.id}" class="topic"/>
                         <span th:text="${pollTopic.description}"></span>
                     </label>
                 </p>
@@ -52,11 +52,10 @@
                     a = document.getElementsByClassName("topic");
 
                     /*<![CDATA[*/
-                    alert(typeof a);
 
                     for(i = 0; i < a.length; i++){
                         if(a.item(i).checked){
-                            $.post( "/poll/voteForTopic", { poll: /*[[${poll.id}]]*/"", topic:a.item(i)}, function( data ) {
+                            $.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
                                 if(typeof data === 'boolean'){
                                     if(data){
                                         $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");

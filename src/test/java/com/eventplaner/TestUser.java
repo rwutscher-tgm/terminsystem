@@ -37,9 +37,19 @@ public class TestUser extends TestCase {
     /*
         Create User Tests
      */
+    @Autowired
+    UserRepository userRepository;
+
+    @Test
+    public void testRepositoryNotNull(){
+        assertNotNull(userRepository);
+    }
 
     @Test
     public void testCreateRegisteredUserWithId() {
+
+
+
         new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw").execute();
 
         assertEquals("userCreatedWithID", new GetUser("registered1@user.com").execute().get(0).getUserID());

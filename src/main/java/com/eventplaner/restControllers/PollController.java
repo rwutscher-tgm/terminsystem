@@ -108,10 +108,14 @@ public class PollController {
         System.out.println("Seas ....................................................................................");
         try{
             if(user != null){
-                new VoteForTopic(pollRepository.findById(params.get("poll")),new GetUser(user.getName()).execute().get(0), pollTopicRepository.findById(params.get("topic"))).execute();
+                System.out.print(params.get("topic"));
+                new VoteForTopic(new GetUser(user.getName()).execute().get(0),
+                        pollTopicRepository,
+                        pollTopicRepository.findById(params.get("topic"))).execute();
             }
             return true;
         }catch(Exception e){
+            e.printStackTrace();
             return false;
         }
     }
