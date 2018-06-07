@@ -25,6 +25,26 @@
             <button class="btn-floating btn-large waves-effect waves-light red" type="submit"><i class="material-icons">send</i></button>
         </form>
 
+        <script>
+
+            $(document).ready(function(){
+
+                $('.topic').each(function(i, obj) {
+                    $.post( "/poll/gettopicvote", {topic: obj.id}, function( data ) {
+                        if(typeof data === 'boolean'){
+                            if(data){
+                                obj.checked = true;
+                            }else{
+                                obj.checked = false;
+                            }
+                        }else{
+                        }
+                    });
+
+                });
+
+            });
+        </script>
 
         <div th:text="${poll.description}"></div>
 
@@ -54,9 +74,8 @@
                     /*<![CDATA[*/
 
                     for(i = 0; i < a.length; i++){
-                        if(a.item(i).checked){
                             id = a.item(i).id;
-                            $.post( "/poll/voteForTopic", {topic: id}, function( data ) {
+                            $.post( "/poll/voteForTopic", {topic: id, voted: a.item(i).checked}, function( data ) {
 
                                 if(typeof data === 'boolean'){
                                     if(data){
@@ -70,8 +89,6 @@
                                 //$( ".result" ).html( data );
 
                             });
-                            //alert("seas");
-                        }
                     }
                     /*]]>*/
                 }
@@ -81,13 +98,20 @@
 
 
                 $(document).ready(function(){
-                    a = document.getElementsByClassName("topic");
 
+                    $('.topic').each(function(i, obj) {
+                        $.post( "/poll/gettopicvote", {topic: obj.id}, function( data ) {
+                            if(typeof data === 'boolean'){
+                                if(data){
+                                    obj.checked = true;
+                                }else{
+                                    obj.checked = false;
+                                }
+                            }else{
+                            }
+                        });
 
-                    for(i = 0; i < a.length; i++){
-                        $('#'+a.item().id).prop('checked', true);
-                    }
-
+                    });
 
                 });
             </script>

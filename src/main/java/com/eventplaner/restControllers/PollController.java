@@ -100,33 +100,52 @@ public class PollController {
     public void joinPoll(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
 
         if(user != null){
-            new JoinPoll(pollRepository.findById(pollId), new GetUser(user.getName()).execute().get(0), pollRepository).execute();
+            if(!pollRepository.findById(pollId).getParticipants().contains(userRepository.findByUserID(user.getName()))){
+                //if user hasn't joined
+                new JoinPoll(pollRepository.findById(pollId), new GetUser(user.getName()).execute().get(0), pollRepository).execute();
+                response.sendRedirect("/poll?poll="+pollId);
+            }else{
+                new LeavePoll(pollRepository.findById(pollId), new GetUser(user.getName()).execute().get(0), pollRepository).execute();
+                response.sendRedirect("/poll?poll="+pollId);
+            }
+
+        }else{
             response.sendRedirect("/poll?poll="+pollId);
         }
+    }
 
-        response.sendRedirect("/poll?poll="+pollId);
+    @PostMapping("/poll/getjoined")
+    public boolean getjoined(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
+        return pollRepository.findById(pollId).getParticipants().contains(userRepository.findByUserID(user.getName()));
     }
 
     @PostMapping("/poll/voteForTopic")
-    public boolean voteForTopic(@RequestParam(value="topic") String topic, Principal user){
+    public boolean voteForTopic(@RequestParam(value="topic") String topic, @RequestParam(value="voted") boolean voted, Principal user){
         System.out.println("Seas ....................................................................................");
         try{
             if(user != null){
                 if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
                     // if User hasnt voted for topic jet
-                    new VoteForTopic(
-                            userRepository.findByEmail(user.getName()),
-                            pollTopicRepository,
-                            pollTopicRepository.findById(topic)
-                    ).execute();
+
+                    if(voted){
+                        new VoteForTopic(
+                                userRepository.findByEmail(user.getName()),
+                                pollTopicRepository,
+                                pollTopicRepository.findById(topic)
+                        ).execute();
+                    }
                 }else{
                     // if User has already voted for topic
                     // if User hasnt voted for topic jet
-                    new RemoveVoteForTopic(
-                            userRepository.findByEmail(user.getName()),
-                            pollTopicRepository,
-                            pollTopicRepository.findById(topic)
-                    ).execute();
+
+                    if(!voted){
+                        new RemoveVoteForTopic(
+                                userRepository.findByEmail(user.getName()),
+                                pollTopicRepository,
+                                pollTopicRepository.findById(topic)
+                        ).execute();
+                    }
+
                 }
 
             }
