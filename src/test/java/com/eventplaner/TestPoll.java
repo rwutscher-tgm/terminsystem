@@ -73,7 +73,7 @@ public class TestPoll extends TestCase{
     public void testaddPollTopic() {
         // Creating Organizer
         new CreateUser("registered2@user.com","regUser2","rootpw",registeredUserRepository).execute();
-        RegisteredUser organizer = registeredUserRepository.findByEmail("registered1@user.com");
+        RegisteredUser organizer = registeredUserRepository.findByEmail("registered2@user.com");
 
         // Creating Poll
         new CreatePoll(organizer, "poll_2", "poll", true, pollRepository).execute();
@@ -160,6 +160,48 @@ public class TestPoll extends TestCase{
         assertEquals(pollRepository.findAllByName("poll_4").size(), 0);
     }
 
+    @Test
+    public void testLeavePoll(){
+        new CreateUser("registered8@user.com","regUser8","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer1 = registeredUserRepository.findByEmail("registered8@user.com");
+
+        new CreateUser("registered9@user.com","regUser9","rootpw",registeredUserRepository).execute();
+        RegisteredUser participant = registeredUserRepository.findByEmail("registered9@user.com");
+
+        new CreatePoll(organizer1, "poll_5", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_5").get(0);
+
+        assertEquals(1, pollRepository.findAllByName("poll_5").get(0).getParticipants().size());
+
+        new JoinPoll(poll, participant, pollRepository).execute();
+
+        assertEquals(2, pollRepository.findAllByName("poll_5").get(0).getParticipants().size());
+
+        new LeavePoll(poll, participant, pollRepository).execute();
+
+        assertEquals(1, pollRepository.findAllByName("poll_5").get(0).getParticipants().size());
+
+    }
+
+    @Test
+    public void testremovePollTopic() {
+        // Creating Organizer
+        new CreateUser("registered10@user.com","regUser10","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer = registeredUserRepository.findByEmail("registered10@user.com");
+
+        // Creating Poll
+        new CreatePoll(organizer, "poll_5", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_5").get(0);
+
+        new AddPollTopic(poll, "poll_topic_1", pollRepository, pollTopicRepository).execute();
+
+        assertEquals(1, pollRepository.findAllByName("poll_5").get(0).getPollTopics().size());
+
+        new RemovePollTopic(poll, pollTopicRepository.findByDescription("poll_topic_1"), pollRepository, pollTopicRepository).execute();
+
+        assertEquals(0, pollRepository.findAllByName("poll_5").get(0).getPollTopics().size());
+    }
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -173,6 +215,7 @@ public class TestPoll extends TestCase{
                 "poll_2",
                 "poll_3",
                 "poll_4",
+                "poll_5",
                 "MyName"
         };
         for(String poll: polls){
@@ -190,6 +233,9 @@ public class TestPoll extends TestCase{
                 "registered5@user.com",
                 "registered6@user.com",
                 "registered7@user.com",
+                "registered8@user.com",
+                "registered9@user.com",
+                "registered10@user.com",
                 "registered20@user.com",
 
                 "unregistered1@user.com",
