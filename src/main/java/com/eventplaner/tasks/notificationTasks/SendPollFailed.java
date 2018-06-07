@@ -56,9 +56,7 @@ public class SendPollFailed implements Task {
             //Title of the maik
             message.setSubject("There has been a problem with your poll!" +
                     "");
-
-            //Set the type of content, that the mail should be in
-            //message.setContent(messageHtml, "text/html");
+            
 
             //Main content of the mail
             message.setText("We are sorry to inform you "
