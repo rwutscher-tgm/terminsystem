@@ -35,14 +35,39 @@ public class SendPollFinalizedUpdate implements Task{
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
-            message.setSubject("Signup");
+            message.setSubject("The results of your poll are here!");
 
             message.setContent(messageHtml, "text/html");
-            message.setText("Your Terminplaner Account has been created successfully!"
-                    + "\n\n Have fun!");
+            message.setText(
+                    "Dear User,"+
+                            "\n\n"
+                    +"Your poll has been completed and here is the result:"+
+                            "\n\n"
+                    +"<TempText1>\n"
+                    +"<TempText2>\n"
+                    +"<TempText3>\n"
+                    +"<TempText4>\n\n"
+                    +"We hope you are happy with the results and we are looking forward for your next poll"+
+                            "\n\n"
+                    +"Good luck,"+
+                            "\n\n"
+                    +"Your Terminsystem team" +
+                            "\n"
+            );
 
             Transport.send(message);
 
             System.out.println("Done");
     }
 }
+
+
+
+
+
+
+
+
+
+
+

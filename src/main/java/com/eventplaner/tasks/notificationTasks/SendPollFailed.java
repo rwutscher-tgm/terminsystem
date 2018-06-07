@@ -35,7 +35,8 @@ public class SendPollFailed implements Task {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
-            message.setSubject("There has been a problem with your poll!");
+            message.setSubject("There has been a problem with your poll!" +
+                    "");
 
             message.setContent(messageHtml, "text/html");
             message.setText("We are sorry to inform you "
@@ -48,3 +49,10 @@ public class SendPollFailed implements Task {
             System.out.println("Done");
     }
 }
+
+
+
+
+
+
+
