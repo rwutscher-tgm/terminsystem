@@ -40,11 +40,13 @@ public class ViewController {
     public String home(@RequestParam(value="poll", required = false) String pollId, Model model, Principal user){
 
         boolean loggedIn = false;
+        boolean isOrganizer = false;
         if(user != null){
             loggedIn = true;
         }
 
         if(pollId == null){
+
             Iterable<Poll> polls = pollRepository.findAll();
             ArrayList<Poll> validPolls = new ArrayList<>();
             for(Poll poll:polls){
@@ -54,7 +56,7 @@ public class ViewController {
                     if(loggedIn){
                         User logged_in_User = new GetUser(user.getName()).execute().get(0);
 
-                        System.out.println("USERNAME :::::::::::::::::: " + logged_in_User.getEmail());
+
 
                         for(User participant: poll.getParticipants()){
 
@@ -66,12 +68,14 @@ public class ViewController {
                         for(User organizer: poll.getOrganizers()){
                             if(organizer.getEmail().equals(logged_in_User.getEmail())){
                                 validPolls.add(poll);
+                                isOrganizer = true;
                                 break;
                             }
                         }
                     }
                 }
             }
+
             model.addAttribute("polls", validPolls /*new GetPoll().execute()*/);
             return "polls";
 
@@ -86,7 +90,9 @@ public class ViewController {
             Poll poll = pollRepository.findById(pollId);
             int i = poll.getCommentSystem().getComments().size();
             System.out.println(poll.getPollTopics().size());
+            
             model.addAttribute("loggedIn", loggedIn);
+            model.addAttribute("isOrganizer", isOrganizer);
             model.addAttribute("poll", poll);
             //model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);
             /*model.addAttribute("name", poll.getName());
