@@ -45,11 +45,11 @@ public class RegisteredUser extends User {
         this.userID = UUID.randomUUID().toString();
     }
 
-    public boolean isPassword(String unhashedPassword){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println("Password matches: " + passwordEncoder.matches(unhashedPassword, this.password));
-        return passwordEncoder.matches(unhashedPassword, this.password);
-    }
+//    public boolean isPassword(String unhashedPassword){
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        System.out.println("Password matches: " + passwordEncoder.matches(unhashedPassword, this.password));
+//        return passwordEncoder.matches(unhashedPassword, this.password);
+//    }
 
     public String getPassword() {
         return password;

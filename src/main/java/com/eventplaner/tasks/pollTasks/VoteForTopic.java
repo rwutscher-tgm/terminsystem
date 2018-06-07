@@ -14,7 +14,7 @@ public class VoteForTopic implements Task{
 
     private PollTopic polltopic;
 
-    public VoteForTopic(User user, PollTopicRepository repository, PollTopic polltopic) {
+    public VoteForTopic(User user, PollTopic polltopic, PollTopicRepository repository) {
         this.user = user;
         this.repository = repository;
         this.polltopic = polltopic;

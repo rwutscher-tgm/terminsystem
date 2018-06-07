@@ -15,7 +15,7 @@ public class RemoveVoteForTopic implements Task {
 
     private PollTopic polltopic;
 
-    public RemoveVoteForTopic(User user, PollTopicRepository repository, PollTopic polltopic) {
+    public RemoveVoteForTopic(User user, PollTopic polltopic, PollTopicRepository repository) {
         this.user = user;
         this.repository = repository;
         this.polltopic = polltopic;

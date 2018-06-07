@@ -1,20 +1,41 @@
 package com.eventplaner;
 
-import com.eventplaner.model.Comment;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.tasks.DeleteObject;
+import com.eventplaner.model.repositories.PollRepository;
+import com.eventplaner.model.repositories.PollTopicRepository;
+import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.tasks.commentTasks.AddComment;
-import com.eventplaner.tasks.commentTasks.EditComment;
-import com.eventplaner.tasks.commentTasks.GetComment;
 import com.eventplaner.tasks.pollTasks.CreatePoll;
 import com.eventplaner.tasks.pollTasks.GetPoll;
 import com.eventplaner.tasks.userTasks.CreateUser;
 import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+//@WebIntegrationTest
+@AutoConfigureTestDatabase
+@AutoConfigureTestEntityManager
+@DataJpaTest
 public class TestComment extends TestCase{
+
+    @Autowired
+    PollRepository pollRepository;
+
+    @Autowired
+    PollTopicRepository pollTopicRepository;
+
+    @Autowired
+    RegisteredUserRepository registeredUserRepository;
 
     @Override
     protected void setUp() throws Exception {
@@ -36,16 +57,16 @@ public class TestComment extends TestCase{
     @Test
     public void testChangeComment(){
         //Creating User
-        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw").execute();
+        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository).execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered1@user.com").execute().get(0);
 
         //Creting Poll
-        new CreatePoll(user, "poll_1", "poll", true);
+        new CreatePoll(user, "poll_1", "poll", true, pollRepository);
         Poll poll = new GetPoll("registered1@user.com").execute().get(0);
 
         //Adding Comment
         new AddComment(poll, user, "Hi!").execute();
-        //Comment comment = new GetComment(poll).execute().get(0);
+        //Comment comment = new GetComment(poll).execute().get(0);*/
 
         //Changing Comment
         //new EditComment(comment, "Bye!").execute();
@@ -74,7 +95,7 @@ public class TestComment extends TestCase{
         };
         for(String poll: polls){
             try{
-                new DeleteObject<>(new GetPoll(poll).execute().get(0)).execute();
+                pollRepository.delete(pollRepository.findAllByName(poll).get(0));
             }catch (Exception e){}
         }
 
@@ -92,7 +113,7 @@ public class TestComment extends TestCase{
 
         for(String user: users){
             try{
-                new DeleteObject<>(new GetUser(user).execute().get(0)).execute();
+                registeredUserRepository.delete(registeredUserRepository.findByEmail(user));
             }catch (Exception e){}
         }
 
