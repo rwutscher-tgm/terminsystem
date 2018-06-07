@@ -52,7 +52,7 @@ public class SendPollFailed implements Task {
                     "");
 
             //Set the type of content, that the mail should be in
-            message.setContent(messageHtml, "text/html");
+            //message.setContent(messageHtml, "text/html");
 
             //Main content of the mail
             message.setText("We are sorry to inform you "

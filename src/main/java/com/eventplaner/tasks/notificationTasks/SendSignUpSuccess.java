@@ -61,7 +61,7 @@ public class SendSignUpSuccess implements Task{
             message.setSubject("Signup");
 
             //Define thetype of mail
-            message.setContent(messageHtml, "text/html");
+            //message.setContent(messageHtml, "text/html");
 
             //Set the main content of the mail
             message.setText("Your Terminplaner Account has been created successfully!"
