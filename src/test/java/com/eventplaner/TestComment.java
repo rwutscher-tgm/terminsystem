@@ -58,11 +58,7 @@ public class TestComment extends TestCase{
     @Test
     public void testChangeComment(){
         //Creating User
-<<<<<<< Updated upstream
         new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository).execute();
-=======
-        /*new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw").execute();
->>>>>>> Stashed changes
         RegisteredUser user = (RegisteredUser) new GetUser("registered1@user.com").execute().get(0);
 
         //Creting Poll
