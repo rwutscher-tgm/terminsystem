@@ -66,7 +66,7 @@ public class TestComment extends TestCase{
 
         //Adding Comment
         new AddComment(poll, user, "Hi!").execute();
-        //Comment comment = new GetComment(poll).execute().get(0);
+        //Comment comment = new GetComment(poll).execute().get(0);*/
 
         //Changing Comment
         //new EditComment(comment, "Bye!").execute();
