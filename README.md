@@ -13,26 +13,26 @@ Hier wird erklärt, wie man seinen eigenen Terminsystem Server kompiliert und au
 
 ### Installing
 
-0) Zuerst muss das git-Repository heruntergeladen werden. Das kann entweder über Download>Downlad Zip oder diesen Befehl geschehen:
+1) Zuerst muss das git-Repository heruntergeladen werden. Das kann entweder über Download>Downlad Zip oder diesen Befehl geschehen:
 
 ```bash
  git clone git@github.com:rwutscher-tgm/terminsystem.git
  ```
 
-0) Als nächstes muss man in den Ordner gehen und den gradle build starten.
+2) Als nächstes muss man in den Ordner gehen und den gradle build starten.
 
 ```bash
 cd terminsystem
 gradle build
  ```
 
-0) Letztens muss ein jar File mit dem folgenden Befehl erstellt werden
+3) Letztens muss ein jar File mit dem folgenden Befehl erstellt werden
 
 ```bash
 gradle jar
  ```
 
-0) Das jar-File befindet sich jetzt unter build/libs
+4) Das jar-File befindet sich jetzt unter build/libs
 
 
 ## Running the tests
