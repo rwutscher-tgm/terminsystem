@@ -11,6 +11,7 @@ public class RemoveComment implements Task{
 
     public RemoveComment(Comment comment, CommentRepository commentRepository) {
         this.comment = comment;
+        this.commentRepository = commentRepository;
     }
 
     @Override

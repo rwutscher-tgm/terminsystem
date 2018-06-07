@@ -1,9 +1,11 @@
 package com.eventplaner;
 
-import com.eventplaner.model.repositories.PollRepository;
-import com.eventplaner.model.repositories.PollTopicRepository;
-import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.model.repositories.UserRepository;
+import com.eventplaner.model.Poll;
+import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.model.repositories.*;
+import com.eventplaner.tasks.userTasks.*;
+import com.eventplaner.tasks.commentTasks.*;
+import com.eventplaner.tasks.pollTasks.*;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +36,12 @@ public class TestComment extends TestCase{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    CommentSystemRepository commentSystemRepository;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -43,12 +51,38 @@ public class TestComment extends TestCase{
 
     @Test
     public void testCreateComment(){
+        //Creating User
+        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository, userRepository).execute();
+        RegisteredUser user = registeredUserRepository.findByEmail("registered1@user.com");
 
+        //Creting Poll
+        new CreatePoll(user, "poll_1", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_1").get(0);
+
+        //Adding Comment
+        new AddComment(poll, user, "Hi!", commentRepository, commentSystemRepository).execute();
+
+        assertEquals("Hi!", commentRepository.findAllByComment("Hi!").get(0).getComment());
     }
 
     @Test
     public void testRemoveComment(){
+        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository, userRepository).execute();
+        RegisteredUser user = registeredUserRepository.findByEmail("registered1@user.com");
 
+        //Creting Poll
+        new CreatePoll(user, "poll_1", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_1").get(0);
+
+        //Adding Comment
+        new AddComment(poll, user, "Hi!", commentRepository, commentSystemRepository).execute();
+
+        System.out.println(commentRepository.findAllByComment("Hi!").get(0));
+
+        //Deleting Comment
+        new RemoveComment(commentRepository.findAllByComment("Hi!").get(0), commentRepository).execute();
+
+        assertEquals(0, commentRepository.findAllByComment("Hi!").size());
     }
 
     @Test
