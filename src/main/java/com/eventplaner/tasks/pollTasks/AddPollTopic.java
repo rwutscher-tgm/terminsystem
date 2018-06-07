@@ -2,6 +2,8 @@ package com.eventplaner.tasks.pollTasks;
 
 import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.*;
+import com.eventplaner.model.repositories.PollRepository;
+import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 import org.hibernate.Session;
@@ -13,9 +15,14 @@ public class AddPollTopic implements Task{
     private Poll poll;
     private String description;
 
-    public AddPollTopic(Poll poll, String description) {
+    private PollRepository pollRepository;
+    private PollTopicRepository pollTopicRepository;
+
+    public AddPollTopic(Poll poll, String description, PollRepository pollRepository, PollTopicRepository pollTopicRepository) {
         this.poll = poll;
         this.description = description;
+        this.pollRepository = pollRepository;
+        this.pollTopicRepository = pollTopicRepository;
     }
 
     @Override
@@ -41,10 +48,10 @@ public class AddPollTopic implements Task{
             session.beginTransaction();*/
 
             PollTopic topic = new PollTopic(this.description);
-            new SaveObject<>(topic).execute();
+            pollTopicRepository.save(topic);
 
             this.poll.addPollTopic(topic);
-            new SaveObject<>(this.poll).execute();
+            pollRepository.save(poll);
 /*
             session.getTransaction().commit();
 
