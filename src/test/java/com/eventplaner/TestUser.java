@@ -41,7 +41,6 @@ public class TestUser extends TestCase {
         Create User Tests
      */
     @Autowired
-    @Qualifier("registeredUserRepository")
     RegisteredUserRepository registeredUserRepository;
 
     @Test

@@ -11,12 +11,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class JoinPoll implements Task{
 
     private Poll poll;
     private User participant;
-    PollRepository pollRepository;
+    private PollRepository pollRepository;
 
 
     public JoinPoll(Poll poll, User participant) {
