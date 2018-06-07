@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PollTopicRepository extends JpaRepository<PollTopic ,Long>{
     PollTopic findById(String id);
-
+    PollTopic findByDescription(String description);
 }

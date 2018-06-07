@@ -1,6 +1,7 @@
 package com.eventplaner;
 
 import com.eventplaner.model.Poll;
+import com.eventplaner.model.PollTopic;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
@@ -108,7 +109,15 @@ public class TestPoll extends TestCase{
 
     @Test
     public void testVoteForTopic() {
+        new CreateUser("userCreatedWithID","registered20@user.com","regUser2","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer = registeredUserRepository.findByEmail("registered20@user.com");
 
+        new CreatePoll(organizer, "MyName", "MyDescription", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("MyName").get(0);
+        poll.addPollTopic(new PollTopic("MyPoll"));
+        pollRepository.save(poll);
+        new VoteForTopic(organizer, pollTopicRepository.findByDescription("MyPoll"), pollTopicRepository).execute();
+        assertEquals(pollRepository.findAllByName("MyName").get(0).getPollTopics().get(0).getAvailables().size(), 1);
     }
 
     @Test
