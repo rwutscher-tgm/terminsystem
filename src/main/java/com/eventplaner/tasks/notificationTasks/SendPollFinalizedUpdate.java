@@ -40,6 +40,7 @@ public class SendPollFinalizedUpdate implements Task{
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
             message.setSubject("The results of your poll are here!");
+            //message.setContent(messageHtml, "text/html");
 
             message.setContent(messageHtml, "text/html");
             message.setText(

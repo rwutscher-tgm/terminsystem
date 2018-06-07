@@ -42,7 +42,10 @@ public class SendPollFailed implements Task {
             message.setSubject("There has been a problem with your poll!" +
                     "");
 
-            message.setContent(messageHtml, "text/html");
+            //Set the type of content, that the mail should be in
+            //message.setContent(messageHtml, "text/html");
+
+            //Main content of the mail
             message.setText("We are sorry to inform you "
                     +"that your poll has encountered a problem"
                     +"and has not been sent successfully"
