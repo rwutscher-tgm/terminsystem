@@ -40,14 +40,13 @@ public class SendPollFailed implements Task {
 
             message.setContent(messageHtml, "text/html");
             message.setText("We are sorry to inform you "
-                    + "that your poll has encountered a problem"
-                    + "and has not been sent successfully"
-                    + "\n\n Please try again later or try to contact the support.");
+                    +"that your poll has encountered a problem"
+                    +"and has not been sent successfully"
+                    + "\n\n Please try again later or try to contact the support.);
 
             Transport.send(message);
 
             System.out.println("Done");
-        }
     }
 }
 
