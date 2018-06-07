@@ -15,6 +15,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -40,28 +41,32 @@ public class TestUser extends TestCase {
         Create User Tests
      */
     @Autowired
-    RegisteredUserRepository userRepository;
+    @Qualifier("registeredUserRepository")
+    RegisteredUserRepository registeredUserRepository;
 
     @Test
     public void testRepositoryNotNull(){
-        assertNotNull(userRepository);
-        userRepository.save(new RegisteredUser("rwutscher@student.tgm.ac.at", "rootpw", "Richard Wutscher"));
-        System.out.println(userRepository.findByEmail("rwutscher@student.tgm.ac.at").getUsername() + " seasseas123");
+        if(registeredUserRepository != null){
+            System.out.println("seasseas123");
+        }
+        assertNotNull(registeredUserRepository);
+        RegisteredUser user = new RegisteredUser("rwutscher@student.tgm.ac.at", "rootpw", "Richard Wutscher");
+        registeredUserRepository.save(user);
+//        System.out.println(registeredUserRepository.findByEmail("rwutscher@student.tgm.ac.at").getUsername());
+        registeredUserRepository.delete(user);
     }
 
-    /*@Test
+    @Test
     public void testCreateRegisteredUserWithId() {
 
-
-
-        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw").execute();
+        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository).execute();
 
         assertEquals("userCreatedWithID", new GetUser("registered1@user.com").execute().get(0).getUserID());
     }
 
     @Test
     public void testCreateRegisteredUserWithoutId() {
-        new CreateUser("registered2@user.com","regUser2","rootpw").execute();
+        new CreateUser("registered2@user.com","regUser2","rootpw", registeredUserRepository).execute();
 
         assertEquals(1, new GetUser("registered2@user.com").execute().size());
     }
@@ -83,9 +88,9 @@ public class TestUser extends TestCase {
         Password Tests
      */
 
-    /*@Test
+    @Test
     public void testIsPasswordRight(){
-        new CreateUser("registered4@user.com","regUser4","rootpw").execute();
+        new CreateUser("registered4@user.com","regUser4","rootpw",registeredUserRepository).execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered4@user.com").execute().get(0);
 
         assertTrue(user.isPassword("rootpw"));
@@ -93,7 +98,7 @@ public class TestUser extends TestCase {
 
     @Test
     public void testIsPasswordWrong(){
-        new CreateUser("registered5@user.com","regUser5","rootpw").execute();
+        new CreateUser("registered5@user.com","regUser5","rootpw",registeredUserRepository).execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered5@user.com").execute().get(0);
 
         assertFalse(user.isPassword("RootPw"));
@@ -101,7 +106,7 @@ public class TestUser extends TestCase {
 
     @Test
     public void testChangePasswordRight(){
-        new CreateUser("registered6@user.com","regUser6","rootpw").execute();
+        new CreateUser("registered6@user.com","regUser6","rootpw",registeredUserRepository).execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered6@user.com").execute().get(0);
         user.setPassword("newPw");
 
@@ -110,7 +115,7 @@ public class TestUser extends TestCase {
 
     @Test
     public void testChangePasswordWrong(){
-        new CreateUser("registered7@user.com","regUser7","rootpw").execute();
+        new CreateUser("registered7@user.com","regUser7","rootpw",registeredUserRepository).execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered7@user.com").execute().get(0);
         user.setPassword("newPw");
 
@@ -121,9 +126,9 @@ public class TestUser extends TestCase {
         Delete User Tests
      */
 
-    /*@Test
+    @Test
     public void testDeleteRegisterdUser(){
-        new CreateUser("registered3@user.com","regUser3","rootpw").execute();
+        new CreateUser("registered3@user.com","regUser3","rootpw",registeredUserRepository).execute();
         new DeleteUser(new GetUser("registered3@user.com").execute().get(0)).execute();
 
         assertEquals(0, new GetUser("unregistered3@user.com").execute().size());
@@ -142,7 +147,7 @@ public class TestUser extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         deleteUsers();
-    }*/
+    }
 
     public void deleteUsers(){
         String[] users = new String[]{
