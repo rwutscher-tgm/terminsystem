@@ -6,10 +6,8 @@ import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.tasks.commentTasks.GetComment;
 import com.eventplaner.tasks.pollTasks.*;
 import com.eventplaner.tasks.userTasks.CreateUser;
-import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -114,9 +112,10 @@ public class TestPoll extends TestCase{
         RegisteredUser organizer = registeredUserRepository.findByEmail("registered20@user.com");
 
         new CreatePoll(organizer, "MyName", "MyDescription", true, pollRepository).execute();
+        PollTopic pollTopic = new PollTopic("MyPoll");
+        pollTopicRepository.save(pollTopic);
         Poll poll = pollRepository.findAllByName("MyName").get(0);
-        poll.addPollTopic(new PollTopic("MyPoll"));
-        pollRepository.save(poll);
+        poll.addPollTopic(pollTopicRepository.findByDescription("MyPoll"));
         new VoteForTopic(organizer, pollTopicRepository.findByDescription("MyPoll"), pollTopicRepository).execute();
         assertEquals(pollRepository.findAllByName("MyName").get(0).getPollTopics().get(0).getAvailables().size(), 1);
     }
@@ -182,11 +181,6 @@ public class TestPoll extends TestCase{
                 registeredUserRepository.delete(registeredUserRepository.findByEmail(user));
             }catch (Exception e){}
         }
-
-        System.out.println("Cleaning up: ");
-        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
-        System.out.println("Amount of polls in DB: " + new GetPoll().execute().size());
-        System.out.println("Amount of Comments in DB: " + new GetComment().execute().size());
 
     }
 

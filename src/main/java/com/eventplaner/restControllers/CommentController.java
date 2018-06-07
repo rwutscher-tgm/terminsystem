@@ -1,10 +1,8 @@
 package com.eventplaner.restControllers;
 
-import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.model.repositories.*;
 import com.eventplaner.tasks.commentTasks.AddComment;
-import com.eventplaner.tasks.commentTasks.GetCommentSystem;
-import com.eventplaner.tasks.pollTasks.GetPoll;
-import com.eventplaner.tasks.userTasks.GetUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,11 +15,33 @@ import java.util.Map;
 @org.springframework.web.bind.annotation.RestController
 public class CommentController {
 
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    CommentSystemRepository commentSystemRepository;
+
+    @Autowired
+    RegisteredUserRepository registeredUserRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    PollRepository pollRepository;
+
     @PostMapping("/comment/createComment")
     public void createComment(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {
 
-        new AddComment(new GetPoll(params.get("poll")).execute().get(0), (RegisteredUser) new GetUser(user.getName()).execute().get(0), params.get("comment")).execute();
+//        new AddComment(new GetPoll(params.get("poll")).execute().get(0), (RegisteredUser) new GetUser(user.getName()).execute().get(0), params.get("comment")).execute();
 
+        new AddComment(pollRepository.findById(params.get("poll")),
+                registeredUserRepository.findByEmail(user.getName()),
+                params.get("comment"),
+                commentRepository,
+                commentSystemRepository);
+
+        // CommentSystem system, RegisteredUser author, String comment, CommentRepository commentRepository, CommentSystemRepository commentSystemRepository
         response.sendRedirect("/poll?poll="+params.get("poll"));
     }
 
@@ -30,10 +50,16 @@ public class CommentController {
 
         System.out.println("SEAS :..................................................................................:");
         System.out.println(params.get("commentSystem"));
-        System.out.print(new GetCommentSystem().execute().size());
+//        System.out.print(new GetCommentSystem().execute().size());
 
 
-        new AddComment(new GetCommentSystem(params.get("commentSystem")).execute().get(0), (RegisteredUser) new GetUser(user.getName()).execute().get(0), params.get("comment")).execute();
+//        new AddComment(new GetCommentSystem(params.get("commentSystem")).execute().get(0), (RegisteredUser) new GetUser(user.getName()).execute().get(0), params.get("comment")).execute();
+
+        new AddComment(commentSystemRepository.findByCommentSystemID(params.get("commentSystem")),
+                registeredUserRepository.findByEmail(user.getName()),
+                params.get("comment"),
+                commentRepository,
+                commentSystemRepository);
 
         response.sendRedirect("/poll?poll="+params.get("poll"));
     }

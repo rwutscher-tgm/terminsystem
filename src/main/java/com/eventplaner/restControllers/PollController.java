@@ -4,19 +4,13 @@ import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
+import com.eventplaner.model.repositories.RegisteredUserRepository;
+import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.pollTasks.*;
-import com.eventplaner.tasks.userTasks.GetUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.ITemplateEngine;
-import org.thymeleaf.Thymeleaf;
-import org.thymeleaf.context.EngineContext;
-import org.thymeleaf.context.IContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,13 +27,19 @@ public class PollController {
     @Autowired
     PollTopicRepository pollTopicRepository;
 
+    @Autowired
+    RegisteredUserRepository registeredUserRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     /*
         Creating
      */
     @PostMapping("/poll/createPoll")
     public void createPoll(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {
 
-        RegisteredUser organizer = (RegisteredUser) new GetUser(user.getName()).execute().get(0);
+        RegisteredUser organizer = registeredUserRepository.findByEmail(user.getName());
 
 
         boolean status = false;
@@ -58,25 +58,8 @@ public class PollController {
 
         String id = cp.getId();
 
-        Poll poll = new GetPoll(id).execute().get(0);
+        Poll poll = pollRepository.findById(id);
 
-        System.out.println("Amount of Polls in Database"+new GetPoll().execute().size());
-
-        for(String param : params.values()){
-            System.out.println(param);
-        }
-
-        for(String param : params.keySet()){
-            if(param.substring(0, 6).equals("topic_")){
-                System.out.println("Adding Poll Topic: "+params.get(param));
-                new AddPollTopic(poll, params.get(param), pollRepository, pollTopicRepository).execute();
-            }
-        }
-
-        System.out.println("Amount of Polls in Database"+new GetPoll().execute().size());
-
-
-        System.out.println("SEAS .............................................. ..................... ...............");
         response.sendRedirect("/");
     }
 
@@ -97,7 +80,7 @@ public class PollController {
     public void joinPoll(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
 
         if(user != null){
-            new JoinPoll(pollRepository.findById(pollId), new GetUser(user.getName()).execute().get(0), pollRepository).execute();
+            new JoinPoll(pollRepository.findById(pollId), userRepository.findByEmail(user.getName()), pollRepository).execute();
             response.sendRedirect("/poll?poll="+pollId);
         }
 
@@ -110,7 +93,7 @@ public class PollController {
         try{
             if(user != null){
                 System.out.print(params.get("topic"));
-                new VoteForTopic(new GetUser(user.getName()).execute().get(0),
+                new VoteForTopic(userRepository.findByEmail(user.getName()),
                         pollTopicRepository.findById(params.get("topic")),
                         pollTopicRepository).execute();
             }

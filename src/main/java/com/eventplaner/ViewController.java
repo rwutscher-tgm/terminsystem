@@ -3,14 +3,8 @@ package com.eventplaner;
 import com.eventplaner.model.*;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.UserRepository;
-import com.eventplaner.tasks.commentTasks.AddComment;
-import com.eventplaner.tasks.pollTasks.CreatePoll;
-import com.eventplaner.tasks.pollTasks.GetPoll;
-import com.eventplaner.tasks.userTasks.CreateUser;
-import com.eventplaner.tasks.userTasks.GetUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,7 +103,7 @@ public class ViewController {
             return "poll";
         }catch(Exception e){
             e.printStackTrace();
-            model.addAttribute("polls", new GetPoll().execute());
+            model.addAttribute("polls", pollRepository.findAll());
             return "polls";
         }
     }
