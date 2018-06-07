@@ -1,6 +1,7 @@
 package com.eventplaner.tasks.notificationTasks;
 
 import com.eventplaner.model.Poll;
+import com.eventplaner.model.User;
 import com.eventplaner.tasks.Task;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -14,9 +15,11 @@ import java.util.Properties;
 public class SendPollFailed implements Task {
 
     private Poll poll;
+    private User user;
 
-    public SendPollFailed(Poll poll) {
+    public SendPollFailed(Poll poll, User user) {
         this.poll = poll;
+        this.user = user;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class SendPollFailed implements Task {
 
 
             //Set the recipients
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
 
 
             //Title of the maik
