@@ -3,6 +3,7 @@ package com.eventplaner;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.UnregisteredUser;
 import com.eventplaner.model.User;
+import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.DeleteObject;
 import com.eventplaner.tasks.pollTasks.GetPoll;
@@ -20,11 +21,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
 //@WebIntegrationTest
-//@AutoConfigureTestDatabase
-//@AutoConfigureTestEntityManager
+@AutoConfigureTestDatabase
+@AutoConfigureTestEntityManager
+@DataJpaTest
 public class TestUser extends TestCase {
 
     @Override
@@ -37,9 +39,21 @@ public class TestUser extends TestCase {
     /*
         Create User Tests
      */
+    @Autowired
+    RegisteredUserRepository userRepository;
 
     @Test
+    public void testRepositoryNotNull(){
+        assertNotNull(userRepository);
+        userRepository.save(new RegisteredUser("rwutscher@student.tgm.ac.at", "rootpw", "Richard Wutscher"));
+        System.out.println(userRepository.findByEmail("rwutscher@student.tgm.ac.at").getUsername() + " seasseas123");
+    }
+
+    /*@Test
     public void testCreateRegisteredUserWithId() {
+
+
+
         new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw").execute();
 
         assertEquals("userCreatedWithID", new GetUser("registered1@user.com").execute().get(0).getUserID());
@@ -69,7 +83,7 @@ public class TestUser extends TestCase {
         Password Tests
      */
 
-    @Test
+    /*@Test
     public void testIsPasswordRight(){
         new CreateUser("registered4@user.com","regUser4","rootpw").execute();
         RegisteredUser user = (RegisteredUser) new GetUser("registered4@user.com").execute().get(0);
@@ -107,7 +121,7 @@ public class TestUser extends TestCase {
         Delete User Tests
      */
 
-    @Test
+    /*@Test
     public void testDeleteRegisterdUser(){
         new CreateUser("registered3@user.com","regUser3","rootpw").execute();
         new DeleteUser(new GetUser("registered3@user.com").execute().get(0)).execute();
@@ -128,7 +142,7 @@ public class TestUser extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         deleteUsers();
-    }
+    }*/
 
     public void deleteUsers(){
         String[] users = new String[]{

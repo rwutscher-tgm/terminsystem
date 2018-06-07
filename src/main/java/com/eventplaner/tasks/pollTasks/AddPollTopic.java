@@ -1,10 +1,7 @@
 package com.eventplaner.tasks.pollTasks;
 
 import com.eventplaner.HibernateUtils;
-import com.eventplaner.model.Poll;
-import com.eventplaner.model.PollTopic;
-import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.model.User;
+import com.eventplaner.model.*;
 import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 import org.hibernate.Session;
@@ -23,8 +20,39 @@ public class AddPollTopic implements Task{
 
     @Override
     public void execute() {
-        PollTopic topic = new PollTopic(this.description);
-        new SaveObject<>(topic).execute();
-        this.poll.addPollTopic(topic);
+
+        /*Configuration config = HibernateUtils.getConfig(new Class[]{
+                Poll.class,
+                PollTopic.class,
+                User.class,
+                UnregisteredUser.class,
+                RegisteredUser.class,
+                Comment.class,
+                CommentSystem.class
+        });
+
+        SessionFactory factory = null;
+        Session session = null;
+
+        try{
+            factory = config.buildSessionFactory();
+            session = factory.openSession();
+
+            session.beginTransaction();*/
+
+            PollTopic topic = new PollTopic(this.description);
+            new SaveObject<>(topic).execute();
+
+            this.poll.addPollTopic(topic);
+            new SaveObject<>(this.poll).execute();
+/*
+            session.getTransaction().commit();
+
+            session.close();
+            factory.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+*/
     }
 }

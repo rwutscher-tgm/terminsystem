@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name="comment")
@@ -12,8 +13,6 @@ public class Comment {
 
     @Id
     @Column(name="comment_id")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String  commentID;
 
     //@Column(name="author")
@@ -32,6 +31,7 @@ public class Comment {
     private CommentSystem subCommentSystem;
 
     public Comment(RegisteredUser author, String comment) {
+        this.commentID = UUID.randomUUID().toString();
         this.author = author;
         this.comment = comment;
         this.subCommentSystem = new CommentSystem();
@@ -40,6 +40,7 @@ public class Comment {
     }
 
     public Comment() {
+        this.commentID = UUID.randomUUID().toString();
         this.subCommentSystem = new CommentSystem();
     }
 
@@ -84,4 +85,25 @@ public class Comment {
     public CommentSystem getSubCommentSystem() {
         return subCommentSystem;
     }
+
+    public void setCommentID(String commentID) {
+        this.commentID = commentID;
+    }
+
+    public void setAuthor(RegisteredUser author) {
+        this.author = author;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setSubCommentSystem(CommentSystem subCommentSystem) {
+        this.subCommentSystem = subCommentSystem;
+    }
 }
+

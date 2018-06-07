@@ -1,20 +1,81 @@
 package com.eventplaner.restControllers;
 
+import com.eventplaner.model.Poll;
+import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.model.repositories.PollRepository;
+import com.eventplaner.model.repositories.PollTopicRepository;
+import com.eventplaner.tasks.pollTasks.*;
+import com.eventplaner.tasks.userTasks.GetUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.Thymeleaf;
+import org.thymeleaf.context.EngineContext;
+import org.thymeleaf.context.IContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Map;
 
 @org.springframework.web.bind.annotation.RestController
 public class PollController {
+
+    @Autowired
+    PollRepository pollRepository;
+
+    @Autowired
+    PollTopicRepository pollTopicRepository;
 
     /*
         Creating
      */
     @PostMapping("/poll/createPoll")
-    public void createPoll(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("seas mich gibts auch");
+    public void createPoll(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {
+
+        RegisteredUser organizer = (RegisteredUser) new GetUser(user.getName()).execute().get(0);
+
+
+        boolean status = false;
+        if(params.get("status") != null){
+            if(params.get("status").equals("on")){
+                status = true;
+            }
+        }
+
+
+
+
+        CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status);
+
+        cp.execute();
+
+        String id = cp.getId();
+
+        Poll poll = new GetPoll(id).execute().get(0);
+
+        System.out.println("Amount of Polls in Database"+new GetPoll().execute().size());
+
+        for(String param : params.values()){
+            System.out.println(param);
+        }
+
+        for(String param : params.keySet()){
+            if(param.substring(0, 6).equals("topic_")){
+                System.out.println("Adding Poll Topic: "+params.get(param));
+                new AddPollTopic(poll, params.get(param)).execute();
+            }
+        }
+
+        System.out.println("Amount of Polls in Database"+new GetPoll().execute().size());
+
+
+        System.out.println("SEAS .............................................. ..................... ...............");
         response.sendRedirect("/");
     }
 
@@ -32,13 +93,31 @@ public class PollController {
     }
 
     @PostMapping("/poll/joinPoll")
-    public boolean joinPoll(HttpServletRequest request){
-        return true;
+    public void joinPoll(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
+
+        if(user != null){
+            new JoinPoll(pollRepository.findById(pollId), new GetUser(user.getName()).execute().get(0), pollRepository).execute();
+            response.sendRedirect("/poll?poll="+pollId);
+        }
+
+        response.sendRedirect("/poll?poll="+pollId);
     }
 
-    @PostMapping("/poll/VoteForTopic")
-    public boolean VoteForTopic(HttpServletRequest request){
-        return true;
+    @PostMapping("/poll/voteForTopic")
+    public boolean voteForTopic(@RequestParam Map<String, String> params, Principal user){
+        System.out.println("Seas ....................................................................................");
+        try{
+            if(user != null){
+                System.out.print(params.get("topic"));
+                new VoteForTopic(new GetUser(user.getName()).execute().get(0),
+                        pollTopicRepository,
+                        pollTopicRepository.findById(params.get("topic"))).execute();
+            }
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /*
@@ -61,6 +140,7 @@ public class PollController {
 
     @PostMapping("/poll/removePollTopic")
     public boolean removePollTopic(HttpServletRequest request){
+
         return true;
     }
 

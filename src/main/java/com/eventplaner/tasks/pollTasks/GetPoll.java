@@ -3,6 +3,7 @@ package com.eventplaner.tasks.pollTasks;
 import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.*;
 import com.eventplaner.tasks.GetterTask;
+import com.eventplaner.tasks.commentTasks.GetComment;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Transactional
@@ -64,9 +66,12 @@ public class GetPoll implements GetterTask{
                 polls.addAll(query.list());
             }
 
+            ArrayList<Poll> fixedPolls = new ArrayList<>();
             for(Poll poll: polls){
-                Hibernate.initialize(poll.getCommentSystem().getComments());
+                poll.getCommentSystem().setComments(getComments(poll.getCommentSystem().getCommentSystemID()));
+                fixedPolls.add(poll);
             }
+            polls = fixedPolls;
 
             session.getTransaction().commit();
             session.close();
@@ -77,5 +82,14 @@ public class GetPoll implements GetterTask{
 
 
         return polls;
+    }
+
+    public ArrayList<Comment> getComments(String systemId){
+        ArrayList<Comment> comments = new ArrayList<>();
+        for(Comment comment: new GetComment(systemId).execute()){
+            comment.getSubCommentSystem().setComments(getComments(comment.getSubCommentSystem().getCommentSystemID()));
+            comments.add(comment);
+        }
+        return comments;
     }
 }

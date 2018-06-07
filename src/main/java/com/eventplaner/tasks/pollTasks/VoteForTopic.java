@@ -1,23 +1,28 @@
 package com.eventplaner.tasks.pollTasks;
 
 import com.eventplaner.model.Poll;
+import com.eventplaner.model.PollTopic;
 import com.eventplaner.model.User;
+import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.tasks.Task;
 
 public class VoteForTopic implements Task{
 
-    private Poll poll;
-    private String topic;
     private User user;
 
-    public VoteForTopic(Poll poll, User user, String topic) {
-        this.poll = poll;
+    private PollTopicRepository repository;
+
+    private PollTopic polltopic;
+
+    public VoteForTopic(User user, PollTopicRepository repository, PollTopic polltopic) {
         this.user = user;
-        this.topic = topic;
+        this.repository = repository;
+        this.polltopic = polltopic;
     }
 
     @Override
     public void execute() {
-        this.poll.addPollTopic();
+        this.polltopic.addAvailable(user);
+        repository.save(this.polltopic);
     }
 }

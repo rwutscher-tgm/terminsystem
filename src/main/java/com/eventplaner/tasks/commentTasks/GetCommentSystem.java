@@ -11,35 +11,25 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetComment implements GetterTask{
-
+public class GetCommentSystem implements GetterTask{
     private User user;
     private CommentSystem system;
     private String cid;
 
-    public GetComment(){
+    public GetCommentSystem(){
 
     }
-
-    public GetComment(User user) {
-        this.user = user;
-    }
-
-    public GetComment(CommentSystem system) {
-        this.system = system;
-    }
-
-    public GetComment(String cid) {
+    public GetCommentSystem(String cid) {
         this.cid = cid;
     }
 
     @Override
-    public ArrayList<Comment> execute() {
+    public ArrayList<CommentSystem> execute() {
 
 
 
 
-        ArrayList<Comment> polls = new ArrayList<>();
+        ArrayList<CommentSystem> polls = new ArrayList<>();
 
         // Adding all model classes to hibernate config
         Configuration config = HibernateUtils.getConfig(new Class[]{
@@ -60,24 +50,13 @@ public class GetComment implements GetterTask{
             session = factory.openSession();
             session.beginTransaction();
 
-
-            if(this.user != null){
-                //TODO: Implement get all Comments from a User
-            }else if(this.system != null){
-                Query query = session.createQuery("from stored_comment where CommentSystem_comment_system_id = :i");
-                query.setParameter("i", system.getCommentSystemID());
-                List<String> commentIds = query.list();
-
-                for(String commentId: commentIds){
-                    polls.add(new GetComment(commentId).execute().get(0));
-                }
-            }else if(this.cid != null) {
-                Query query = session.createQuery("from Comment where comment_id = :i");
+            if(this.cid != null) {
+                Query query = session.createQuery("from CommentSystem where comment_system_id = :i");
                 query.setParameter("i", this.cid);
                 polls.addAll(query.list());
 
             }else{
-                Query query = session.createQuery("from Comment");
+                Query query = session.createQuery("from CommentSystem");
                 polls.addAll(query.list());
             }
 

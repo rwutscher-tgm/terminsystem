@@ -6,6 +6,7 @@
     <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
 		
     </script>
@@ -19,9 +20,83 @@
 
         <h1 th:text="${poll.name}"> </h1>
 
+        <form method="post" action="/poll/joinPoll">
+            <input type="hidden" name="poll" th:value="${poll.id}">
+            <button class="btn-floating btn-large waves-effect waves-light red" type="submit"><i class="material-icons">send</i></button>
+        </form>
+
+
         <div th:text="${poll.description}"></div>
 
-        <h2>Comments</h2>
+        <br>
+        <div class="divider"></div>
+
+        <div class="col s12 m2">
+
+
+            <h3>Termine</h3>
+            <div class="" th:each="pollTopic: ${poll.pollTopics}">
+
+                <p>
+                    <label>
+                        <input type="checkbox" th:id="''+${pollTopic.id}" class="topic"/>
+                        <span th:text="${pollTopic.description}"></span>
+                    </label>
+                </p>
+            </div>
+            <div id="topic_messages"></div>
+            <a href="#" class="btn-large waves-effect waves-light green lighten-1" onclick="f1()">Send</a>
+
+            <script>
+                function f1(){
+                    a = document.getElementsByClassName("topic");
+
+                    /*<![CDATA[*/
+
+                    for(i = 0; i < a.length; i++){
+                        if(a.item(i).checked){
+                            $.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
+                                if(typeof data === 'boolean'){
+                                    if(data){
+                                        $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");
+                                    }else{
+                                        $("#topic_messages").html("<div class=\"card-panel red lighten-1\">Error</div>");
+                                    }
+                                }else{
+                                    window.location.replace("/login");
+                                }
+                                //$( ".result" ).html( data );
+
+                            });
+                            //alert("seas");
+                        }
+                    }
+                    /*]]>*/
+                }
+            </script>
+        </div>
+
+        <br>
+        <div class="divider"></div>
+        <h3>Comments</h3>
+
+        <div class="row">
+            <form class="col s12" method="post" action="/comment/createComment">
+                <input type="hidden" name="poll" th:value="${poll.id}">
+                <div class="row">
+                    <div class="input-field col s11">
+                        <textarea id="textarea1" name="comment" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Schreib ein Kommentar ...</label>
+                    </div>
+                    <div class="input-field col s1">
+                        <button class="btn-floating btn-large waves-effect waves-light red" type="submit" name="submitbutton"><i class="material-icons">send</i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
         <div th:replace="fragments.html :: commentTree(commentSystem=${poll.commentSystem})"></div>
     </div>
 

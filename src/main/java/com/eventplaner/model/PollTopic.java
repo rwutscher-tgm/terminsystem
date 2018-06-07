@@ -23,6 +23,11 @@ public class PollTopic {
 
     public PollTopic(String description) {
         this.description = description;
+        this.availables = new ArrayList<>();
+    }
+
+    public PollTopic() {
+        this.availables = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -31,5 +36,13 @@ public class PollTopic {
 
     public ArrayList<User> getAvailables() {
         return availables;
+    }
+
+    public void addAvailable(User user) {
+        this.availables.add(user);
+    }
+
+    public void removeAvailable(User user){
+        this.availables.remove(user);
     }
 }
