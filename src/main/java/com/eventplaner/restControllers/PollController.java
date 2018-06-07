@@ -51,7 +51,7 @@ public class PollController {
 
 
 
-        CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status);
+        CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status, pollRepository);
 
         cp.execute();
 
@@ -68,7 +68,7 @@ public class PollController {
         for(String param : params.keySet()){
             if(param.substring(0, 6).equals("topic_")){
                 System.out.println("Adding Poll Topic: "+params.get(param));
-                new AddPollTopic(poll, params.get(param)).execute();
+                new AddPollTopic(poll, params.get(param), pollRepository, pollTopicRepository).execute();
             }
         }
 

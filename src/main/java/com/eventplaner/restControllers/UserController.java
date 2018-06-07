@@ -1,7 +1,9 @@
 package com.eventplaner.restControllers;
 
+import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.tasks.userTasks.CreateUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,10 @@ import java.util.Map;
 @org.springframework.web.bind.annotation.RestController
 public class UserController {
 
+    @Autowired
+    @Qualifier("registeredUserRepository")
+    private RegisteredUserRepository registeredUserRepository;
+
     /*
         Create
      */
@@ -25,7 +31,7 @@ public class UserController {
         System.out.println(username);
         System.out.println(password);
 */
-        new CreateUser(email, username, password).execute();
+        new CreateUser(email, username, password, registeredUserRepository).execute();
         response.sendRedirect("/login");
     }
 
