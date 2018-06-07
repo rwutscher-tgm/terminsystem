@@ -27,6 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureTestEntityManager
 @DataJpaTest
 public class TestPoll extends TestCase{
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -50,7 +51,7 @@ public class TestPoll extends TestCase{
     @Test
     public void testCreatePoll() {
         // Creating Organizer
-        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw",registeredUserRepository).execute();
+        new CreateUser("registered1@user.com","regUser1","rootpw",registeredUserRepository).execute();
 //        RegisteredUser organizer = (RegisteredUser) new GetUser("registered1@user.com").execute().get(0);
         RegisteredUser organizer = registeredUserRepository.findByEmail("registered1@user.com");
         System.out.println(organizer.getUsername());
@@ -73,7 +74,7 @@ public class TestPoll extends TestCase{
     @Test
     public void testaddPollTopic() {
         // Creating Organizer
-        new CreateUser("userCreatedWithID","registered2@user.com","regUser2","rootpw",registeredUserRepository).execute();
+        new CreateUser("registered2@user.com","regUser2","rootpw",registeredUserRepository).execute();
         RegisteredUser organizer = registeredUserRepository.findByEmail("registered1@user.com");
 
         // Creating Poll
@@ -90,21 +91,21 @@ public class TestPoll extends TestCase{
     @Test
     public void testAddOrganizer(){
         // Creating Organizers
-        new CreateUser("userCreatedWithID","registered3@user.com","regUser3","rootpw",registeredUserRepository).execute();
-        RegisteredUser organizer1 = (RegisteredUser) new GetUser("registered3@user.com").execute().get(0);
+        new CreateUser("registered3@user.com","regUser3","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer1 = registeredUserRepository.findByEmail("registered3@user.com");
 
-        new CreateUser("userCreatedWithID","registered@user.com","regUser4","rootpw",registeredUserRepository).execute();
-        RegisteredUser organizer2 = (RegisteredUser) new GetUser("registered4@user.com").execute().get(0);
+        new CreateUser("registered@user.com","regUser4","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer2 = registeredUserRepository.findByEmail("registered@user.com");
 
         // Creating Poll
-        new CreatePoll(organizer1, "poll_ 2", "poll", true, pollRepository).execute();
-        Poll poll = new GetPoll("poll_ 2").execute().get(0);
+        new CreatePoll(organizer1, "poll_2", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_2").get(0);
 
         // Adding Organizer
         new AddOrganizer(poll, organizer2, pollRepository).execute();
-        poll = new GetPoll("poll_ 2").execute().get(0);
+        poll = pollRepository.findAllByName("poll_2").get(0);
 
-        assertEquals(new GetOrganizer(poll).execute().size(), 2);
+        assertEquals(2, poll.getOrganizers().size());
     }
 
     @Test
@@ -123,26 +124,26 @@ public class TestPoll extends TestCase{
     @Test
     public void testRemoveOrganizer(){
         // Creating Organizers
-        new CreateUser("userCreatedWithID","registered5@user.com","regUser5","rootpw",registeredUserRepository).execute();
-        RegisteredUser organizer1 = (RegisteredUser) new GetUser("registered3@user.com").execute().get(0);
+        new CreateUser("registered5@user.com","regUser5","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer1 = registeredUserRepository.findByEmail("registered5@user.com");
 
-        new CreateUser("userCreatedWithID","registered5@user.com","regUser6","rootpw",registeredUserRepository).execute();
-        RegisteredUser organizer2 = (RegisteredUser) new GetUser("registered6@user.com").execute().get(0);
+        new CreateUser("registered6@user.com","regUser6","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer2 = registeredUserRepository.findByEmail("registered6@user.com");
 
         // Creating Poll
-        new CreatePoll(organizer1, "poll_ 3", "poll", true, pollRepository).execute();
-        Poll poll = new GetPoll("poll_ 3").execute().get(0);
+        new CreatePoll(organizer1, "poll_3", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_3").get(0);
 
         // Adding Organizer
         new AddOrganizer(poll, organizer2, pollRepository).execute();
-        poll = new GetPoll("poll_ 3").execute().get(0);
+        poll = pollRepository.findAllByName("poll_3").get(0);
 
         // Removing Organizer
         new RemoveOrganizer(poll, registeredUserRepository.findByEmail("registered6@user.com"), pollRepository).execute();
-        poll = new GetPoll("poll_ 3").execute().get(0);
+        poll = pollRepository.findAllByName("poll_3").get(0);
 
 
-        assertEquals(new GetOrganizer(poll).execute().size(), 0);
+        assertEquals(1, pollRepository.findAllByName("poll_3").get(0).getOrganizers().size());
     }
 
     @Override
@@ -154,9 +155,9 @@ public class TestPoll extends TestCase{
     public void deleteObjects(){
 
         String[] polls = new String[]{
-                "poll_ 1",
-                "poll_ 2",
-                "poll_ 3"
+                "poll_1",
+                "poll_2",
+                "poll_3"
         };
         for(String poll: polls){
             try{

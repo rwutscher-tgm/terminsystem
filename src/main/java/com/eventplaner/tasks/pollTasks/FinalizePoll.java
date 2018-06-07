@@ -2,6 +2,7 @@ package com.eventplaner.tasks.pollTasks;
 
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.PollTopic;
+import com.eventplaner.model.User;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.tasks.DeleteObject;
 import com.eventplaner.tasks.Task;
@@ -32,9 +33,14 @@ public class FinalizePoll implements Task{
                 }
 
             }
-            new SendPollFinalizedUpdate(this.poll).execute();
+            for(User participant: this.poll.getParticipants()){
+                new SendPollFinalizedUpdate(this.poll, mostVotedTopic, participant).execute();
+            }
         }else{
-            new SendPollFailed(this.poll).execute();
+            for(User participant: this.poll.getParticipants()){
+                new SendPollFailed(this.poll, participant).execute();
+            }
+
         }
         pollRepository.delete(this.poll);
     }

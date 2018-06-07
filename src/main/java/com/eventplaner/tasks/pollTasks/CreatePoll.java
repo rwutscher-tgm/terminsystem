@@ -25,7 +25,6 @@ public class CreatePoll implements Task{
         this.description = description;
         this.isPublic = isPublic;
         this.pollRepository = pollRepository;
-        if(pollRepository != null)System.out.println("seasseas123");
     }
 
     @Override

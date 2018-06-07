@@ -12,10 +12,10 @@ public class JoinPoll implements Task{
     private PollRepository pollRepository;
 
 
-    public JoinPoll(Poll poll, User participant) {
+    /*public JoinPoll(Poll poll, User participant) {
         this.poll = poll;
         this.participant = participant;
-    }
+    }*/
 
     public JoinPoll(Poll poll, User participant, PollRepository pollRepository) {
         this.poll = poll;

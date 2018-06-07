@@ -20,6 +20,7 @@ public class AddOrganizer implements Task{
     @Override
     public void execute() {
         this.poll.addOrganizer(this.organizer);
+        new JoinPoll(this.poll, organizer, pollRepository).execute();
         pollRepository.save(this.poll);
     }
 }
