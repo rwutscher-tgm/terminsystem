@@ -74,6 +74,11 @@ public class TestPoll extends TestCase{
     }
 
     @Test
+    public void testVoteForTopic() {
+
+    }
+
+    @Test
     public void testRemoveOrganizer(){
         // Creating Organizers
         new CreateUser("userCreatedWithID","registered5@user.com","regUser5","rootpw").execute();

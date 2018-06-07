@@ -25,6 +25,7 @@
             <button class="btn-floating btn-large waves-effect waves-light red" id="joinPollButton" type="submit">Join</button>
         </form>
 
+<<<<<<< HEAD
         <script th:inline="javascript">
             /*<![CDATA[*/
             $(document).ready(function(){
@@ -43,6 +44,8 @@
             });
             /*]]>*/
         </script>
+=======
+>>>>>>> 209f597b4e1b3d8179722d6bd84cdab3e4f24c12
 
         <div th:text="${poll.description}"></div>
 
@@ -72,9 +75,8 @@
                     /*<![CDATA[*/
 
                     for(i = 0; i < a.length; i++){
-                            id = a.item(i).id;
-                            $.post( "/poll/voteForTopic", {topic: id, voted: a.item(i).checked}, function( data ) {
-
+                        if(a.item(i).checked){
+                            $.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
                                 if(typeof data === 'boolean'){
                                     if(data){
                                         $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");
@@ -87,31 +89,11 @@
                                 //$( ".result" ).html( data );
 
                             });
+                            //alert("seas");
+                        }
                     }
                     /*]]>*/
                 }
-
-
-
-
-
-                $(document).ready(function(){
-
-                    $('.topic').each(function(i, obj) {
-                        $.post( "/poll/gettopicvote", {topic: obj.id}, function( data ) {
-                            if(typeof data === 'boolean'){
-                                if(data){
-                                    obj.checked = true;
-                                }else{
-                                    obj.checked = false;
-                                }
-                            }else{
-                            }
-                        });
-
-                    });
-
-                });
             </script>
         </div>
 
