@@ -145,6 +145,21 @@ public class TestPoll extends TestCase{
         assertEquals(1, pollRepository.findAllByName("poll_3").get(0).getOrganizers().size());
     }
 
+    @Test
+    public void testFinalizePoll(){
+        new CreateUser("registered7@user.com","regUser7","rootpw",registeredUserRepository).execute();
+        RegisteredUser organizer1 = registeredUserRepository.findByEmail("registered7@user.com");
+
+        new CreatePoll(organizer1, "poll_4", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_4").get(0);
+
+        poll.addPollTopic(new PollTopic("test"));
+
+        new FinalizePoll(poll, true, pollRepository).execute();
+
+        assertEquals(pollRepository.findAllByName("poll_4").size(), 0);
+    }
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -156,7 +171,9 @@ public class TestPoll extends TestCase{
         String[] polls = new String[]{
                 "poll_1",
                 "poll_2",
-                "poll_3"
+                "poll_3",
+                "poll_4",
+                "MyName"
         };
         for(String poll: polls){
             try{
@@ -172,6 +189,8 @@ public class TestPoll extends TestCase{
                 "registered4@user.com",
                 "registered5@user.com",
                 "registered6@user.com",
+                "registered7@user.com",
+                "registered20@user.com",
 
                 "unregistered1@user.com",
                 "unregistered2@user.com"
