@@ -2,10 +2,7 @@ package com.eventplaner.tasks.userTasks;
 
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.model.repositories.UserRepository;
-import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class CreateUser implements Task {
 

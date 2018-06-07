@@ -1,28 +1,25 @@
 package com.eventplaner.tasks.pollTasks;
 
-import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.model.User;
-import com.eventplaner.tasks.SaveObject;
+import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.tasks.Task;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public class AddOrganizer implements Task{
 
     private Poll poll;
     private RegisteredUser organizer;
+    private PollRepository pollRepository;
 
-    public AddOrganizer(Poll poll, RegisteredUser organizer) {
+    public AddOrganizer(Poll poll, RegisteredUser organizer, PollRepository pollRepository) {
         this.poll = poll;
         this.organizer = organizer;
+        this.pollRepository = pollRepository;
     }
 
     @Override
     public void execute() {
         this.poll.addOrganizer(this.organizer);
-        new SaveObject(poll).execute();
+        pollRepository.save(this.poll);
     }
 }

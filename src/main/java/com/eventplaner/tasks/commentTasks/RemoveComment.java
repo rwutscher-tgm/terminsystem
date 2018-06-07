@@ -1,7 +1,7 @@
 package com.eventplaner.tasks.commentTasks;
 
 import com.eventplaner.model.Comment;
-import com.eventplaner.tasks.DeleteObject;
+import com.eventplaner.tasks.DeleteObjecta;
 import com.eventplaner.tasks.Task;
 
 public class RemoveComment implements Task{
@@ -14,6 +14,6 @@ public class RemoveComment implements Task{
 
     @Override
     public void execute() {
-        new DeleteObject<>(this.comment);
+        new DeleteObjecta<>(this.comment);
     }
 }

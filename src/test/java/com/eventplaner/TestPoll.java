@@ -2,22 +2,18 @@ package com.eventplaner;
 
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
-import com.eventplaner.model.User;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.tasks.DeleteObject;
+import com.eventplaner.tasks.DeleteObjecta;
 import com.eventplaner.tasks.commentTasks.GetComment;
 import com.eventplaner.tasks.pollTasks.*;
-import com.eventplaner.tasks.userTasks.CreateUnregisteredUser;
 import com.eventplaner.tasks.userTasks.CreateUser;
-import com.eventplaner.tasks.userTasks.DeleteUser;
 import com.eventplaner.tasks.userTasks.GetUser;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -105,7 +101,7 @@ public class TestPoll extends TestCase{
         Poll poll = new GetPoll("poll_ 2").execute().get(0);
 
         // Adding Organizer
-        new AddOrganizer(poll, organizer2).execute();
+        new AddOrganizer(poll, organizer2, pollRepository).execute();
         poll = new GetPoll("poll_ 2").execute().get(0);
 
         assertEquals(new GetOrganizer(poll).execute().size(), 2);
@@ -130,11 +126,11 @@ public class TestPoll extends TestCase{
         Poll poll = new GetPoll("poll_ 3").execute().get(0);
 
         // Adding Organizer
-        new AddOrganizer(poll, organizer2).execute();
+        new AddOrganizer(poll, organizer2, pollRepository).execute();
         poll = new GetPoll("poll_ 3").execute().get(0);
 
         // Removing Organizer
-        new RemoveOrganizer(poll, (RegisteredUser) new GetUser("registered6@user.com").execute().get(0)).execute();
+        new RemoveOrganizer(poll, registeredUserRepository.findByEmail("registered6@user.com"), pollRepository).execute();
         poll = new GetPoll("poll_ 3").execute().get(0);
 
 
@@ -156,7 +152,7 @@ public class TestPoll extends TestCase{
         };
         for(String poll: polls){
             try{
-                new DeleteObject<>(new GetPoll(poll).execute().get(0)).execute();
+                new DeleteObjecta<>(new GetPoll(poll).execute().get(0)).execute();
             }catch (Exception e){}
         }
 
@@ -174,7 +170,7 @@ public class TestPoll extends TestCase{
         };
         for(String user: users){
             try{
-                new DeleteObject<>(new GetUser(user).execute().get(0)).execute();
+                new DeleteObjecta<>(new GetUser(user).execute().get(0)).execute();
             }catch (Exception e){}
         }
 
