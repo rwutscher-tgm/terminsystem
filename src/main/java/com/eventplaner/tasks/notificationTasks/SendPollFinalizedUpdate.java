@@ -3,7 +3,7 @@ package com.eventplaner.tasks.notificationTasks;
 import com.eventplaner.model.Poll;
 import com.eventplaner.tasks.Task;
 
-public class SendPollFinalizedUpdate implements Task{
+public class SendPollFinalizedUpdate implements Task {
 
     private Poll poll;
 
@@ -39,25 +39,26 @@ public class SendPollFinalizedUpdate implements Task{
 
             message.setContent(messageHtml, "text/html");
             message.setText(
-                    "Dear User,"+
+                    "Dear User," +
                             "\n\n"
-                    +"Your poll has been completed and here is the result:"+
+                            + "Your poll has been completed and here is the result:" +
                             "\n\n"
-                    +"<TempText1>\n"
-                    +"<TempText2>\n"
-                    +"<TempText3>\n"
-                    +"<TempText4>\n\n"
-                    +"We hope you are happy with the results and we are looking forward for your next poll"+
+                            + "<TempText1>\n"
+                            + "<TempText2>\n"
+                            + "<TempText3>\n"
+                            + "<TempText4>\n\n"
+                            + "We hope you are happy with the results and we are looking forward for your next poll" +
                             "\n\n"
-                    +"Good luck,"+
+                            + "Good luck," +
                             "\n\n"
-                    +"Your Terminsystem team" +
+                            + "Your Terminsystem team" +
                             "\n"
             );
 
             Transport.send(message);
 
             System.out.println("Done");
+        }
     }
 }
 
