@@ -56,14 +56,14 @@ public class SendPollFailed implements Task {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
 
 
-            //Title of the maik
+            //Title of the mail
             message.setSubject("There has been a problem with your poll!" +
                     "");
             
 
             //Main content of the mail
             message.setText("We are sorry to inform you "
-                            +"that your poll has encountered a problem"
+                            +"that your poll ("+poll.getName()+") has encountered a problem"
                             +"and has not been sent successfully"
                             + "\n\n Please try again later or try to contact the support.");
 
