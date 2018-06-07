@@ -3,7 +3,6 @@ package com.eventplaner.tasks.userTasks;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.User;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.tasks.DeleteObjecta;
 import com.eventplaner.tasks.Task;
 
 public class DeleteUser implements Task{
