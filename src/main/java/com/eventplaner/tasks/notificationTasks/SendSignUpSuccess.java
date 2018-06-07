@@ -1,7 +1,5 @@
 package com.eventplaner.tasks.notificationTasks;
 
-
-
 import com.eventplaner.model.Comment;
 import com.eventplaner.model.CommentSystem;
 import com.eventplaner.model.RegisteredUser;
@@ -10,9 +8,6 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-
-
-
 
 public class SendSignUpSuccess implements Task{
 
@@ -29,12 +24,14 @@ public class SendSignUpSuccess implements Task{
         final String password = "*T9:7N(!%gV'ruY>";
 
 
+
         //Set up the properties of the mail
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+
 
 
         //Create a new session
@@ -46,26 +43,29 @@ public class SendSignUpSuccess implements Task{
                 });
 
         try {
+
             //Set main mail content
+
 
             //Create new Message object (will be the finalized message we send
             Message message = new MimeMessage(session);
 
+
             //Set the sender
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
+
 
             //Set the recipients
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
 
+
             //Set the Title of the mail
             message.setSubject("Signup");
-
-            //Define thetype of mail
-            //message.setContent(messageHtml, "text/html");
 
             //Set the main content of the mail
             message.setText("Your Terminplaner Account has been created successfully!"
                     + "\n\n Have fun!");
+
 
             //Send message after everything is set up
             Transport.send(message);
@@ -78,6 +78,8 @@ public class SendSignUpSuccess implements Task{
         }
     }
 }
+
+
 
 
 

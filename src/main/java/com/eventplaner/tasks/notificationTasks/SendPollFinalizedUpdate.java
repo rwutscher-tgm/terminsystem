@@ -1,18 +1,24 @@
 package com.eventplaner.tasks.notificationTasks;
 
 import com.eventplaner.model.Poll;
+import com.eventplaner.model.PollTopic;
 import com.eventplaner.tasks.Task;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+
+
+
 public class SendPollFinalizedUpdate implements Task{
 
     private Poll poll;
+    private PollTopic pollTopic;
 
-    public SendPollFinalizedUpdate(Poll poll) {
+    public SendPollFinalizedUpdate(Poll poll, PollTopic pollTopic) {
         this.poll = poll;
+        this.pollTopic = pollTopic;
     }
 
     @Override
@@ -28,7 +34,6 @@ public class SendPollFinalizedUpdate implements Task{
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-
         //Create session
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -37,14 +42,14 @@ public class SendPollFinalizedUpdate implements Task{
                     }
                 });
 
-
         try {
             Message message = new MimeMessage(session);
             //Setting the sender
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
             //Setting the recipients
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
-            //This is the title of the mail
+
+            //This is the title of the mail (
             message.setSubject("The results of your poll are here!");
             //message.setContent(messageHtml, "text/html");
 
@@ -55,10 +60,10 @@ public class SendPollFinalizedUpdate implements Task{
                             "\n\n"
                             +"Your poll has been completed and here is the result:"+
                             "\n\n"
-                            +"<TempText1>\n"
-                            +"<TempText2>\n"
-                            +"<TempText3>\n"
-                            +"<TempText4>\n\n"
+
+                            //pollTopic.getDescription gets the date that won the poll
+
+                            +"The date \""+pollTopic.getDescription()+"\" has won the poll!"
                             +"We hope you are happy with the results and we are looking forward for your next poll"+
                             "\n\n"
                             +"Good luck,"+
@@ -74,11 +79,12 @@ public class SendPollFinalizedUpdate implements Task{
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
-
-
     }
 }
+
+
+
+
 
 
 
