@@ -22,28 +22,26 @@
 
         <form method="post" action="/poll/joinPoll">
             <input type="hidden" name="poll" th:value="${poll.id}">
-            <button class="btn-floating btn-large waves-effect waves-light red" type="submit"><i class="material-icons">send</i></button>
+            <button class="btn-floating btn-large waves-effect waves-light red" id="joinPollButton" type="submit">Join</button>
         </form>
 
-        <script>
-
+        <script th:inline="javascript">
+            /*<![CDATA[*/
             $(document).ready(function(){
-
-                $('.topic').each(function(i, obj) {
-                    $.post( "/poll/gettopicvote", {topic: obj.id}, function( data ) {
-                        if(typeof data === 'boolean'){
-                            if(data){
-                                obj.checked = true;
-                            }else{
-                                obj.checked = false;
-                            }
+                $.post( "/poll/getjoined", {topic: ""+/*[[${poll.id}]]*/""}, function( data ) {
+                    if(typeof data === 'boolean'){
+                        if(data){
+                            $('#joinPollButton').html("Joined");
                         }else{
+                            obj.checked = false;
                         }
-                    });
-
+                    }else{
+                    }
                 });
 
+
             });
+            /*]]>*/
         </script>
 
         <div th:text="${poll.description}"></div>
