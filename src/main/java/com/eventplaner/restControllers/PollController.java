@@ -101,7 +101,7 @@ public class PollController {
             response.sendRedirect("/poll?poll="+pollId);
         }
 
-        response.sendRedirect("/poll?poll="+pollId);
+        //response.sendRedirect("/poll?poll="+pollId);
     }
 
     @PostMapping("/poll/voteForTopic")

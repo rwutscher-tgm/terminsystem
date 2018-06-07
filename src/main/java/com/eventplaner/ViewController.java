@@ -60,13 +60,6 @@ public class ViewController {
 
                         User logged_in_User = userRepository.findByEmail(user.getName());
 
-                        for(User organizer: poll.getOrganizers()){
-                            if(organizer.getEmail().equals(logged_in_User.getEmail())){
-                                validPolls.add(poll);
-                                break;
-                            }
-                        }
-
                         for(User participant: poll.getParticipants()){
 
                             if(participant.getEmail().equals(logged_in_User.getEmail())){

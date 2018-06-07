@@ -73,6 +73,7 @@ public class SendPollFailed implements Task {
             //Send success message
             System.out.println("Done");
         } catch (MessagingException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

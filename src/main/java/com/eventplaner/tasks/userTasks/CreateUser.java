@@ -5,6 +5,7 @@ import com.eventplaner.model.User;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.Task;
+import com.eventplaner.tasks.notificationTasks.SendSignUpSuccess;
 
 public class CreateUser implements Task {
 
@@ -46,6 +47,7 @@ public class CreateUser implements Task {
         }
 //        System.out.println(user.getUserID());
         //userRepository.save(user);
+        new SendSignUpSuccess(user).execute();
         registeredUserRepository.save(user);
     }
 }
