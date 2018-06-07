@@ -2,6 +2,7 @@ package com.eventplaner;
 
 import com.eventplaner.model.*;
 import com.eventplaner.model.repositories.PollRepository;
+import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.commentTasks.AddComment;
 import com.eventplaner.tasks.pollTasks.CreatePoll;
 import com.eventplaner.tasks.pollTasks.GetPoll;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 @Controller
 //@CrossOrigin(origins = {"http://localhost:8081"})
 public class ViewController {
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/")
     public String renderHome(Principal user, Model model){
@@ -40,7 +43,7 @@ public class ViewController {
     public String home(@RequestParam(value="poll", required = false) String pollId, Model model, Principal user){
 
         boolean loggedIn = false;
-        boolean isOrganizer = false;
+
         if(user != null){
             loggedIn = true;
         }
@@ -54,9 +57,15 @@ public class ViewController {
                     validPolls.add(poll);
                 }else{
                     if(loggedIn){
-                        User logged_in_User = new GetUser(user.getName()).execute().get(0);
 
+                        User logged_in_User = userRepository.findByEmail(user.getName());
 
+                        for(User organizer: poll.getOrganizers()){
+                            if(organizer.getEmail().equals(logged_in_User.getEmail())){
+                                validPolls.add(poll);
+                                break;
+                            }
+                        }
 
                         for(User participant: poll.getParticipants()){
 
@@ -65,13 +74,7 @@ public class ViewController {
                                 break;
                             }
                         }
-                        for(User organizer: poll.getOrganizers()){
-                            if(organizer.getEmail().equals(logged_in_User.getEmail())){
-                                validPolls.add(poll);
-                                isOrganizer = true;
-                                break;
-                            }
-                        }
+
                     }
                 }
             }
@@ -84,6 +87,17 @@ public class ViewController {
 
 
         try{
+            boolean isOrganizer = false;
+            if(user != null){
+                User logged_in_User = userRepository.findByEmail(user.getName());
+
+                for(User organizer: pollRepository.findById(pollId).getOrganizers()){
+                    if(organizer.getEmail().equals(logged_in_User.getEmail())){
+                        isOrganizer = true;
+                        break;
+                    }
+                }
+            }
             //PollRepositoryGiver giver = new PollRepositoryGiver();
             //PollRepository pollRepository = giver.getPollRepository();
             //Poll poll = new GetPoll(pollId).execute().get(0);
@@ -92,6 +106,8 @@ public class ViewController {
             System.out.println(poll.getPollTopics().size());
             
             model.addAttribute("loggedIn", loggedIn);
+            System.out.println(isOrganizer);
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
             model.addAttribute("isOrganizer", isOrganizer);
             model.addAttribute("poll", poll);
             //model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);

@@ -21,11 +21,10 @@
         <h1 th:text="${poll.name}"> </h1>
 
 
-        <span th:if="${isOrganizer}=true">
-
-
+        <span th:if="${isOrganizer}">
+            <a th:href="@{/poll/finalizePoll(poll=${poll.id})}" class="btn-large waves-effect waves-light green lighten-1">Finalize Poll</a>
         </span>
-        <a href="#" class="btn-large waves-effect waves-light green lighten-1">Send</a>
+
 
         <form method="post" action="/poll/joinPoll">
             <input type="hidden" name="poll" th:value="${poll.id}">
