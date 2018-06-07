@@ -3,6 +3,7 @@ package com.eventplaner.tasks.notificationTasks;
 import com.eventplaner.model.Comment;
 import com.eventplaner.model.CommentSystem;
 import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.model.User;
 import com.eventplaner.tasks.Task;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -11,9 +12,9 @@ import java.util.Properties;
 
 public class SendSignUpSuccess implements Task{
 
-    private RegisteredUser user;
+    private User user;
 
-    public SendSignUpSuccess(RegisteredUser user){
+    public SendSignUpSuccess(User user){
         this.user = user;
     }
 
@@ -56,7 +57,7 @@ public class SendSignUpSuccess implements Task{
 
 
             //Set the recipients
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
 
 
             //Set the Title of the mail

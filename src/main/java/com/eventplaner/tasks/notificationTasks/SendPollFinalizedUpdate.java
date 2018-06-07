@@ -2,6 +2,7 @@ package com.eventplaner.tasks.notificationTasks;
 
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.PollTopic;
+import com.eventplaner.model.User;
 import com.eventplaner.tasks.Task;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -15,10 +16,12 @@ public class SendPollFinalizedUpdate implements Task{
 
     private Poll poll;
     private PollTopic pollTopic;
+    private User user;
 
-    public SendPollFinalizedUpdate(Poll poll, PollTopic pollTopic) {
+    public SendPollFinalizedUpdate(Poll poll, PollTopic pollTopic, User user) {
         this.poll = poll;
         this.pollTopic = pollTopic;
+        this.user = user;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class SendPollFinalizedUpdate implements Task{
             //Setting the sender
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
             //Setting the recipients
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
 
             //This is the title of the mail (
             message.setSubject("The results of your poll are here!");
