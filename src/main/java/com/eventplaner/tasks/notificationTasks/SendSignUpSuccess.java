@@ -7,6 +7,8 @@ import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.tasks.Task;
 
 
+
+
 public class SendSignUpSuccess implements Task{
 
     private RegisteredUser user;
@@ -49,8 +51,17 @@ public class SendSignUpSuccess implements Task{
 
             System.out.println("Done");
 
+
+
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
 }
+
+
+
+
+
+
+
