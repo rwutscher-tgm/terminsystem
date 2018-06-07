@@ -6,7 +6,7 @@
     <session-factory>
         <!--<property name="connection.url">jdbc:mysql://192.168.146.133:3306/eventplaner?useSSL=false&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8</property>-->
         <!--<property name="hibernate.connection.driver_class"></property>-->
-        <property name="connection.url">jdbc:sqlite:src/main/resources/database.db</property>
+        <property name="connection.url">jdbc:sqlite::resource:database.db</property>
         <property name="connection.username">testwu</property>
         <property name="connection.password">rootpw</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
