@@ -35,11 +35,13 @@ public class SendPollFailed implements Task {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
-            message.setSubject("Signup");
+            message.setSubject("There has been a problem with your poll!");
 
             message.setContent(messageHtml, "text/html");
-            message.setText("Poll has not been sent successfully!"
-                    + "\n\n Try again later.);
+            message.setText("We are sorry to inform you "
+                    +"that your poll has encountered a problem"
+                    +"and has not been sent successfully"
+                    + "\n\n Please try again later or try to contact the support.);
 
             Transport.send(message);
 
