@@ -55,7 +55,9 @@
 
                     for(i = 0; i < a.length; i++){
                         if(a.item(i).checked){
-                            $.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
+                            id = a.item(i).id;
+                            $.post( "/poll/voteForTopic", {topic: id}, function( data ) {
+
                                 if(typeof data === 'boolean'){
                                     if(data){
                                         $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");
@@ -73,6 +75,21 @@
                     }
                     /*]]>*/
                 }
+
+
+
+
+
+                $(document).ready(function(){
+                    a = document.getElementsByClassName("topic");
+
+
+                    for(i = 0; i < a.length; i++){
+                        $('#'+a.item().id).prop('checked', true);
+                    }
+
+
+                });
             </script>
         </div>
 
