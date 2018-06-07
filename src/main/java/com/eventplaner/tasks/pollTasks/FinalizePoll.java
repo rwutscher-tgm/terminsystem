@@ -23,6 +23,7 @@ public class FinalizePoll implements Task{
 
     @Override
     public void execute() {
+        System.out.println("\n...\n...\n...\n...\n...\n Finalizing Poll ");
         if(success){
 
             PollTopic mostVotedTopic = this.poll.getPollTopics().get(0);
@@ -35,6 +36,7 @@ public class FinalizePoll implements Task{
             }
             for(User participant: this.poll.getParticipants()){
                 new SendPollFinalizedUpdate(this.poll, mostVotedTopic, participant).execute();
+                System.out.println("\n...\n...\n...\n...\n...\n Sending Finalize Success");
             }
         }else{
             for(User participant: this.poll.getParticipants()){
