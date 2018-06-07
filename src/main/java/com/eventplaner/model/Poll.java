@@ -66,6 +66,7 @@ public class Poll {
         this.pollTopics = new ArrayList<>();
 
         this.organizers.add(organizer);
+        this.addParticipant(organizer);
     }
 
     public Poll() {
