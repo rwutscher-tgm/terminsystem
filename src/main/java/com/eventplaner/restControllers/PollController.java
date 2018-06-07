@@ -110,8 +110,8 @@ public class PollController {
             if(user != null){
                 System.out.print(params.get("topic"));
                 new VoteForTopic(new GetUser(user.getName()).execute().get(0),
-                        pollTopicRepository,
-                        pollTopicRepository.findById(params.get("topic"))).execute();
+                        pollTopicRepository.findById(params.get("topic")),
+                        pollTopicRepository).execute();
             }
             return true;
         }catch(Exception e){

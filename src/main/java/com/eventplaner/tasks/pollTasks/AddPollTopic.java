@@ -1,14 +1,9 @@
 package com.eventplaner.tasks.pollTasks;
 
-import com.eventplaner.HibernateUtils;
 import com.eventplaner.model.*;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
-import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public class AddPollTopic implements Task{
 
