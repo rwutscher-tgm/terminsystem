@@ -3,7 +3,6 @@ package com.eventplaner;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.model.repositories.UserRepository;
-import com.eventplaner.tasks.DeleteObjecta;
 import com.eventplaner.tasks.userTasks.CreateUnregisteredUser;
 import com.eventplaner.tasks.userTasks.CreateUser;
 import com.eventplaner.tasks.userTasks.DeleteUser;
@@ -162,7 +161,7 @@ public class TestUser extends TestCase {
         };
         for(String user: users){
             try{
-                new DeleteObjecta<>(new GetUser(user).execute().get(0)).execute();
+                registeredUserRepository.delete(registeredUserRepository.findByEmail(user));
                 System.out.println("Deleting user");
             }catch (Exception e){}
         }

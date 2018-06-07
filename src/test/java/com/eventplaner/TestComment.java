@@ -5,7 +5,6 @@ import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.tasks.DeleteObjecta;
 import com.eventplaner.tasks.commentTasks.AddComment;
 import com.eventplaner.tasks.pollTasks.CreatePoll;
 import com.eventplaner.tasks.pollTasks.GetPoll;
@@ -96,7 +95,7 @@ public class TestComment extends TestCase{
         };
         for(String poll: polls){
             try{
-                new DeleteObjecta<>(new GetPoll(poll).execute().get(0)).execute();
+                pollRepository.delete(pollRepository.findAllByName(poll).get(0));
             }catch (Exception e){}
         }
 
@@ -114,7 +113,7 @@ public class TestComment extends TestCase{
 
         for(String user: users){
             try{
-                new DeleteObjecta<>(new GetUser(user).execute().get(0)).execute();
+                registeredUserRepository.delete(registeredUserRepository.findByEmail(user));
             }catch (Exception e){}
         }
 
