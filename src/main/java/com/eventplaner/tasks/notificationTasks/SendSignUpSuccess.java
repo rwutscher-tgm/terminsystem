@@ -1,10 +1,15 @@
 package com.eventplaner.tasks.notificationTasks;
 
 
+
 import com.eventplaner.model.Comment;
 import com.eventplaner.model.CommentSystem;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.tasks.Task;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 
 
@@ -50,8 +55,6 @@ public class SendSignUpSuccess implements Task{
             Transport.send(message);
 
             System.out.println("Done");
-
-
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
