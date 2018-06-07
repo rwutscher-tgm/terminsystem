@@ -61,7 +61,7 @@ public class SendPollFinalizedUpdate implements Task{
             message.setText(
                     "Dear User,"+
                             "\n\n"
-                            +"Your poll has been completed and here is the result:"+
+                            +"Your poll ("+poll.getName()+")has been completed and here is the result:"+
                             "\n\n"
 
                             //pollTopic.getDescription gets the date that won the poll

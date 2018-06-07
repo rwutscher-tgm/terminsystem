@@ -14,11 +14,12 @@ public class RemoveOrganizer implements Task{
     public RemoveOrganizer(Poll poll, RegisteredUser organizer, PollRepository pollRepository) {
         this.poll = poll;
         this.organizer = organizer;
+        this.pollRepository = pollRepository;
     }
 
     @Override
     public void execute() {
-        this.poll.removeOrganizer(this.organizer);
-        pollRepository.save(this.poll);
+        poll.removeOrganizer(organizer);
+        pollRepository.save(poll);
     }
 }
