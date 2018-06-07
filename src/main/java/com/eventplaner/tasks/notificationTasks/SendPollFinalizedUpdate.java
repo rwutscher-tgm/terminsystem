@@ -17,7 +17,7 @@ public class SendPollFinalizedUpdate implements Task{
 
     @Override
     public void execute() {
-        //Userdata for mail
+        //Userdata for mail 
         final String username = "termimysytemsew2018wtsm@gmail.com";
         final String password = "*T9:7N(!%gV'ruY>";
 
@@ -46,7 +46,8 @@ public class SendPollFinalizedUpdate implements Task{
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
             //This is the title of the mail
             message.setSubject("The results of your poll are here!");
-            //message.setContent(messageHtml, "text/html");
+             //message.setContent(messageHtml, "text/html");
+
 
             //This is the main content of the mail
             message.setText(
