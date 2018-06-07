@@ -7,6 +7,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+
+
+
+
 public class SendPollFailed implements Task {
 
     private Poll poll;
@@ -28,7 +32,6 @@ public class SendPollFailed implements Task {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-
         //Create a new session
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -39,13 +42,16 @@ public class SendPollFailed implements Task {
 
         try {
 
+
             Message message = new MimeMessage(session);
 
             //Set the sender
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
 
+
             //Set the recipients
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
+
 
             //Title of the maik
             message.setSubject("There has been a problem with your poll!" +
@@ -63,14 +69,11 @@ public class SendPollFailed implements Task {
                     //Send mail after setting everything up
                     Transport.send(message);
 
-
-
             //Send success message
             System.out.println("Done");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
 
