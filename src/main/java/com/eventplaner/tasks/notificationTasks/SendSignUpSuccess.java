@@ -24,16 +24,20 @@ public class SendSignUpSuccess implements Task{
 
     @Override
     public void execute() {
+        //Set up the userdata of the mail account
         final String username = "termimysytemsew2018wtsm@gmail.com";
         final String password = "*T9:7N(!%gV'ruY>";
 
 
+        //Set up the properties of the mail
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
+
+        //Create a new session
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -42,10 +46,18 @@ public class SendSignUpSuccess implements Task{
                 });
 
         try {
+            //Set main mail content
 
+            //Create new Message object (will be the finalized message we send
             Message message = new MimeMessage(session);
+
+            //Set the sender
             message.setFrom(new InternetAddress("termimysytemsew2018wtsm@gmail.com"));
+
+            //Set the recipients
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rwutscher@student.tgm.ac.at"));
+
+            //Set the Title of the mail
             message.setSubject("Signup");
 
             //Define thetype of mail
@@ -55,8 +67,10 @@ public class SendSignUpSuccess implements Task{
             message.setText("Your Terminplaner Account has been created successfully!"
                     + "\n\n Have fun!");
 
+            //Send message after everything is set up
             Transport.send(message);
 
+            //send success message in log
             System.out.println("Done");
 
         } catch (MessagingException e) {
@@ -64,6 +78,7 @@ public class SendSignUpSuccess implements Task{
         }
     }
 }
+
 
 
 
