@@ -110,7 +110,7 @@ public class TestPoll extends TestCase{
 
     @Test
     public void testVoteForTopic() {
-        new CreateUser("userCreatedWithID","registered20@user.com","regUser2","rootpw",registeredUserRepository).execute();
+        new CreateUser("registered20@user.com","regUser2","rootpw",registeredUserRepository).execute();
         RegisteredUser organizer = registeredUserRepository.findByEmail("registered20@user.com");
 
         new CreatePoll(organizer, "MyName", "MyDescription", true, pollRepository).execute();
