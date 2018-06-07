@@ -1,9 +1,12 @@
 package com.eventplaner.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,8 +20,13 @@ public class PollTopic {
     @Column
     private String description;
 
-    @Column
-    private ArrayList<User> availables;
+    @OneToMany//(fetch = FetchType.EAGER)//(cascade = CascadeType.ALL, mappedBy = "comment_system", orphanRemoval = true)//(cascade=CascadeType.ALL)
+    @JoinTable(
+            name = "poll_topic_availables",
+            joinColumns = {@JoinColumn(referencedColumnName = "id", name = "poll_topic_id")},
+            inverseJoinColumns = { @JoinColumn(referencedColumnName = "user_id", name = "user_id") })
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<User> availables;
 
     public PollTopic(String description) {
         this.id = UUID.randomUUID().toString();
@@ -35,7 +43,7 @@ public class PollTopic {
         return description;
     }
 
-    public ArrayList<User> getAvailables() {
+    public List<User> getAvailables() {
         return availables;
     }
 
