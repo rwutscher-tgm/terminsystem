@@ -20,6 +20,7 @@ public class SendSignUpSuccess implements Task{
         final String username = "termimysytemsew2018wtsm@gmail.com";
         final String password = "*T9:7N(!%gV'ruY>";
 
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -41,8 +42,8 @@ public class SendSignUpSuccess implements Task{
             message.setSubject("Signup");
 
             message.setContent(messageHtml, "text/html");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n No spam to my email, please!");
+            message.setText("Your Terminplaner Account has been created successfully!"
+                    + "\n\n Have fun!");
 
             Transport.send(message);
 
