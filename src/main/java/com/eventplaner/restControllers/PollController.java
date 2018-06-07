@@ -4,12 +4,14 @@ import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
+import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.pollTasks.*;
 import com.eventplaner.tasks.userTasks.GetUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.ITemplateEngine;
@@ -32,6 +34,8 @@ public class PollController {
     @Autowired
     PollTopicRepository pollTopicRepository;
 
+    @Autowired
+    UserRepository userRepository;
     /*
         Creating
      */
@@ -104,19 +108,41 @@ public class PollController {
     }
 
     @PostMapping("/poll/voteForTopic")
-    public boolean voteForTopic(@RequestParam Map<String, String> params, Principal user){
+    public boolean voteForTopic(@RequestParam(value="topic") String topic, Principal user){
         System.out.println("Seas ....................................................................................");
         try{
             if(user != null){
-                System.out.print(params.get("topic"));
-                new VoteForTopic(new GetUser(user.getName()).execute().get(0),
-                        pollTopicRepository,
-                        pollTopicRepository.findById(params.get("topic"))).execute();
+                if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
+                    // if User hasnt voted for topic jet
+                    new VoteForTopic(
+                            userRepository.findByEmail(user.getName()),
+                            pollTopicRepository,
+                            pollTopicRepository.findById(topic)
+                    ).execute();
+                }else{
+                    // if User has already voted for topic
+                    // if User hasnt voted for topic jet
+                    new RemoveVoteForTopic(
+                            userRepository.findByEmail(user.getName()),
+                            pollTopicRepository,
+                            pollTopicRepository.findById(topic)
+                    ).execute();
+                }
+
             }
             return true;
         }catch(Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @PostMapping("/poll/gettopicvote")
+    public boolean getTopicVote(@RequestParam(value="topic") String topic, Principal user){
+        if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
+            return false;
+        }else{
+            return true;
         }
     }
 
