@@ -70,6 +70,10 @@ public class SendPollFinalizedUpdate implements Task{
 
             //Successlog message
             System.out.println("Done");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
 

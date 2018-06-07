@@ -73,9 +73,6 @@ public class SendSignUpSuccess implements Task{
             //send success message in log
             System.out.println("Done");
 
-
-
-
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
