@@ -1,15 +1,9 @@
 package com.eventplaner;
 
-import com.eventplaner.model.Poll;
-import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
-import com.eventplaner.tasks.commentTasks.AddComment;
-import com.eventplaner.tasks.pollTasks.CreatePoll;
-import com.eventplaner.tasks.pollTasks.GetPoll;
-import com.eventplaner.tasks.userTasks.CreateUser;
-import com.eventplaner.tasks.userTasks.GetUser;
+import com.eventplaner.model.repositories.UserRepository;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +31,9 @@ public class TestComment extends TestCase{
     @Autowired
     RegisteredUserRepository registeredUserRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -57,15 +54,15 @@ public class TestComment extends TestCase{
     @Test
     public void testChangeComment(){
         //Creating User
-        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository).execute();
-        RegisteredUser user = (RegisteredUser) new GetUser("registered1@user.com").execute().get(0);
+//        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository, userRepository).execute();
+//        RegisteredUser user = (RegisteredUser) new GetUser("registered1@user.com").execute().get(0);
 
         //Creting Poll
-        new CreatePoll(user, "poll_1", "poll", true, pollRepository);
-        Poll poll = new GetPoll("registered1@user.com").execute().get(0);
+//        new CreatePoll(user, "poll_1", "poll", true, pollRepository);
+//        Poll poll = new GetPoll("registered1@user.com").execute().get(0);
 
         //Adding Comment
-        new AddComment(poll, user, "Hi!").execute();
+//        new AddComment(poll, user, "Hi!").execute();
         //Comment comment = new GetComment(poll).execute().get(0);*/
 
         //Changing Comment
@@ -116,10 +113,5 @@ public class TestComment extends TestCase{
                 registeredUserRepository.delete(registeredUserRepository.findByEmail(user));
             }catch (Exception e){}
         }
-
-        System.out.println("Cleaning up: ");
-        System.out.println("Amount of users in DB: " + new GetUser().execute().size());
-        System.out.println("Amount of polls in DB: " + new GetPoll().execute().size());
-
     }
 }

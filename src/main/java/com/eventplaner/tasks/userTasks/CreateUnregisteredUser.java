@@ -2,7 +2,6 @@ package com.eventplaner.tasks.userTasks;
 
 import com.eventplaner.model.UnregisteredUser;
 import com.eventplaner.model.repositories.UserRepository;
-import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 
 public class CreateUnregisteredUser implements Task {

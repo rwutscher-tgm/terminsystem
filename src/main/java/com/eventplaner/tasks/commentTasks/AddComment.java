@@ -6,7 +6,6 @@ import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.CommentRepository;
 import com.eventplaner.model.repositories.CommentSystemRepository;
-import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 
 public class AddComment implements Task{

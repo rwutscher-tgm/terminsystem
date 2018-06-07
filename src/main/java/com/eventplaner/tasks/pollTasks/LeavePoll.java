@@ -3,7 +3,6 @@ package com.eventplaner.tasks.pollTasks;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.User;
 import com.eventplaner.model.repositories.PollRepository;
-import com.eventplaner.tasks.SaveObject;
 import com.eventplaner.tasks.Task;
 
 public class LeavePoll implements Task{
