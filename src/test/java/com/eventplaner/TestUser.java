@@ -1,6 +1,7 @@
 package com.eventplaner;
 
 import com.eventplaner.model.RegisteredUser;
+import com.eventplaner.model.UnregisteredUser;
 import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.userTasks.CreateUnregisteredUser;
@@ -55,8 +56,10 @@ public class TestUser extends TestCase {
 
     @Test
     public void testCreateRegisteredUserWithId() {
+        UnregisteredUser user = new UnregisteredUser("registered1@user.com");
+        userRepository.save(user);
 
-        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository).execute();
+        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository, userRepository).execute();
 
         assertEquals("userCreatedWithID", registeredUserRepository.findByEmail("registered1@user.com").getUserID());
     }
