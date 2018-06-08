@@ -1,6 +1,6 @@
 # Terminsystem
 
-One Paragraph of project description goes here
+Dieses Porgramm ist ein Eventplaner mit dem man abstimmen kann wann ein Event stattfinden soll
 
 ## Getting Started
 

@@ -51,7 +51,6 @@ public class PollController {
 
 
 
-
         CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status, pollRepository);
 
         cp.execute();
@@ -59,6 +58,12 @@ public class PollController {
         String id = cp.getId();
 
         Poll poll = pollRepository.findById(id);
+
+        for(String param : params.keySet()){
+            if(param.substring(0, 6).equals("topic_")){
+                new AddPollTopic(poll, params.get(param), pollRepository, pollTopicRepository).execute();
+            }
+        }
 
         response.sendRedirect("/");
     }

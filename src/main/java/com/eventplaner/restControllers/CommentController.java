@@ -35,11 +35,15 @@ public class CommentController {
 
 //        new AddComment(new GetPoll(params.get("poll")).execute().get(0), (RegisteredUser) new GetUser(user.getName()).execute().get(0), params.get("comment")).execute();
 
-        new AddComment(pollRepository.findById(params.get("poll")),
-                registeredUserRepository.findByEmail(user.getName()),
+        new AddComment(pollRepository.findById(
+                params.get("poll")),
+                registeredUserRepository.findByEmail(
+                        user.getName()
+                ),
                 params.get("comment"),
                 commentRepository,
-                commentSystemRepository);
+                commentSystemRepository
+        ).execute();
 
         // CommentSystem system, RegisteredUser author, String comment, CommentRepository commentRepository, CommentSystemRepository commentSystemRepository
         response.sendRedirect("/poll?poll="+params.get("poll"));

@@ -26,7 +26,7 @@ public class Comment {
     @Column(name="comment")
     private String comment;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "sub_comment_system")
     private CommentSystem subCommentSystem;
 
