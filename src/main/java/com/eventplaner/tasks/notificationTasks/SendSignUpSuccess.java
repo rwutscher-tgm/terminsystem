@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class SendSignUpSuccess implements Task{
-
+    //Used to get the mail address from
     private User user;
 
     public SendSignUpSuccess(User user){

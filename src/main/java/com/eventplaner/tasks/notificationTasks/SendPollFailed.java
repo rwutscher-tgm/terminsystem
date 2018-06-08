@@ -13,8 +13,9 @@ import java.util.Properties;
 
 
 public class SendPollFailed implements Task {
-
+    //Poll to get the pollname from
     private Poll poll;
+    //User to get the mail address from
     private User user;
 
     public SendPollFailed(Poll poll, User user) {
