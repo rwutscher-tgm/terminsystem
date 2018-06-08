@@ -13,9 +13,11 @@ import java.util.Properties;
 
 
 public class SendPollFinalizedUpdate implements Task{
-
+    //Poll to get Pollname
     private Poll poll;
+    //  PollTopic to get the Date
     private PollTopic pollTopic;
+    //User to get the email
     private User user;
 
     public SendPollFinalizedUpdate(Poll poll, PollTopic pollTopic, User user) {
