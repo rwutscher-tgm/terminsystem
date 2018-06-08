@@ -35,8 +35,10 @@ public class CommentController {
 
 //        new AddComment(new GetPoll(params.get("poll")).execute().get(0), (RegisteredUser) new GetUser(user.getName()).execute().get(0), params.get("comment")).execute();
 
-        new AddComment(pollRepository.findById(
-                params.get("poll")),
+        new AddComment(
+                pollRepository.findById(
+                    params.get("poll")
+                ),
                 registeredUserRepository.findByEmail(
                         user.getName()
                 ),

@@ -36,6 +36,10 @@ public class AddComment implements Task{
     public void execute() {
         Comment c = new Comment(this.author, this.comment);
         this.system.addComment(c);
+
+        System.out.println(this.system.getCommentSystemID());
+        System.out.println(c.getCommentID());
+
         commentRepository.save(c);
         commentSystemRepository.save(system);
     }
