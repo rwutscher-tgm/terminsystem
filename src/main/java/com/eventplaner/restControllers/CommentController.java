@@ -5,6 +5,7 @@ import com.eventplaner.tasks.commentTasks.AddComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
 public class CommentController {
 
     @Autowired
@@ -54,8 +55,8 @@ public class CommentController {
         response.sendRedirect("/poll?poll="+params.get("poll"));
     }
 
+    /*
     @PostMapping("/poll/gettopicvote")
-
     public boolean getTopicVote(@RequestParam(value="topic") String topic, Principal user){
         if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
             return false;
@@ -63,7 +64,7 @@ public class CommentController {
             return true;
         }
     }
-
+*/
 
     @PostMapping("/comment/createSubComment")
     public void createSubComment(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {

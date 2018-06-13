@@ -98,7 +98,6 @@
                         //if(a.item(i).checked){
                             //$.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
                             id = a.item(i).id;
-                            alert("sesa");
                             $.post( "/poll/voteForTopic", {topic: id, voted: a.item(i).checked}, function( data ) {
 
                                 if(typeof data === 'boolean'){

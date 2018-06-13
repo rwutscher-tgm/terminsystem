@@ -8,9 +8,8 @@ import com.eventplaner.model.repositories.RegisteredUserRepository;
 import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.pollTasks.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 
-@org.springframework.web.bind.annotation.RestController
+@Controller
 public class PollController {
 
     @Autowired
@@ -37,6 +36,7 @@ public class PollController {
         Creating
      */
     @PostMapping("/poll/createPoll")
+    @ResponseBody
     public void createPoll(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {
 
         RegisteredUser organizer = registeredUserRepository.findByEmail(user.getName());
@@ -71,16 +71,19 @@ public class PollController {
         Modifying
      */
     @PostMapping("/poll/addOrganizer")
+    @ResponseBody
     public boolean addOrganizer(HttpServletRequest request) {
         return true;
     }
 
     @PostMapping("/poll/addPollTopic")
+    @ResponseBody
     public boolean addPollTopic(HttpServletRequest request) {
         return true;
     }
 
     @PostMapping("/poll/joinPoll")
+    @ResponseBody
     public void joinPoll(@RequestParam(value = "poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
 
         /*if(user != null){
@@ -107,6 +110,7 @@ public class PollController {
     }
 
     @PostMapping("/poll/gettopicvote")
+    @ResponseBody
     public boolean getTopicVote(@RequestParam(value="topic") String topic, Principal user){
         if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
             return false;
@@ -133,6 +137,7 @@ public class PollController {
     }*/
 
     @PostMapping("/poll/voteForTopic")
+    @ResponseBody
     public boolean voteForTopic(@RequestParam(value = "topic") String topic, @RequestParam(value = "voted") boolean voted, Principal user) {
         //System.out.println("Seas ....................................................................................");
         try {
@@ -165,6 +170,7 @@ public class PollController {
     }
 
     @PostMapping("/poll/getjoined")
+    @ResponseBody
     public boolean getjoined(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
 
         return pollRepository.findById(pollId).getParticipants().contains(userRepository.findByUserID(user.getName()));
@@ -178,27 +184,32 @@ public class PollController {
         Remove
      */
     @GetMapping("/poll/finalizePoll")
+    @ResponseBody
     public void finalizePoll(@RequestParam Map<String, String> params, Principal user){
         new FinalizePoll(pollRepository.findById(params.get("poll")), true, pollRepository).execute();
     }
 
     @PostMapping("/poll/leavePoll")
+    @ResponseBody
     public boolean leavePoll(HttpServletRequest request){
         return true;
     }
 
     @PostMapping("/poll/removeOrganizer")
+    @ResponseBody
     public boolean removeOrganizer(HttpServletRequest request){
         return true;
     }
 
     @PostMapping("/poll/removePollTopic")
+    @ResponseBody
     public boolean removePollTopic(HttpServletRequest request){
 
         return true;
     }
 
     @PostMapping("/poll/removeVoteForTopic")
+    @ResponseBody
     public boolean removeVoteForTopic(HttpServletRequest request){
         return true;
     }
