@@ -43,12 +43,11 @@ public class PollController {
 
 
         boolean status = false;
-        if(params.get("status") != null){
-            if(params.get("status").equals("on")){
+        if (params.get("status") != null) {
+            if (params.get("status").equals("on")) {
                 status = true;
             }
         }
-
 
 
         CreatePoll cp = new CreatePoll(organizer, params.get("PollName"), params.get("Polldesc"), status, pollRepository);
@@ -59,8 +58,8 @@ public class PollController {
 
         Poll poll = pollRepository.findById(id);
 
-        for(String param : params.keySet()){
-            if(param.substring(0, 6).equals("topic_")){
+        for (String param : params.keySet()) {
+            if (param.substring(0, 6).equals("topic_")) {
                 new AddPollTopic(poll, params.get(param), pollRepository, pollTopicRepository).execute();
             }
         }
@@ -72,27 +71,52 @@ public class PollController {
         Modifying
      */
     @PostMapping("/poll/addOrganizer")
-    public boolean addOrganizer(HttpServletRequest request){
+    public boolean addOrganizer(HttpServletRequest request) {
         return true;
     }
 
     @PostMapping("/poll/addPollTopic")
-    public boolean addPollTopic(HttpServletRequest request){
+    public boolean addPollTopic(HttpServletRequest request) {
         return true;
     }
 
     @PostMapping("/poll/joinPoll")
-    public void joinPoll(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
+    public void joinPoll(@RequestParam(value = "poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
 
-        if(user != null){
+        /*if(user != null){
             new JoinPoll(pollRepository.findById(pollId), userRepository.findByEmail(user.getName()), pollRepository).execute();
             response.sendRedirect("/poll?poll="+pollId);
+        }*/
+
+        if (user != null) {
+            if (!pollRepository.findById(pollId).getParticipants().contains(userRepository.findByUserID(user.getName()))) {
+                //if user hasn't joined
+                new JoinPoll(pollRepository.findById(pollId), userRepository.findByEmail(user.getName()), pollRepository).execute();
+                response.sendRedirect("/poll?poll=" + pollId);
+            } else {
+                new LeavePoll(pollRepository.findById(pollId), userRepository.findByEmail(user.getName()), pollRepository).execute();
+                response.sendRedirect("/poll?poll=" + pollId);
+            }
+        } else {
+            new JoinPoll(pollRepository.findById(pollId), userRepository.findByEmail(user.getName()), pollRepository).execute();
+            response.sendRedirect("/poll?poll=" + pollId);
         }
+
 
         //response.sendRedirect("/poll?poll="+pollId);
     }
 
-    @PostMapping("/poll/voteForTopic")
+    @PostMapping("/poll/gettopicvote")
+    public boolean getTopicVote(@RequestParam(value="topic") String topic, Principal user){
+        if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    /*@PostMapping("/poll/voteForTopic")
     public boolean voteForTopic(@RequestParam Map<String, String> params, Principal user){
         try{
             if(user != null){
@@ -106,10 +130,41 @@ public class PollController {
             e.printStackTrace();
             return false;
         }
+    }*/
+
+    @PostMapping("/poll/voteForTopic")
+    public boolean voteForTopic(@RequestParam(value = "topic") String topic, @RequestParam(value = "voted") boolean voted, Principal user) {
+        //System.out.println("Seas ....................................................................................");
+        try {
+            if (user != null) {
+                if (!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))) {
+                    // if User hasnt voted for topic jet
+                    if (voted) {
+                        new VoteForTopic(
+                                userRepository.findByEmail(user.getName()),
+                                pollTopicRepository.findById(topic),
+                                pollTopicRepository
+                        ).execute();
+                    }
+                } else {
+                    // if User has already voted for topic
+                    if (!voted) {
+                        new RemoveVoteForTopic(
+                                userRepository.findByEmail(user.getName()),
+                                pollTopicRepository.findById(topic),
+                                pollTopicRepository
+                        ).execute();
+                    }
+                }
+                return true;
+            }else return false;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     @PostMapping("/poll/getjoined")
-
     public boolean getjoined(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
 
         return pollRepository.findById(pollId).getParticipants().contains(userRepository.findByUserID(user.getName()));

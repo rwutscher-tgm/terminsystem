@@ -95,8 +95,12 @@
                     /*<![CDATA[*/
 
                     for(i = 0; i < a.length; i++){
-                        if(a.item(i).checked){
-                            $.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
+                        //if(a.item(i).checked){
+                            //$.post( "/poll/voteForTopic", {topic:a.item(i).id}, function( data ) {
+                            id = a.item(i).id;
+                            alert("sesa");
+                            $.post( "/poll/voteForTopic", {topic: id, voted: a.item(i).checked}, function( data ) {
+
                                 if(typeof data === 'boolean'){
                                     if(data){
                                         $("#topic_messages").html("<div class=\"card-panel green lighten-1\">Saved Successfully</div>");
@@ -111,7 +115,7 @@
                             });
                             //alert("seas");
                         }
-                    }
+                    //}
                     /*]]>*/
                 }
             </script>
