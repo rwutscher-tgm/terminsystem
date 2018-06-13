@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -31,6 +35,14 @@ public class ViewController {
 
     @Autowired
     PollRepository pollRepository;
+
+
+    @GetMapping("/error")
+    public void error(HttpServletResponse response) throws IOException {
+
+        response.sendRedirect("/");
+
+    }
 
 
     @GetMapping("/poll")
@@ -66,6 +78,7 @@ public class ViewController {
                 }
             }
 
+            model.addAttribute("loggedIn", loggedIn);
             model.addAttribute("polls", validPolls /*new GetPoll().execute()*/);
             return "polls";
 
