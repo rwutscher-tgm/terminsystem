@@ -81,8 +81,6 @@ public class TestComment extends TestCase{
         //Adding Comment
         new AddComment(poll, user, "Hi!", commentRepository, commentSystemRepository).execute();
 
-        System.out.println(commentRepository.findAllByComment("Hi!").get(0));
-
         //Deleting Comment
         new RemoveComment(commentRepository.findAllByComment("Hi!").get(0), commentRepository).execute();
 
@@ -147,9 +145,9 @@ public class TestComment extends TestCase{
     public void deleteObjects(){
 
         String[] polls = new String[]{
-                "poll_ 1",
-                "poll_ 2",
-                "poll_ 3"
+                "poll_1",
+                "poll_2",
+                "poll_3"
         };
         for(String poll: polls){
             try{
