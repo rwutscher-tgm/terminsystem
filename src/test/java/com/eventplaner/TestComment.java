@@ -1,5 +1,7 @@
 package com.eventplaner;
 
+import com.eventplaner.model.Comment;
+import com.eventplaner.model.CommentSystem;
 import com.eventplaner.model.Poll;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.model.repositories.*;
@@ -23,7 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureTestDatabase
 @AutoConfigureTestEntityManager
 @DataJpaTest
-@TestPropertySource(locations="classpath:test.properties")
 public class TestComment extends TestCase{
 
     @Autowired
@@ -56,14 +57,15 @@ public class TestComment extends TestCase{
         //Creating User
         new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository, userRepository).execute();
         RegisteredUser user = registeredUserRepository.findByEmail("registered1@user.com");
+        assertEquals(user.getEmail(), "registered1@user.com");
 
         //Creting Poll
         new CreatePoll(user, "poll_1", "poll", true, pollRepository).execute();
         Poll poll = pollRepository.findAllByName("poll_1").get(0);
+        assertEquals(poll.getName(), "poll_1");
 
         //Adding Comment
         new AddComment(poll, user, "Hi!", commentRepository, commentSystemRepository).execute();
-
         assertEquals("Hi!", commentRepository.findAllByComment("Hi!").get(0).getComment());
     }
 
@@ -110,7 +112,30 @@ public class TestComment extends TestCase{
 
     @Test
     public void testReplyToComment(){
+        new CreateUser("userCreatedWithID","registered1@user.com","regUser1","rootpw", registeredUserRepository, userRepository).execute();
+        RegisteredUser user = registeredUserRepository.findByEmail("registered1@user.com");
 
+        //Creting Poll
+        new CreatePoll(user, "poll_1", "poll", true, pollRepository).execute();
+        Poll poll = pollRepository.findAllByName("poll_1").get(0);
+
+        //Adding Comment
+        new AddComment(poll, user, "Hi!", commentRepository, commentSystemRepository).execute();
+
+        CommentSystem cmnts = new CommentSystem();
+
+        commentSystemRepository.save(cmnts);
+
+        new ReplyToComment(commentRepository.findAllByComment("Hi!").get(0), new Comment(user, "Hi!II"/*, cmnts*/), commentRepository, commentSystemRepository).execute();
+
+        assertEquals("HI!II",commentRepository.findAllByComment("Hi!").get(0).getSubCommentSystem().getComments().get(0).getComment());
+
+        System.out.println(commentRepository.findAllByComment("Hi!II").get(0));
+
+        //Deleting Comment
+        new RemoveComment(commentRepository.findAllByComment("Hi!II").get(0), commentRepository).execute();
+
+        assertEquals(0, commentRepository.findAllByComment("Hi!II").size());
     }
 
     @Override

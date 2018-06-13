@@ -51,4 +51,19 @@ public class CommentSystem {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CommentSystem)) return false;
+
+        CommentSystem that = (CommentSystem) o;
+
+        return commentSystemID.equals(that.commentSystemID);
+    }
+
+    @Override
+    public int hashCode() {
+        return commentSystemID.hashCode();
+    }
 }

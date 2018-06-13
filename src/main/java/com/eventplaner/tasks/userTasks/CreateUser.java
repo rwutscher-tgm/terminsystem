@@ -47,7 +47,7 @@ public class CreateUser implements Task {
         }
 //        System.out.println(user.getUserID());
         //userRepository.save(user);
-        new SendSignUpSuccess(user).execute();
+        //new SendSignUpSuccess(user).execute();
         registeredUserRepository.save(user);
     }
 }

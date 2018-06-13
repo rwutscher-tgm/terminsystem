@@ -70,4 +70,19 @@ public class PollTopic {
     public void setAvailables(ArrayList<User> availables) {
         this.availables = availables;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PollTopic)) return false;
+
+        PollTopic pollTopic = (PollTopic) o;
+
+        return id.equals(pollTopic.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

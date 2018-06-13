@@ -34,13 +34,22 @@ public class AddComment implements Task{
 
     @Override
     public void execute() {
-        Comment c = new Comment(this.author, this.comment);
-        this.system.addComment(c);
+        CommentSystem subComments = new CommentSystem();
+        commentSystemRepository.save(subComments);
 
-        System.out.println(this.system.getCommentSystemID());
-        System.out.println(c.getCommentID());
+        commentSystemRepository.flush();
+
+        Comment c = new Comment(this.author, this.comment/*, subComments*/);
+        c.setSubCommentSystem(subComments);
 
         commentRepository.save(c);
+
+        this.system.addComment(c);
+
+        System.out.println("Comment SystemId: "+this.system.getCommentSystemID());
+        System.out.println("Comment id: "+c.getCommentID());
+        System.out.println("User Id: "+author.getUserID());
+
         commentSystemRepository.save(system);
     }
 }

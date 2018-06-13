@@ -34,4 +34,19 @@ public abstract class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return userID.equals(user.userID);
+    }
+
+    @Override
+    public int hashCode() {
+        return userID.hashCode();
+    }
 }

@@ -12,6 +12,7 @@ import java.util.UUID;
 public class Comment {
 
     @Id
+    //@GeneratedValue
     @Column(name="comment_id")
     private String  commentID;
 
@@ -30,18 +31,21 @@ public class Comment {
     @JoinColumn(name = "sub_comment_system")
     private CommentSystem subCommentSystem;
 
-    public Comment(RegisteredUser author, String comment) {
+    public Comment(RegisteredUser author, String comment/*, CommentSystem subComments*/) {
         this.commentID = UUID.randomUUID().toString();
         this.author = author;
         this.comment = comment;
-        this.subCommentSystem = new CommentSystem();
+        //this.subCommentSystem = subComments;
+        //this.subCommentSystem = new CommentSystem();
 
         this.dateTime = new Date();
     }
 
     public Comment() {
         this.commentID = UUID.randomUUID().toString();
-        this.subCommentSystem = new CommentSystem();
+        //this.commentID = UUID.randomUUID().toString();
+ //       this.subCommentSystem = new CommentSystem();
+        //this.subCommentSystem = new CommentSystem();
     }
 
     public RegisteredUser getAuthor() {
@@ -104,6 +108,21 @@ public class Comment {
 
     public void setSubCommentSystem(CommentSystem subCommentSystem) {
         this.subCommentSystem = subCommentSystem;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+
+        Comment comment = (Comment) o;
+
+        return commentID.equals(comment.commentID);
+    }
+
+    @Override
+    public int hashCode() {
+        return commentID.hashCode();
     }
 }
 

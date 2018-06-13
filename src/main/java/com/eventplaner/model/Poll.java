@@ -168,4 +168,19 @@ public class Poll {
     public boolean isPublic() {
         return isPublic;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Poll)) return false;
+
+        Poll poll = (Poll) o;
+
+        return id.equals(poll.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
