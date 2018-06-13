@@ -128,7 +128,7 @@ public class TestComment extends TestCase{
 
         new ReplyToComment(commentRepository.findAllByComment("Hi!").get(0), new Comment(user, "Hi!II"/*, cmnts*/), commentRepository, commentSystemRepository).execute();
 
-        assertEquals("HI!II",commentRepository.findAllByComment("Hi!").get(0).getSubCommentSystem().getComments().get(0).getComment());
+        assertEquals("Hi!II",commentRepository.findAllByComment("Hi!").get(0).getSubCommentSystem().getComments().get(0).getComment());
 
         System.out.println(commentRepository.findAllByComment("Hi!II").get(0));
 

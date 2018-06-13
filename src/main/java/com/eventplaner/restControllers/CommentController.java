@@ -65,7 +65,7 @@ public class CommentController {
                 registeredUserRepository.findByEmail(user.getName()),
                 params.get("comment"),
                 commentRepository,
-                commentSystemRepository);
+                commentSystemRepository).execute();
 
         response.sendRedirect("/poll?poll="+params.get("poll"));
     }
