@@ -30,6 +30,9 @@ public class CommentController {
     @Autowired
     PollRepository pollRepository;
 
+    @Autowired
+    PollTopicRepository pollTopicRepository;
+
     @PostMapping("/comment/createComment")
     public void createComment(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {
 
@@ -50,6 +53,17 @@ public class CommentController {
         // CommentSystem system, RegisteredUser author, String comment, CommentRepository commentRepository, CommentSystemRepository commentSystemRepository
         response.sendRedirect("/poll?poll="+params.get("poll"));
     }
+
+    @PostMapping("/poll/gettopicvote")
+
+    public boolean getTopicVote(@RequestParam(value="topic") String topic, Principal user){
+        if(!pollTopicRepository.findById(topic).getAvailables().contains(userRepository.findByEmail(user.getName()))){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 
     @PostMapping("/comment/createSubComment")
     public void createSubComment(@RequestParam Map<String, String> params, HttpServletResponse response, Principal user) throws IOException {

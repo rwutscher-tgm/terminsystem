@@ -93,8 +93,6 @@ public class ViewController {
             System.out.println(poll.getPollTopics().size());
             
             model.addAttribute("loggedIn", loggedIn);
-            System.out.println(isOrganizer);
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
             model.addAttribute("isOrganizer", isOrganizer);
             model.addAttribute("poll", poll);
             //model.addAttribute("comments", poll.getCommentSystem()/*.getComments()*/);

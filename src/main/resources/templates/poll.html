@@ -72,6 +72,23 @@
             <a href="#" class="btn-large waves-effect waves-light green lighten-1" onclick="f1()">Send</a>
 
             <script>
+                $(document).ready(function(){
+                    $('.topic').each(function(i, obj) {
+                        $.post( "/poll/gettopicvote", {topic: obj.id}, function( data ) {
+                            if(typeof data === 'boolean'){
+                                if(data){
+                                    obj.checked = true;
+                                }else{
+                                    obj.checked = false;
+                                }
+                            }else{
+                            }
+                        });
+                    });
+                });
+            </script>
+
+            <script>
                 function f1(){
                     a = document.getElementsByClassName("topic");
 

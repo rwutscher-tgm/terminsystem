@@ -94,7 +94,6 @@ public class PollController {
 
     @PostMapping("/poll/voteForTopic")
     public boolean voteForTopic(@RequestParam Map<String, String> params, Principal user){
-        System.out.println("Seas ....................................................................................");
         try{
             if(user != null){
                 System.out.print(params.get("topic"));
@@ -108,6 +107,17 @@ public class PollController {
             return false;
         }
     }
+
+    @PostMapping("/poll/getjoined")
+
+    public boolean getjoined(@RequestParam(value="poll", required = false) String pollId, Principal user, HttpServletResponse response) throws IOException {
+
+        return pollRepository.findById(pollId).getParticipants().contains(userRepository.findByUserID(user.getName()));
+
+        //response.sendRedirect("/poll?poll="+pollId);
+
+    }
+
 
     /*
         Remove
