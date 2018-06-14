@@ -76,7 +76,10 @@ public class ViewController {
 
                     }
                 }
+
             }
+
+
 
             model.addAttribute("loggedIn", loggedIn);
             model.addAttribute("polls", validPolls /*new GetPoll().execute()*/);
