@@ -8,18 +8,30 @@ import com.eventplaner.tasks.Task;
 import com.eventplaner.tasks.notificationTasks.SendPollFailed;
 import com.eventplaner.tasks.notificationTasks.SendPollFinalizedUpdate;
 
+/**
+ * Beendet den Poll und teilt das Ergebniss den Teilnemern mit
+ */
 public class FinalizePoll implements Task{
 
     private Poll poll;
     private boolean success;
     private PollRepository pollRepository;
 
+    /**
+     * Der Konstruktor für den FinalizePoll Task
+     * @param poll Der Poll der beendet werden soll
+     * @param success Ob der Poll ein Ergebniss Produziert hat oder nicht.
+     * @param pollRepository Das Repository indem der Poll gespeichert werden soll
+     */
     public FinalizePoll(Poll poll, boolean success, PollRepository pollRepository) {
         this.poll = poll;
         this.success = success;
         this.pollRepository = pollRepository;
     }
 
+    /**
+     * Führt den Task aus
+     */
     @Override
     public void execute() {
         System.out.println("\n...\n...\n...\n...\n...\n Finalizing Poll ");

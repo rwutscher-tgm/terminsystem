@@ -6,6 +6,9 @@ import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.tasks.Task;
 
+/**
+ * Entfernt ein PollTopic
+ */
 public class RemovePollTopic implements Task{
 
     private Poll poll;
@@ -13,6 +16,13 @@ public class RemovePollTopic implements Task{
     private PollRepository pollRepository;
     private PollTopicRepository pollTopicRepository;
 
+    /**
+     * Der Konstruktor für den RemoveTopic Task
+     * @param poll Der Poll aus dem ein Topic entfernt werden soll
+     * @param pollTopic Das Topic das entfernt werden soll
+     * @param pollRepository Das Repository indem der Poll gespeichert werden soll
+     * @param pollTopicRepository Das Repository aus dem das Topic gelöscht werden soll
+     */
     public RemovePollTopic(Poll poll, PollTopic pollTopic, PollRepository pollRepository, PollTopicRepository pollTopicRepository) {
         this.poll = poll;
         this.pollTopic = pollTopic;
@@ -20,6 +30,9 @@ public class RemovePollTopic implements Task{
         this.pollTopicRepository = pollTopicRepository;
     }
 
+    /**
+     * Führt den Taks aus
+     */
     @Override
     public void execute() {
 

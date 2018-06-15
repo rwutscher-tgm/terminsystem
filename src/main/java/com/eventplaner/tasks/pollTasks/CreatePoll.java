@@ -10,6 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
+/**
+ * Erstellt einen neuen Poll
+ */
 public class CreatePoll implements Task{
 
     private RegisteredUser organizer;
@@ -19,6 +22,14 @@ public class CreatePoll implements Task{
     private String id;
     private PollRepository pollRepository;
 
+    /**
+     * Der Konstruktor für den CreatePoll Task
+     * @param organizer Der Ersteller des Polls
+     * @param name Der Name des Polls
+     * @param description Die Beschreibung des Polls
+     * @param isPublic Ob der Poll public oder private ist
+     * @param pollRepository Das Repository indem der Poll gespeichert werden soll
+     */
     public CreatePoll(RegisteredUser organizer, String name, String description, boolean isPublic, PollRepository pollRepository) {
         this.organizer = organizer;
         this.name = name;
@@ -27,6 +38,9 @@ public class CreatePoll implements Task{
         this.pollRepository = pollRepository;
     }
 
+    /**
+     * Führt den Task aus
+     */
     @Override
     public void execute() {
         Poll poll = new Poll(this.organizer, name, description, isPublic);

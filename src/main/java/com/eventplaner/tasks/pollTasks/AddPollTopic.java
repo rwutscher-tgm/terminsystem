@@ -5,6 +5,9 @@ import com.eventplaner.model.repositories.PollRepository;
 import com.eventplaner.model.repositories.PollTopicRepository;
 import com.eventplaner.tasks.Task;
 
+/**
+ * Fügt ein Topic zu einem Poll hinzu
+ */
 public class AddPollTopic implements Task{
 
     private Poll poll;
@@ -14,11 +17,11 @@ public class AddPollTopic implements Task{
     private PollTopicRepository pollTopicRepository;
 
     /**
-     *
-     * @param poll
-     * @param description
-     * @param pollRepository
-     * @param pollTopicRepository
+     * Der Konstruktor für den AddPollTopic Task
+     * @param poll Der Poll zu dem ein Topic hinzugefügt werden soll
+     * @param description Eine Beschreibung des Topics (z.B.: Datum)
+     * @param pollRepository Das Repository indem der Poll gespeichert werden soll
+     * @param pollTopicRepository Das Repository indem das PollTopic gespeichert werden soll
      */
     public AddPollTopic(Poll poll, String description, PollRepository pollRepository, PollTopicRepository pollTopicRepository) {
         this.poll = poll;
@@ -27,6 +30,9 @@ public class AddPollTopic implements Task{
         this.pollTopicRepository = pollTopicRepository;
     }
 
+    /**
+     * Führt den Task aus
+     */
     @Override
     public void execute() {
 
