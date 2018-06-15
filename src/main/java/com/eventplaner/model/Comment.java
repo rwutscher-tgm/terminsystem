@@ -62,16 +62,16 @@ public class Comment {
     }
 
     /**
-     *
-     * @return Gibt den Author des Kommentars zurück
+     * Gibt den Author des Kommentars zurück
+     * @return den Author des Kommentars
      */
     public RegisteredUser getAuthor() {
         return author;
     }
 
     /**
-     *
-     * @return Gibt das Erstellungsdatum zurück
+     * Gibt das Erstellungsdatum zurück
+     * @return das Datum, an welchem der Kommentar erstellt wurde, als String in Form von "dd.MM.yyyy"
      */
     public String getDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -80,8 +80,8 @@ public class Comment {
     }
 
     /**
-     *
-     * @return Gibt die Erstellungszeit zurück
+     * Gibt die Erstellungszeit zurück
+     * @return die Uhrzeit, zu welcher der Kommentar erstellt wurde, als String in Form von "HH:mm:ss"
      */
     public String getTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
@@ -90,16 +90,16 @@ public class Comment {
     }
 
     /**
-     *
-     * @return Gibt das Erstellungsdatum und die Erstellungsuhrzeit zurück
+     * Gibt das Erstellungsdatum und die Erstellungsuhrzeit zurück
+     * @return die DateTime, an welcher der Kommentar erstellt wurde
      */
     public Date getDateTime(){
         return dateTime;
     }
 
     /**
-     *
-     * @return Gibt das Erstellungsdatum und die Erstellungsuhrzeit als String zurück
+     * Gibt das Erstellungsdatum und die Erstellungsuhrzeit als String zurück
+     * @return die DateTime, an welcher der Kommentar erstellt wurde , als String in Form von "dd.MM.yyyy HH:mm:ss"
      */
     public String getDateTimeString(){
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -108,46 +108,65 @@ public class Comment {
     }
 
     /**
-     *
-     * @return Gibt die ID des Kommentars zurück
+     * Gibt die ID des Kommentars zurück
+     * @return die Id des Kommentars
      */
     public String getCommentID() {
         return commentID;
     }
 
     /**
-     *
-     * @return Gibt den Text des Kommentars zurück
+     * Gibt den Text des Kommentars zurück
+     * @return den Text des Kommentars
      */
     public String getComment() {
         return comment;
     }
 
     /**
-     *
-     * @return Gibt das Kommentarsystem indem die Antworten auf diesen Kommentar gespeichert werden zurück
+     * Gibt das Kommentarsystem, in welchem die Antworten auf diesen Kommentar gespeichert werden, zurück
+     * @return das Kommentarsystem innerhalb des Subsystems
      */
     public CommentSystem getSubCommentSystem() {
         return subCommentSystem;
     }
 
-
+    /**
+     * Setzt die Id des Kommentars
+     * @param commentID die neue Id des Kommentars
+     */
     public void setCommentID(String commentID) {
         this.commentID = commentID;
     }
 
+    /**
+     * Setzt den Author des Kommentars
+     * @param author der registrierte Benutzer, welcher den Kommentar verfasst hat
+     */
     public void setAuthor(RegisteredUser author) {
         this.author = author;
     }
 
+    /**
+     * Setzt die DateTime, zu welcher der Kommentar erstellt wurde
+     * @param dateTime die DateTime des Kommentars
+     */
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
+    /**
+     * Setzt den Text des Kommentars
+     * @param comment der Text des Kommentars
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
+    /**
+     * Setzt des SubCommentSystem des Kommentars
+     * @param subCommentSystem das neue SubCommentSystems
+     */
     public void setSubCommentSystem(CommentSystem subCommentSystem) {
         this.subCommentSystem = subCommentSystem;
     }

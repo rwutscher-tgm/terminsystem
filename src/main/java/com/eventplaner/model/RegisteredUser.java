@@ -18,7 +18,12 @@ public class RegisteredUser extends User {
     @Column(name="username")
     private String username;
 
-
+    /**
+     * Dieser Konstruktor erstellt nimmt drei Parameter entgegen um einen registrieten User zu erstellen
+     * @param email die Email des registrierten Benutzers
+     * @param password das Passwort des registrierten Benutzer
+     * @param username der Username des registrierten Benutzer
+     */
     public RegisteredUser(String email, String password, String username) {
         this.userID = UUID.randomUUID().toString();
         this.email = email;
@@ -30,6 +35,13 @@ public class RegisteredUser extends User {
         this.password = hashedPassword;
     }
 
+    /**
+     * 
+     * @param userID
+     * @param email
+     * @param password
+     * @param username
+     */
     public RegisteredUser(String userID, String email, String password, String username) {
         this.userID = userID;
         this.email = email;

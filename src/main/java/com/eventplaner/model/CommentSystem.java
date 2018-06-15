@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * CommentSystems sind Entities, welche Kommentare enthält, welche daraufhin wieder eigene Commentsystems beinhalten.
+ * @author Nemanja Tesanovic
+ */
+
 @Entity
 @Table(name="comment_system")
 public class CommentSystem {
@@ -26,32 +31,60 @@ public class CommentSystem {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> comments;
 
+    /**
+     * Der no-args Konstruktor der CommentSystem-Klasse
+     */
     public CommentSystem() {
         this.commentSystemID = UUID.randomUUID().toString();
         comments = new ArrayList<>();
 
     }
 
+    /**
+     * Fügt einen Kommentar zum CommentSystem hinzu bzw. fügt es in die Liste der Kommentare hinzu
+     * @param c der neue Kommentar
+     */
     public void addComment(Comment c){
         comments.add(c);
     }
 
+    /**
+     * Gibt die Liste zurück, welche die Kommentare beinhaltet
+     * @return die Liste der Kommentare
+     */
     public List<Comment> getComments() {
         return comments;
     }
 
+    /**
+     * Gibt die Id des CommentSystems zurück
+     * @return die Id des CommentSystems
+     */
     public String getCommentSystemID() {
         return commentSystemID;
     }
 
+    /**
+     * Setzt die Id des CommentSystems
+     * @param commentSystemID die neue Id des CommentSystems
+     */
     public void setCommentSystemID(String commentSystemID) {
         this.commentSystemID = commentSystemID;
     }
 
+    /**
+     * Setzt die Liste der Kommentare des CommentSystems
+     * @param comments die neue Liste von Kommentare
+     */
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
+    /**
+     * Die equals-Methode, welche 2 CommentSystems mittels der Id vergleicht
+     * @param o das Objekt, mit welchem eine Instanz des CommentSystems verglichen werden soll
+     * @return das Ergbnis des Vergleichs
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,6 +95,10 @@ public class CommentSystem {
         return commentSystemID.equals(that.commentSystemID);
     }
 
+    /**
+     * Generiert den HashCode des Objektes mithilfe der Id
+     * @return der generierte HashCode
+     */
     @Override
     public int hashCode() {
         return commentSystemID.hashCode();
