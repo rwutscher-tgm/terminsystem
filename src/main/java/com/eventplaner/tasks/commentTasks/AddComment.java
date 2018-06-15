@@ -8,6 +8,9 @@ import com.eventplaner.model.repositories.CommentRepository;
 import com.eventplaner.model.repositories.CommentSystemRepository;
 import com.eventplaner.tasks.Task;
 
+/**
+ * Fügt einen Kommentar zu einem gegebenen Poll oder Kommentarsystem hinzu
+ */
 public class AddComment implements Task{
 
     private CommentSystem system;
@@ -16,6 +19,13 @@ public class AddComment implements Task{
     private CommentRepository commentRepository;
     private CommentSystemRepository commentSystemRepository;
 
+    /**
+     * Ein Konstruktor für den AddComment-Task
+     * @param system Das Comment-System indem der Kommentar hinzugefügt wird
+     * @param comment Der Text des Kommentars
+     * @param commentRepository Das Repository indem die Kommentare gespeichert werden
+     * @param commentSystemRepository Das Repository indem das Kommantarsystem für die Kommantarantworten gespeichert werden
+     */
     public AddComment(CommentSystem system, RegisteredUser author, String comment, CommentRepository commentRepository, CommentSystemRepository commentSystemRepository){
         this.system = system;
         this.author = author;
@@ -24,6 +34,13 @@ public class AddComment implements Task{
         this.commentSystemRepository = commentSystemRepository;
     }
 
+    /**
+     * Ein Konstruktor für den AddComment-Task
+     * @param poll Der Poll in dessen Kommentarsystem das Kommentar gespeichert wird
+     * @param comment Der Text des Kommentars
+     * @param commentRepository Das Repository indem die Kommentare gespeichert werden
+     * @param commentSystemRepository Das Repository indem das Kommantarsystem für die Kommantarantworten gespeichert werden
+     */
     public AddComment(Poll poll, RegisteredUser author, String comment, CommentRepository commentRepository, CommentSystemRepository commentSystemRepository){
         this.system = poll.getCommentSystem();
         this.author = author;
@@ -32,6 +49,9 @@ public class AddComment implements Task{
         this.commentSystemRepository = commentSystemRepository;
     }
 
+    /**
+     * Führt die Operation aus
+     */
     @Override
     public void execute() {
         CommentSystem subComments = new CommentSystem();

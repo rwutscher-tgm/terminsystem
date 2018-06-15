@@ -7,9 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Diese Klasse ist eine Entity, welche alle mit einem Kommentar verwandten Attribute speichert.
+ * @author Richard Wutscher
+ */
 @Entity
 @Table(name="comment")
 public class Comment {
+
 
     @Id
     //@GeneratedValue
@@ -31,6 +36,11 @@ public class Comment {
     @JoinColumn(name = "sub_comment_system")
     private CommentSystem subCommentSystem;
 
+    /**
+     * Der Konstruktor für die Comment Klasse
+     * @param author Der ersteller des Kommentars
+     * @param comment Der Text des Kommentars
+     */
     public Comment(RegisteredUser author, String comment/*, CommentSystem subComments*/) {
         this.commentID = UUID.randomUUID().toString();
         this.author = author;
@@ -41,6 +51,9 @@ public class Comment {
         this.dateTime = new Date();
     }
 
+    /**
+     * Der no-args Konstruktor für die Comment Klasse
+     */
     public Comment() {
         this.commentID = UUID.randomUUID().toString();
         //this.commentID = UUID.randomUUID().toString();
@@ -48,47 +61,76 @@ public class Comment {
         //this.subCommentSystem = new CommentSystem();
     }
 
+    /**
+     *
+     * @return Gibt den Author des Kommentars zurück
+     */
     public RegisteredUser getAuthor() {
         return author;
     }
 
+    /**
+     *
+     * @return Gibt das Erstellungsdatum zurück
+     */
     public String getDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
         return formatter.format(dateTime);
     }
 
+    /**
+     *
+     * @return Gibt die Erstellungszeit zurück
+     */
     public String getTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
         return formatter.format(dateTime);
     }
 
+    /**
+     *
+     * @return Gibt das Erstellungsdatum und die Erstellungsuhrzeit zurück
+     */
     public Date getDateTime(){
         return dateTime;
     }
 
+    /**
+     *
+     * @return Gibt das Erstellungsdatum und die Erstellungsuhrzeit als String zurück
+     */
     public String getDateTimeString(){
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
         return formatter.format(dateTime);
     }
 
-    public CommentSystem getSubComments() {
-        return subCommentSystem;
-    }
-
+    /**
+     *
+     * @return Gibt die ID des Kommentars zurück
+     */
     public String getCommentID() {
         return commentID;
     }
 
+    /**
+     *
+     * @return Gibt den Text des Kommentars zurück
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     *
+     * @return Gibt das Kommentarsystem indem die Antworten auf diesen Kommentar gespeichert werden zurück
+     */
     public CommentSystem getSubCommentSystem() {
         return subCommentSystem;
     }
+
 
     public void setCommentID(String commentID) {
         this.commentID = commentID;

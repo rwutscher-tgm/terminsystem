@@ -13,6 +13,13 @@ public class AddPollTopic implements Task{
     private PollRepository pollRepository;
     private PollTopicRepository pollTopicRepository;
 
+    /**
+     *
+     * @param poll
+     * @param description
+     * @param pollRepository
+     * @param pollTopicRepository
+     */
     public AddPollTopic(Poll poll, String description, PollRepository pollRepository, PollTopicRepository pollTopicRepository) {
         this.poll = poll;
         this.description = description;

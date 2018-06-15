@@ -5,6 +5,9 @@ import com.eventplaner.model.repositories.CommentRepository;
 import com.eventplaner.model.repositories.CommentSystemRepository;
 import com.eventplaner.tasks.Task;
 
+/**
+ * Fügt eine Antwort zu einem Kommentar hinzu
+ */
 public class ReplyToComment implements Task{
 
     private Comment parent;
