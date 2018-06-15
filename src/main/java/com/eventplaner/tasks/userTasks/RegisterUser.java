@@ -3,6 +3,9 @@ package com.eventplaner.tasks.userTasks;
 import com.eventplaner.model.UnregisteredUser;
 import com.eventplaner.tasks.Task;
 
+/**
+ * @deprecated
+ */
 public class RegisterUser implements Task{
 
     private UnregisteredUser user;

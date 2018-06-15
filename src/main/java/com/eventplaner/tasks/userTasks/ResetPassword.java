@@ -3,6 +3,9 @@ package com.eventplaner.tasks.userTasks;
 import com.eventplaner.model.RegisteredUser;
 import com.eventplaner.tasks.Task;
 
+/**
+ * Unimplemented
+ */
 public class ResetPassword implements Task{
 
     private RegisteredUser user;

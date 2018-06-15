@@ -10,14 +10,24 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * Teilt einem Benutzer mit, dass er erfolgreich angemeldet wurde
+ */
 public class SendSignUpSuccess implements Task{
     //Used to get the mail address from
     private User user;
 
+    /**
+     * Der Konstruktor für den SendSignupSuccess Task
+     * @param user Der Benutzer der erfolgreich angemeldet wurde
+     */
     public SendSignUpSuccess(User user){
         this.user = user;
     }
 
+    /**
+     * Führt den Task aus
+     */
     @Override
     public void execute() {
         //Set up the userdata of the mail account

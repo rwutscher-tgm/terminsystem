@@ -7,6 +7,9 @@ import com.eventplaner.model.repositories.UserRepository;
 import com.eventplaner.tasks.Task;
 import com.eventplaner.tasks.notificationTasks.SendSignUpSuccess;
 
+/**
+ * Erstellt einen registrierten Benutzer
+ */
 public class CreateUser implements Task {
 
     private String userid;
@@ -16,6 +19,15 @@ public class CreateUser implements Task {
     private RegisteredUserRepository registeredUserRepository;
     private UserRepository userRepository;
 
+    /**
+     * Ein Konstruktor für den CreateUser Task
+     * @param userid Die ID des erstellten Benutzers
+     * @param email Die Email des erstellten Benutzers
+     * @param username Der Username des erstellten Benutzers
+     * @param password Das Passwort des erstellten Benutzers
+     * @param registeredUserRepository Das Repository indem der Benutzer gespeichert werden soll
+     * @param userRepository ?
+     */
     public CreateUser(String userid, String email, String username, String password, RegisteredUserRepository registeredUserRepository, UserRepository userRepository) {
         this.userid = userid;
         this.email = email;
@@ -25,6 +37,13 @@ public class CreateUser implements Task {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Ein Konstruktor für den CreateUser Task
+     * @param email Die Email des erstellten Benutzers
+     * @param username Der Username des erstellten Benutzers
+     * @param password Das Passwort des erstellten Benutzers
+     * @param registeredUserRepository Das Repository indem der Benutzer gespeichert werden soll
+     */
     public CreateUser(String email, String username, String password, RegisteredUserRepository registeredUserRepository) {
         this.email = email;
         this.username = username;
@@ -35,6 +54,9 @@ public class CreateUser implements Task {
     /*@Autowired
     UserRepository userRepository;*/
 
+    /**
+     * Führt den Task aus
+     */
     @Override
     public void execute() {
         RegisteredUser user;

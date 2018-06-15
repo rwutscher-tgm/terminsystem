@@ -9,9 +9,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-
-
-
+/**
+ * Teilt einem Teilnemer eines Polls mit, dass der Poll erfolgreich beendet wurde
+ */
 public class SendPollFinalizedUpdate implements Task{
     //Poll to get Pollname
     private Poll poll;
@@ -20,12 +20,21 @@ public class SendPollFinalizedUpdate implements Task{
     //User to get the email
     private User user;
 
+    /**
+     * Der Kunstruktor für den SendPollFinalitedUpdate Task
+     * @param poll Der Poll der beendet wurde
+     * @param pollTopic Das PollTopic für das am meißten gestimmt wurde
+     * @param user Der Benutzer der Benachrichtigt werden soll
+     */
     public SendPollFinalizedUpdate(Poll poll, PollTopic pollTopic, User user) {
         this.poll = poll;
         this.pollTopic = pollTopic;
         this.user = user;
     }
 
+    /**
+     * Führt den Task aus
+     */
     @Override
     public void execute() {
         //Userdata for mail

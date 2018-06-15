@@ -9,7 +9,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
- * Teilt den Teilnemern einel Polls mit, dass der Poll abgesagt wurde
+ * Teilt einem Teilnemer eines Polls mit, dass der Poll abgesagt wurde
  */
 public class SendPollFailed implements Task {
     //Poll to get the pollname from
@@ -17,6 +17,11 @@ public class SendPollFailed implements Task {
     //User to get the mail address from
     private User user;
 
+    /**
+     * Der Konstruktor für den SendPollFailed Task
+     * @param poll Der Poll der beendet wurde
+     * @param user Der Benutzer der benachrichtigt werden soll.
+     */
     public SendPollFailed(Poll poll, User user) {
         this.poll = poll;
         this.user = user;
